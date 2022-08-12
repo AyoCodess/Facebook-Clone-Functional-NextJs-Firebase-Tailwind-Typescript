@@ -19,7 +19,7 @@ import {
 
 export const Header = () => {
   return (
-    <div>
+    <div className='sticky top-0 z-50 bg-white flex items-center p-2 lg:px-5 shadow-md'>
       {/* Left */}
       <div className='flex items-center'>
         <Image
@@ -33,7 +33,7 @@ export const Header = () => {
           <SearchIcon className='h-6 text-gray-600' />
           <input
             type='text'
-            className=' flex ml-2 bg-transparent outline-none placeholder-gray-500'
+            className=' hidden md:inline-flex  ml-2 bg-transparent outline-none placeholder-gray-500 flex-shrink'
             placeholder='Search Metaspace'
           />
         </div>
@@ -41,7 +41,7 @@ export const Header = () => {
       {/*Center */}
       <div className='flex justify-center flex-grow'>
         <div className='flex gap-6 md:gap-2'>
-          <HeaderIcon Icon={HomeIcon} />
+          <HeaderIcon active Icon={HomeIcon} />
           <HeaderIcon Icon={FlagIcon} />
           <HeaderIcon Icon={PlayIcon} />
           <HeaderIcon Icon={ShoppingCartIcon} />
@@ -49,7 +49,14 @@ export const Header = () => {
         </div>
       </div>
       {/*Right */}
-      <div></div>
+      <div className='flex items-center sm:gap-2 justify-end'>
+        {/*profile pic */}
+        <p className='whitespace-nowrap font-semibold pr-3'>Ayo Adesanya</p>
+        <ViewGridIcon className='icon' />
+        <ChatIcon className='icon' />
+        <BellIcon className='icon' />
+        <ChevronDownIcon className='icon' />
+      </div>
     </div>
   );
 };
