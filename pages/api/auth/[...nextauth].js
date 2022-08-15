@@ -11,8 +11,9 @@ export default NextAuth({
     // ...add more providers here
   ],
   pages: {
-    signIn: '/auth/signin',
+    signIn: '/auth/login',
     signOut: '/signout',
     error: '/error', // Error code passed in query string as ?error=
   },
+  secret: process.env.NEXT_PUBLIC_SECRET,
 });

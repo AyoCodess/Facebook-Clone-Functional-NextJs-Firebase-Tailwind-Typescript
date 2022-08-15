@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { Header } from '../components';
 
 interface Props {
-  session: GetSessionParams;
+  session: any;
 }
 
 const Home: NextPage<Props> = () => {
