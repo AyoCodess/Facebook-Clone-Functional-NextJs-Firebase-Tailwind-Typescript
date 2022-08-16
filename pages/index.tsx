@@ -1,6 +1,8 @@
 import type { NextPage } from 'next';
 
 import Head from 'next/head';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../Context';
 import { Header, Sidebar } from '../components';
 
 interface Props {
@@ -8,6 +10,7 @@ interface Props {
 }
 
 const Home: NextPage<Props> = () => {
+  const { theme, setTheme } = useContext(ThemeContext);
   return (
     <div className='h-screen bg-gray-100 overflow-hidden'>
       <Head>

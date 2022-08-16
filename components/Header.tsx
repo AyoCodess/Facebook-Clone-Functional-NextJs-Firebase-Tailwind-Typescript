@@ -1,6 +1,9 @@
 import Image from 'next/image';
-import React from 'react';
-import { HeaderIcon } from '../components';
+
+import React, { useContext } from 'react';
+import { ThemeContext } from '../Context';
+
+import { HeaderIcon, ThemeToggle } from '../components';
 import {
   BellIcon,
   ChatIcon,
@@ -20,10 +23,15 @@ import {
 import { useSession, signIn, signOut } from 'next-auth/react';
 
 export const Header = () => {
+  const { theme, setTheme } = useContext(ThemeContext);
   const { data: session } = useSession();
 
+  console.log(theme);
   return (
-    <div className='sticky top-0 z-50 bg-white flex items-center p-2 lg:px-5 shadow-md'>
+    <div
+      className={`sticky top-0 z-50  flex items-center p-2 lg:px-5 shadow-md ${
+        theme ? 'bg-metaBlack' : 'bg-white'
+      }`}>
       {/* Left */}
       <div className='flex items-center'>
         <Image
@@ -40,6 +48,7 @@ export const Header = () => {
             Sign In
           </button>
         )}
+
         {session && (
           <button
             className='py-2 px-3 rounded-full bg-blue-500 ml-4 text-white'
@@ -70,6 +79,10 @@ export const Header = () => {
         </div>
       </div>
       {/*Right */}
+      <div className={session ? `${'mr-8 w-24'}` : `${'mr-0 w-24'}`}>
+        <ThemeToggle />
+      </div>
+
       {session && (
         <div className='flex items-center sm:gap-2 justify-end'>
           <img className='h-10 rounded-full mr-2' src={session.user?.image!} />

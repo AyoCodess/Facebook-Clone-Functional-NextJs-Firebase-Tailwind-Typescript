@@ -1,5 +1,6 @@
 import { useSession } from 'next-auth/react';
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../Context';
 import {
   ChevronDownIcon,
   ShoppingBagIcon,
@@ -16,6 +17,7 @@ import { SidebarRow } from '../components';
 
 export const Sidebar = () => {
   const { data: session, status } = useSession();
+  const { theme, setTheme } = useContext(ThemeContext);
 
   return (
     <div className='p-2 mt-5 max-w-[60rem] xl:min-w-[30rem]'>
