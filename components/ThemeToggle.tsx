@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { Switch } from '@headlessui/react';
 import { ThemeContext } from '../Context';
 

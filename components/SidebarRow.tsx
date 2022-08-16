@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import React, { SVGProps } from 'react';
+import React, { SVGProps, useContext } from 'react';
+import { ThemeContext } from '../Context';
 
 interface Props {
   src?: string | null | undefined;
@@ -8,6 +9,8 @@ interface Props {
 }
 
 export const SidebarRow = ({ src, Icon, title }: Props) => {
+  const { theme, setTheme } = useContext(ThemeContext);
+
   return (
     <div className='flex items-center gap-2 p-4 rounded-xl hover:bg-gray-200 cursor-pointer'>
       {src && (

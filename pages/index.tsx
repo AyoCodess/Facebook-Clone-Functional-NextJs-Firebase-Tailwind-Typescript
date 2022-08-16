@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useContext } from 'react';
 import { ThemeContext } from '../Context';
-import { Header, Sidebar } from '../components';
+import { Header, Sidebar, Feed } from '../components';
 
 interface Props {
   session: any;
@@ -40,8 +40,9 @@ const Home: NextPage<Props> = () => {
         {/* <!-- * META TAGS FOR SOCIAL MEDIA ENDS * -->*/}
       </Head>
       <Header />
-      <main>
+      <main className='flex'>
         <Sidebar />
+        <Feed />
       </main>
     </div>
   );
