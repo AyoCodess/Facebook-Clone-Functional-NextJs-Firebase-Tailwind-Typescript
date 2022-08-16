@@ -21,6 +21,7 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 
 export const Header = () => {
   const { data: session } = useSession();
+
   return (
     <div className='sticky top-0 z-50 bg-white flex items-center p-2 lg:px-5 shadow-md'>
       {/* Left */}
@@ -32,8 +33,20 @@ export const Header = () => {
           alt='logo'
           layout='fixed'
         />
-        {!session && <button onClick={() => signIn()}>Sign In</button>}
-        {session && <button onClick={() => signOut()}>Sign Out</button>}
+        {!session && (
+          <button
+            className='py-2 px-3 rounded-full bg-blue-500 ml-4 text-white'
+            onClick={() => signIn()}>
+            Sign In
+          </button>
+        )}
+        {session && (
+          <button
+            className='py-2 px-3 rounded-full bg-blue-500 ml-4 text-white'
+            onClick={() => signOut()}>
+            Sign Out
+          </button>
+        )}
         <div className='flex ml-2 items-center rounded-full bg-gray-100 p-2'>
           <SearchIcon className='h-6 text-gray-600' />
           <input
@@ -44,7 +57,10 @@ export const Header = () => {
         </div>
       </div>
       {/*Center */}
-      <div className='flex justify-center flex-grow'>
+      <div
+        className={`flex ${
+          session ? 'flex-grow, justify-center mx-auto' : 'ml-auto'
+        }`}>
         <div className='flex gap-6 md:gap-2'>
           <HeaderIcon active Icon={HomeIcon} />
           <HeaderIcon Icon={FlagIcon} />
@@ -54,14 +70,18 @@ export const Header = () => {
         </div>
       </div>
       {/*Right */}
-      <div className='flex items-center sm:gap-2 justify-end'>
-        {/*profile pic */}
-        <p className='whitespace-nowrap font-semibold pr-3'>Ayo Adesanya</p>
-        <ViewGridIcon className='icon' />
-        <ChatIcon className='icon' />
-        <BellIcon className='icon' />
-        <ChevronDownIcon className='icon' />
-      </div>
+      {session && (
+        <div className='flex items-center sm:gap-2 justify-end'>
+          <img className='h-10 rounded-full mr-2' src={session.user?.image!} />
+          <p className='whitespace-nowrap font-semibold pr-3'>
+            {session.user?.name}
+          </p>
+          <ViewGridIcon className='icon' />
+          <ChatIcon className='icon' />
+          <BellIcon className='icon' />
+          <ChevronDownIcon className='icon' />
+        </div>
+      )}
     </div>
   );
 };

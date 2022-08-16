@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 
 import Head from 'next/head';
-import { Header } from '../components';
+import { Header, Sidebar } from '../components';
 
 interface Props {
   session: any;
@@ -9,7 +9,7 @@ interface Props {
 
 const Home: NextPage<Props> = () => {
   return (
-    <div className=''>
+    <div className='h-screen bg-gray-100 overflow-hidden'>
       <Head>
         <title>Meta Space</title>
         <link rel='icon' href='/favicon.ico' />
@@ -37,6 +37,9 @@ const Home: NextPage<Props> = () => {
         {/* <!-- * META TAGS FOR SOCIAL MEDIA ENDS * -->*/}
       </Head>
       <Header />
+      <main>
+        <Sidebar />
+      </main>
     </div>
   );
 };
