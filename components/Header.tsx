@@ -29,21 +29,26 @@ export const Header = () => {
   console.log(theme);
   return (
     <div
-      className={`sticky top-0 z-50  flex items-center p-2 lg:px-5 shadow-md ${
-        theme ? 'bg-metaBlack' : 'bg-white'
-      }`}>
+      className={`sticky top-0 z-50  flex items-center p-2  lg:px-5 shadow-md transition duration-700 
+     ${!theme ? 'bg-white ' : 'bg-black- shadow-gray-800'}`}>
       {/* Left */}
       <div className='flex items-center'>
-        <Image
-          src='/images/noWords.png'
-          width={40}
-          height={40}
-          alt='logo'
-          layout='fixed'
-        />
+        <div className='ml-3 lg:ml-0'>
+          <Image
+            src='/images/noWords.png'
+            width={40}
+            height={40}
+            alt='logo'
+            layout='fixed'
+          />
+        </div>
         {!session && (
           <button
-            className='py-2 px-3 rounded-full bg-blue-500 ml-4 text-white'
+            className={`py-2 px-3 rounded-full transition duration-700 w-20 ml-5  ${
+              !theme
+                ? 'bg-blue-500 text-white'
+                : 'bg-black text-white shadow border border-white'
+            }`}
             onClick={() => signIn()}>
             Sign In
           </button>
@@ -51,13 +56,13 @@ export const Header = () => {
 
         {session && (
           <button
-            className='py-2 px-3 rounded-full bg-blue-500 ml-4 text-white'
+            className='py-2 px-3 rounded-full transition duration-700 w-24 ml-5 bg-blue-500  text-white'
             onClick={() => signOut()}>
             Sign Out
           </button>
         )}
-        <div className='flex ml-2 items-center rounded-full bg-gray-100 p-2'>
-          <SearchIcon className='h-6 text-gray-600' />
+        <div className='flex ml-2 xl:ml-10 items-center rounded-full bg-gray-100 p-2 '>
+          <SearchIcon className='h-6 text-gray-600 ' />
           <input
             type='text'
             className=' hidden md:inline-flex  ml-2 bg-transparent outline-none placeholder-gray-500 flex-shrink'
@@ -67,8 +72,8 @@ export const Header = () => {
       </div>
       {/*Center */}
       <div
-        className={`flex ${
-          session ? 'flex-grow, justify-center mx-auto' : 'ml-auto'
+        className={`flex  ${
+          session ? 'flex-grow justify-center mx-auto' : 'ml-auto'
         }`}>
         <div className='flex gap-6 md:gap-2'>
           <HeaderIcon active Icon={HomeIcon} />
@@ -79,14 +84,17 @@ export const Header = () => {
         </div>
       </div>
       {/*Right */}
-      <div className={session ? `${'mr-8 w-24'}` : `${'mr-0 w-24'}`}>
+      <div className={`mx-auto mr-8 w-24`}>
         <ThemeToggle />
       </div>
 
       {session && (
         <div className='flex items-center sm:gap-2 justify-end'>
           <img className='h-10 rounded-full mr-2' src={session.user?.image!} />
-          <p className='whitespace-nowrap font-semibold pr-3'>
+          <p
+            className={`whitespace-nowrap font-semibold pr-3 ${
+              !theme ? '' : 'text-white'
+            } `}>
             {session.user?.name}
           </p>
           <ViewGridIcon className='icon' />

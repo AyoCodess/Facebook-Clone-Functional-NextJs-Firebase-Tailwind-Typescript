@@ -20,7 +20,10 @@ export const Sidebar = () => {
   const { theme, setTheme } = useContext(ThemeContext);
 
   return (
-    <div className='p-2 mt-5 max-w-[60rem] xl:min-w-[30rem]'>
+    <div
+      className={`p-2 pt-5 max-w-[600px] xl:min-w-[300px] transition duration-700 ${
+        !theme ? '' : 'bg-gray-900'
+      }`}>
       {session && (
         <SidebarRow
           src={session.user?.image}

@@ -16,7 +16,7 @@ interface Props {
 const login = ({ providers }: Props) => {
   console.log('providers', providers);
   return (
-    <div className='grid place-content-center bg-metaBlack h-screen'>
+    <div className='grid place-content-center meta-gradient h-screen'>
       <div>
         <Image src='/images/withWords.png' width={400} height={400} />
       </div>

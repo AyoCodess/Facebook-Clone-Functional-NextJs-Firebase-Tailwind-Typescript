@@ -22,8 +22,19 @@ export const SidebarRow = ({ src, Icon, title }: Props) => {
           layout='fixed'
         />
       )}
-      {Icon && <Icon className='h-8 w-8 text-blue-500' />}
-      <p className='hidden sm:inline-flex font-medium'>{title}</p>
+      {Icon && (
+        <Icon
+          className={`h-8 w-8 transition duration-700 ${
+            !theme ? 'text-blue-500' : 'text-white'
+          } `}
+        />
+      )}
+      <p
+        className={`hidden sm:inline-flex font-medium transition duration-700 ${
+          !theme ? '' : 'text-white'
+        }`}>
+        {title}
+      </p>
     </div>
   );
 };

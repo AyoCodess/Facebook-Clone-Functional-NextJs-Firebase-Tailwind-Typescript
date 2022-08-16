@@ -12,7 +12,10 @@ interface Props {
 const Home: NextPage<Props> = () => {
   const { theme, setTheme } = useContext(ThemeContext);
   return (
-    <div className='h-screen bg-gray-100 overflow-hidden'>
+    <div
+      className={` h-screen  overflow-hidden transition duration-700 ${
+        !theme ? 'bg-gray-100' : 'bg-black'
+      } `}>
       <Head>
         <title>Meta Space</title>
         <link rel='icon' href='/favicon.ico' />
