@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { ThemeContext } from '../Context';
 import Image from 'next/image';
 import { EmojiHappyIcon } from '@heroicons/react/outline';
@@ -12,6 +12,11 @@ export const InputBox = () => {
   const { data: session } = useSession();
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const photoPickerRef = useRef<HTMLInputElement>(null);
+
+  const [photoToPost, setPhotoToPost] = useState<
+    string | ArrayBuffer | null | undefined
+  >(null);
 
   const sendPost = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -32,6 +37,23 @@ export const InputBox = () => {
 
     inputRef.current.value = '';
   };
+
+  const addPhotoToPost = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const reader = new FileReader();
+
+    if (e.target.files?.[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+
+      reader.onload = (readerEvent) => {
+        setPhotoToPost(readerEvent?.target?.result);
+      };
+    }
+  };
+
+  const removePhotoToPost = () => {
+    setPhotoToPost(null);
+  };
+
   return (
     <div
       className={` p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6 transition duration-700 ${
@@ -56,6 +78,18 @@ export const InputBox = () => {
             Submit
           </button>
         </form>
+        {photoToPost && (
+          <div
+            onClick={removePhotoToPost}
+            className='flex flex-col filter hover:brightness-110  hover:scale-105 transition duration-150 cursor-pointer '>
+            <img
+              src={photoToPost as string}
+              className='h-10 object-contain'
+              alt='image post'
+            />
+            <p className='text-xs text-red-500 text-center'>Remove</p>
+          </div>
+        )}
       </div>
       <div className='flex justify-evenly'>
         <div className='inputIcon'>
@@ -68,7 +102,9 @@ export const InputBox = () => {
           </p>
         </div>
 
-        <div className='inputIcon'>
+        <div
+          onClick={() => photoPickerRef?.current?.click()}
+          className='inputIcon'>
           <CameraIcon className='h-7 text-green-400' />
           <p
             className={`text-xs sm:text-sm xl:text-base transition duration-700 ${
@@ -76,7 +112,12 @@ export const InputBox = () => {
             }`}>
             Photo/Video
           </p>
-          <input type='file' hidden />
+          <input
+            type='file'
+            ref={photoPickerRef}
+            onChange={(e) => addPhotoToPost(e)}
+            hidden
+          />
         </div>
 
         <div className='inputIcon'>
