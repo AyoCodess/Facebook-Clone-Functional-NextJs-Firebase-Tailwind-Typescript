@@ -12,8 +12,8 @@ export const ThemeToggle = () => {
   return (
     <Switch.Group as='div' className='flex items-center'>
       <Switch
-        checked={theme}
-        onChange={setTheme}
+        checked={theme as boolean}
+        onChange={setTheme as (checked: boolean) => void}
         className={classNames(
           theme ? 'bg-blue-600' : 'bg-gray-200',
           'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none '

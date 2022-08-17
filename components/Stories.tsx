@@ -3,29 +3,29 @@ import { StoriesCard } from '../components';
 
 const stories = [
   {
-    name: 'Sonny Sangha',
-    src: 'https://links.papareact.com/zof',
-    profile: 'https://links.papareact.com/l4v',
+    name: 'Coincora',
+    src: 'https://i.imgur.com/ixWtxQw.png',
+    profile: 'https://i.imgur.com/NVT7gKL.png',
   },
   {
-    name: 'Elon Musk',
-    src: 'https://links.papareact.com/4zn',
-    profile: 'https://links.papareact.com/kxk',
+    name: 'Sustainable Development',
+    src: 'https://i.imgur.com/BWxK40U.jpg',
+    profile: 'https://i.imgur.com/a5Zj4hN.jpg',
   },
   {
-    name: 'Jeff Bezoz',
-    src: 'https://links.papareact.com/k2j',
-    profile: 'https://links.papareact.com/f0p',
+    name: 'Family Life',
+    src: 'https://i.imgur.com/WViIx6j.jpg',
+    profile: 'https://i.imgur.com/QfZnD2p.png',
   },
   {
-    name: 'Mark Zuckerberg',
-    src: 'https://links.papareact.com/xql',
-    profile: 'https://links.papareact.com/snf',
+    name: 'Love and Relationships',
+    src: 'https://i.imgur.com/gPnsz5T.jpg',
+    profile: 'https://i.imgur.com/saBetIe.jpg',
   },
   {
-    name: 'Bill Gates',
-    src: 'https://links.papareact.com/4u4',
-    profile: 'https://links.papareact.com/zvy',
+    name: 'Fruity Loops',
+    src: 'https://i.imgur.com/aGruPzj.jpg',
+    profile: 'https://i.imgur.com/xX74WO4.jpg',
   },
 ];
 

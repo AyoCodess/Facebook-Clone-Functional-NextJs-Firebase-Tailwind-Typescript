@@ -20,4 +20,8 @@
       #4b6cb7
     ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
+
+  .inputIcon {
+    @apply flex items-center justify-center gap-1 hover:bg-gray-100 flex-grow p-2 rounded-xl cursor-pointer;
+  }
 }

@@ -25,8 +25,6 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 export const Header = () => {
   const { theme, setTheme } = useContext(ThemeContext);
   const { data: session } = useSession();
-
-  console.log(theme);
   return (
     <div
       className={`sticky top-0 z-50  flex items-center p-2  lg:px-5 shadow-md transition duration-700 

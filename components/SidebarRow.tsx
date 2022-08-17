@@ -12,7 +12,10 @@ export const SidebarRow = ({ src, Icon, title }: Props) => {
   const { theme, setTheme } = useContext(ThemeContext);
 
   return (
-    <div className='flex items-center gap-2 p-4 rounded-xl hover:bg-gray-200 cursor-pointer'>
+    <div
+      className={`flex items-center gap-2 p-4 rounded-xl  cursor-pointer ${
+        !theme ? 'hover:bg-gray-200' : 'hover:bg-blue-500'
+      }`}>
       {src && (
         <Image
           className='rounded-full'
