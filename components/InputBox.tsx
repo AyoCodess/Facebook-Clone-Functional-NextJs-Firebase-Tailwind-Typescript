@@ -4,8 +4,16 @@ import Image from 'next/image';
 import { EmojiHappyIcon } from '@heroicons/react/outline';
 import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
 import { useSession } from 'next-auth/react';
-import { db } from '../firebase';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { db, storage } from '../firebase';
+import { collection, addDoc, Timestamp, setDoc, doc } from 'firebase/firestore';
+import {
+  ref,
+  uploadString,
+  uploadBytesResumable,
+  getDownloadURL,
+  uploadBytes,
+} from 'firebase/storage';
+import { set } from 'firebase/database';
 
 export const InputBox = () => {
   const { theme, setTheme } = useContext(ThemeContext);
@@ -18,24 +26,66 @@ export const InputBox = () => {
     string | ArrayBuffer | null | undefined
   >(null);
 
+  const removePhotoToPost = () => {
+    setPhotoToPost(null);
+  };
+
   const sendPost = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (!inputRef.current) return;
 
     try {
-      const posts = await addDoc(collection(db, 'posts'), {
-        message: inputRef.current.value,
-        name: session?.user?.name,
-        email: session?.user?.email,
-        image: session?.user?.image,
-        timestamp: Timestamp.now(),
-      });
+      console.log('post with photo');
+      if (!photoToPost) {
+        await addDoc(collection(db, 'posts'), {
+          message: inputRef.current.value,
+          name: session?.user?.name,
+          email: session?.user?.email,
+          image: session?.user?.image,
+          timestamp: Timestamp.now(),
+        });
+      }
+
+      if (photoToPost) {
+        console.log('post with no photo');
+        const photoRef = ref(storage, `posts/photo-${Date.now()}`);
+        const uploadTask = uploadBytesResumable(photoRef, photoToPost as any);
+
+        uploadTask.on(
+          'state_changed',
+          null,
+          (error) => {
+            // handles unsuccessful uploads
+            console.error(error);
+          },
+          () => {
+            // when upload is complete
+            const attachImagePost = async () => {
+              const downloadURL = (await getDownloadURL(
+                uploadTask.snapshot.ref
+              )) as any;
+
+              await addDoc(collection(db, 'postsWithPhotos'), {
+                message: inputRef?.current?.value,
+                name: session?.user?.name,
+                email: session?.user?.email,
+                image: session?.user?.image,
+                imageURL: downloadURL,
+                timestamp: Timestamp.now(),
+              });
+            };
+
+            attachImagePost();
+          }
+        );
+      }
     } catch (err) {
       console.error(err);
     }
 
     inputRef.current.value = '';
+    setPhotoToPost(null);
   };
 
   const addPhotoToPost = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,10 +98,6 @@ export const InputBox = () => {
         setPhotoToPost(readerEvent?.target?.result);
       };
     }
-  };
-
-  const removePhotoToPost = () => {
-    setPhotoToPost(null);
   };
 
   return (
