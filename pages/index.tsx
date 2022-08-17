@@ -13,8 +13,8 @@ const Home: NextPage<Props> = () => {
   const { theme, setTheme } = useContext(ThemeContext);
   return (
     <div
-      className={` h-screen  overflow-hidden transition duration-700 ${
-        !theme ? 'bg-gray-100' : 'bg-black'
+      className={` h-screen  overflow-hidden  ${
+        !theme ? 'themeLight' : 'themeDark'
       } `}>
       <Head>
         <title>Meta Space</title>

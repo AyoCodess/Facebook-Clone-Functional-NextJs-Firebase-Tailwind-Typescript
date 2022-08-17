@@ -27,8 +27,8 @@ export const Header = () => {
   const { data: session } = useSession();
   return (
     <div
-      className={`sticky top-0 z-50  flex items-center p-2  lg:px-5 shadow-md transition duration-700 
-     ${!theme ? 'bg-white ' : 'bg-black- shadow-gray-800'}`}>
+      className={`sticky top-0 z-50  flex items-center p-2  lg:px-5 shadow-md 
+     ${!theme ? 'themeLight ' : 'themeDark shadow-gray-800'}`}>
       {/* Left */}
       <div className='flex items-center'>
         <div className='ml-3 lg:ml-0'>
@@ -42,10 +42,10 @@ export const Header = () => {
         </div>
         {!session && (
           <button
-            className={`py-2 px-3 rounded-full transition duration-700 w-20 ml-5  ${
+            className={`py-2 px-3 rounded-full w-24 ml-5  ${
               !theme
-                ? 'bg-blue-500 text-white'
-                : 'bg-black text-white shadow border border-white'
+                ? 'themeLight bg-blue-500 text-white '
+                : ' themeDark shadow border border-white'
             }`}
             onClick={() => signIn()}>
             Sign In
@@ -54,7 +54,11 @@ export const Header = () => {
 
         {session && (
           <button
-            className='py-2 px-3 rounded-full transition duration-700 w-24 ml-5 bg-blue-500  text-white'
+            className={`py-2 px-3 rounded-full w-24 ml-5  ${
+              !theme
+                ? 'themeLight bg-blue-500 text-white '
+                : 'themeDark shadow border border-white'
+            }`}
             onClick={() => signOut()}>
             Sign Out
           </button>
@@ -91,7 +95,7 @@ export const Header = () => {
           <img className='h-10 rounded-full mr-2' src={session.user?.image!} />
           <p
             className={`whitespace-nowrap font-semibold pr-3 ${
-              !theme ? '' : 'text-white'
+              !theme ? 'themeLight' : 'themeDark'
             } `}>
             {session.user?.name}
           </p>

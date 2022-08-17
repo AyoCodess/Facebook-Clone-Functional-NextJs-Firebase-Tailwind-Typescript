@@ -102,8 +102,8 @@ export const InputBox = () => {
 
   return (
     <div
-      className={` p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6 transition duration-700 ${
-        !theme ? 'bg-white' : ' bg-gray-800'
+      className={` p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6  ${
+        !theme ? 'themeLight' : ' themeDark'
       }`}>
       <div className='flex gap-4 p-4 items-center'>
         <Image
@@ -141,8 +141,8 @@ export const InputBox = () => {
         <div className='inputIcon'>
           <VideoCameraIcon className='h-7 text-red-500' />
           <p
-            className={`text-xs sm:text-sm xl:text-base transition duration-700 ${
-              !theme ? '' : 'text-white'
+            className={`text-xs sm:text-sm xl:text-base ${
+              !theme ? 'themeLight' : 'themeDark'
             }`}>
             Live Video
           </p>
@@ -153,8 +153,8 @@ export const InputBox = () => {
           className='inputIcon'>
           <CameraIcon className='h-7 text-green-400' />
           <p
-            className={`text-xs sm:text-sm xl:text-base transition duration-700 ${
-              !theme ? '' : 'text-white'
+            className={`text-xs sm:text-sm xl:text-base ${
+              !theme ? 'themeLight' : 'themeDark'
             }`}>
             Photo/Video
           </p>
@@ -169,8 +169,8 @@ export const InputBox = () => {
         <div className='inputIcon'>
           <EmojiHappyIcon className='h-7 text-yellow-300' />
           <p
-            className={`text-xs sm:text-sm xl:text-base transition duration-700 ${
-              !theme ? '' : 'text-white'
+            className={`text-xs sm:text-sm xl:text-base  ${
+              !theme ? 'themeLight' : 'themeDark'
             }`}>
             Feeling/Activity
           </p>

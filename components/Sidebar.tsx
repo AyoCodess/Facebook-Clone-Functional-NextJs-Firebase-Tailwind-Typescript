@@ -21,8 +21,8 @@ export const Sidebar = () => {
 
   return (
     <div
-      className={`p-2 pt-5 max-w-[600px] xl:min-w-[300px] transition duration-700 ${
-        !theme ? '' : 'bg-gray-900'
+      className={`p-2 pt-5 max-w-[600px] xl:min-w-[300px] ${
+        !theme ? 'themeLight' : 'themeDark'
       }`}>
       {session && (
         <SidebarRow
