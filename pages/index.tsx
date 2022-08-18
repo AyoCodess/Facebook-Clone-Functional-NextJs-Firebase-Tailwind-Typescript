@@ -1,16 +1,26 @@
 import type { NextPage } from 'next';
 
 import Head from 'next/head';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ThemeContext } from '../Context';
-import { Header, Sidebar, Feed } from '../components';
+import { Header, Sidebar, Feed, Toast } from '../components';
 
 interface Props {
   session: any;
 }
 
 const Home: NextPage<Props> = () => {
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme, setTheme, show, setShow } = useContext(ThemeContext);
+
+  // - removes search field error toast
+  useEffect(() => {
+    if (show) {
+      setTimeout(() => {
+        setShow(false);
+      }, 5000);
+    }
+  }, [show]);
+
   return (
     <div
       className={` h-screen  overflow-hidden  ${
@@ -42,6 +52,7 @@ const Home: NextPage<Props> = () => {
         <meta name='twitter:creator' content='@ayo__codes' />
         {/* <!-- * META TAGS FOR SOCIAL MEDIA ENDS * -->*/}
       </Head>
+      <Toast />
       <Header />
       <main className='flex'>
         <Sidebar />

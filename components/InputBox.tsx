@@ -16,7 +16,7 @@ import {
 import { set } from 'firebase/database';
 
 export const InputBox = () => {
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme, setTheme, setShow } = useContext(ThemeContext);
   const { data: session } = useSession();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -36,8 +36,8 @@ export const InputBox = () => {
     if (!inputRef.current) return;
 
     try {
-      console.log('post with photo');
       if (!photoToPost) {
+        console.log('post no photo');
         await addDoc(collection(db, 'posts'), {
           message: inputRef.current.value,
           name: session?.user?.name,
@@ -48,7 +48,7 @@ export const InputBox = () => {
       }
 
       if (photoToPost) {
-        console.log('post with no photo');
+        console.log('post with photo');
         const photoRef = ref(storage, `posts/photo-${Date.now()}`);
         const uploadTask = uploadBytesResumable(photoRef, photoToPost as any);
 
@@ -82,6 +82,8 @@ export const InputBox = () => {
       }
     } catch (err) {
       console.error(err);
+    } finally {
+      setShow(true);
     }
 
     inputRef.current.value = '';

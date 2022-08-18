@@ -27,7 +27,7 @@ export const Header = () => {
   const { data: session } = useSession();
   return (
     <div
-      className={`sticky top-0 z-50  flex items-center p-2  lg:px-5 shadow-md 
+      className={`sticky top-0 z-40  flex items-center p-2  lg:px-5 shadow-md 
      ${!theme ? 'themeLight ' : 'themeDark shadow-gray-800'}`}>
       {/* Left */}
       <div className='flex items-center'>
