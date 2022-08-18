@@ -8,4 +8,5 @@ export * from './Stories';
 export * from './StoriesCard';
 export * from './InputBox';
 export * from './Posts';
+export * from './Post';
 export * from './Toast';

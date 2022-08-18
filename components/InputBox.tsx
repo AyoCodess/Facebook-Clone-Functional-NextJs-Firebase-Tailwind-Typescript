@@ -6,7 +6,14 @@ import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
 import { useSession } from 'next-auth/react';
 import { db, storage } from '../firebase';
 import { collection, addDoc, Timestamp, setDoc, doc } from 'firebase/firestore';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import {
+  ref,
+  uploadBytesResumable,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+} from 'firebase/storage';
+import { setDefaultResultOrder } from 'dns/promises';
 
 export const InputBox = () => {
   const { theme, setShow, setTitle, setDescription } = useContext(ThemeContext);
@@ -26,11 +33,12 @@ export const InputBox = () => {
   const addPhotoToPost = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
 
+    // selecting and uploading a photo
     if (e.target.files?.[0]) {
       reader.readAsDataURL(e.target.files[0]);
 
       reader.onload = (readerEvent) => {
-        setPhotoToPost(readerEvent?.target?.result);
+        setPhotoToPost(readerEvent?.target?.result); //base64 string
       };
     }
     photoPickerRef.current!.value = '';
@@ -47,6 +55,7 @@ export const InputBox = () => {
     }
 
     try {
+      // handles posts with no image attached
       if (!photoToPost) {
         console.log('post with NO photo');
         await addDoc(collection(db, 'posts'), {
@@ -61,10 +70,21 @@ export const InputBox = () => {
         setPhotoToPost(null);
       }
 
+      // handles posts with image attached
       if (photoToPost) {
+        console.log(photoToPost);
+        const metadata = {
+          contentType: 'image/jpeg',
+        };
+
         console.log('post with photo');
-        const photoRef = ref(storage, `posts/photo-${Date.now()}`);
-        const uploadTask = uploadBytesResumable(photoRef, photoToPost as any);
+        const photoRef = ref(storage, `posts/photo-${Date.now()}.jpeg`);
+        // const uploadTask = await uploadBytes(photoRef, photoToPost as any);
+        const uploadTask = uploadBytesResumable(
+          photoRef,
+          photoToPost as any,
+          metadata
+        );
 
         uploadTask.on(
           'state_changed',
@@ -74,12 +94,14 @@ export const InputBox = () => {
             console.error(error);
           },
           () => {
-            // when upload is complete adds post to via a new collection
+            // when upload is complete adds post to collection
             const attachImagePost = async () => {
-              const downloadURL = (await getDownloadURL(
-                uploadTask.snapshot.ref
-              )) as any;
+              const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
+              // this is a downloads the image instead of DISPLAYING it. here lies  my problem.
+              console.log('downloadURL', downloadURL);
+
+              // adding the image URL to the object to be posted to the collection
               await addDoc(collection(db, 'postsWithPhotos'), {
                 message: inputRef?.current?.value,
                 name: session?.user?.name,
