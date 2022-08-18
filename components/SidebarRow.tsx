@@ -14,9 +14,7 @@ export const SidebarRow = ({ src, Icon, title }: Props) => {
   return (
     <div
       className={`flex items-center gap-2 p-4 rounded-xl  cursor-pointer ${
-        !theme
-          ? ' themeLight hover:bg-gray-200'
-          : ' themeDark hover:bg-blue-500'
+        !theme ? ' themeLight hover:bg-gray-200' : 'hover:bg-blue-500'
       }`}>
       {src && (
         <Image
@@ -30,13 +28,13 @@ export const SidebarRow = ({ src, Icon, title }: Props) => {
       {Icon && (
         <Icon
           className={`h-8 w-8  ${
-            !theme ? 'themeLight text-blue-500' : 'themeDark'
+            !theme ? 'themeLight text-blue-500' : 'themeDark bg-transparent'
           } `}
         />
       )}
       <p
         className={`hidden sm:inline-flex font-medium  ${
-          !theme ? 'themeLight' : 'themeDark'
+          !theme ? 'themeLight' : 'themeDark bg-transparent'
         }`}>
         {title}
       </p>

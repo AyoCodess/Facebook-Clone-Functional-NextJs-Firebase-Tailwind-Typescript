@@ -22,7 +22,7 @@ export const Sidebar = () => {
   return (
     <div
       className={`p-2 pt-5 max-w-[600px] xl:min-w-[300px] ${
-        !theme ? 'themeLight' : 'themeDark'
+        !theme ? 'themeLight' : 'themeDark bg-slate-800'
       }`}>
       {session && (
         <SidebarRow

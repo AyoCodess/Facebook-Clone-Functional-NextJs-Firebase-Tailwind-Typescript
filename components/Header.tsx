@@ -45,7 +45,7 @@ export const Header = () => {
             className={`py-2 px-3 rounded-full w-24 ml-5  ${
               !theme
                 ? 'themeLight bg-blue-500 text-white '
-                : ' themeDark shadow border border-white'
+                : ' themeDark shadow border border-white hover:bg-blue-500 hover:border-0'
             }`}
             onClick={() => signIn()}>
             Sign In
@@ -57,7 +57,7 @@ export const Header = () => {
             className={`py-2 px-3 rounded-full w-24 ml-5  ${
               !theme
                 ? 'themeLight bg-blue-500 text-white '
-                : 'themeDark shadow border border-white'
+                : 'themeDark shadow border border-white hover:bg-blue-500 hover:border-0'
             }`}
             onClick={() => signOut()}>
             Sign Out
@@ -77,7 +77,7 @@ export const Header = () => {
         className={`flex  ${
           session ? 'flex-grow justify-center mx-auto' : 'ml-auto'
         }`}>
-        <div className='flex gap-6 md:gap-2'>
+        <div className={`flex gap-6 md:gap-2`}>
           <HeaderIcon active Icon={HomeIcon} />
           <HeaderIcon Icon={FlagIcon} />
           <HeaderIcon Icon={PlayIcon} />

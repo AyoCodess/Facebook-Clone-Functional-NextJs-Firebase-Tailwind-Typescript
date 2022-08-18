@@ -13,10 +13,9 @@ import {
   getDownloadURL,
   uploadBytes,
 } from 'firebase/storage';
-import { set } from 'firebase/database';
 
 export const InputBox = () => {
-  const { theme, setTheme, setShow } = useContext(ThemeContext);
+  const { theme, setShow } = useContext(ThemeContext);
   const { data: session } = useSession();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -60,7 +59,7 @@ export const InputBox = () => {
             console.error(error);
           },
           () => {
-            // when upload is complete
+            // when upload is complete adds post to via a new collection
             const attachImagePost = async () => {
               const downloadURL = (await getDownloadURL(
                 uploadTask.snapshot.ref
@@ -82,7 +81,6 @@ export const InputBox = () => {
       }
     } catch (err) {
       console.error(err);
-    } finally {
       setShow(true);
     }
 
@@ -105,7 +103,7 @@ export const InputBox = () => {
   return (
     <div
       className={` p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6  ${
-        !theme ? 'themeLight' : ' themeDark'
+        !theme ? 'themeLight' : 'themeDark shadow-blue-900 shadow-sm '
       }`}>
       <div className='flex gap-4 p-4 items-center'>
         <Image
@@ -140,11 +138,11 @@ export const InputBox = () => {
         )}
       </div>
       <div className='flex justify-evenly'>
-        <div className='inputIcon'>
+        <div className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '}`}>
           <VideoCameraIcon className='h-7 text-red-500' />
           <p
             className={`text-xs sm:text-sm xl:text-base ${
-              !theme ? 'themeLight' : 'themeDark'
+              !theme ? 'themeLight' : 'themeDark bg-transparent'
             }`}>
             Live Video
           </p>
@@ -152,11 +150,11 @@ export const InputBox = () => {
 
         <div
           onClick={() => photoPickerRef?.current?.click()}
-          className='inputIcon'>
+          className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '}`}>
           <CameraIcon className='h-7 text-green-400' />
           <p
             className={`text-xs sm:text-sm xl:text-base ${
-              !theme ? 'themeLight' : 'themeDark'
+              !theme ? 'themeLight' : 'themeDark bg-transparent'
             }`}>
             Photo/Video
           </p>
@@ -168,11 +166,11 @@ export const InputBox = () => {
           />
         </div>
 
-        <div className='inputIcon'>
+        <div className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '}`}>
           <EmojiHappyIcon className='h-7 text-yellow-300' />
           <p
             className={`text-xs sm:text-sm xl:text-base  ${
-              !theme ? 'themeLight' : 'themeDark'
+              !theme ? 'themeLight' : 'themeDark bg-transparent'
             }`}>
             Feeling/Activity
           </p>
