@@ -6,16 +6,10 @@ import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
 import { useSession } from 'next-auth/react';
 import { db, storage } from '../firebase';
 import { collection, addDoc, Timestamp, setDoc, doc } from 'firebase/firestore';
-import {
-  ref,
-  uploadString,
-  uploadBytesResumable,
-  getDownloadURL,
-  uploadBytes,
-} from 'firebase/storage';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 export const InputBox = () => {
-  const { theme, setShow } = useContext(ThemeContext);
+  const { theme, setShow, setTitle, setDescription } = useContext(ThemeContext);
   const { data: session } = useSession();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -29,21 +23,42 @@ export const InputBox = () => {
     setPhotoToPost(null);
   };
 
+  const addPhotoToPost = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const reader = new FileReader();
+
+    if (e.target.files?.[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+
+      reader.onload = (readerEvent) => {
+        setPhotoToPost(readerEvent?.target?.result);
+      };
+    }
+    photoPickerRef.current!.value = '';
+  };
+
   const sendPost = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    if (!inputRef.current) return;
+    if (!inputRef.current!.value) {
+      setShow(true);
+      setTitle(`No empty thoughts allowed`);
+      setDescription(`Please share whats on your mind ${session?.user?.name}`);
+      return;
+    }
 
     try {
       if (!photoToPost) {
-        console.log('post no photo');
+        console.log('post with NO photo');
         await addDoc(collection(db, 'posts'), {
-          message: inputRef.current.value,
+          message: inputRef.current!.value,
           name: session?.user?.name,
           email: session?.user?.email,
           image: session?.user?.image,
           timestamp: Timestamp.now(),
         });
+
+        inputRef.current!.value = '';
+        setPhotoToPost(null);
       }
 
       if (photoToPost) {
@@ -73,6 +88,9 @@ export const InputBox = () => {
                 imageURL: downloadURL,
                 timestamp: Timestamp.now(),
               });
+
+              inputRef.current!.value = '';
+              setPhotoToPost(null);
             };
 
             attachImagePost();
@@ -82,27 +100,14 @@ export const InputBox = () => {
     } catch (err) {
       console.error(err);
       setShow(true);
-    }
-
-    inputRef.current.value = '';
-    setPhotoToPost(null);
-  };
-
-  const addPhotoToPost = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const reader = new FileReader();
-
-    if (e.target.files?.[0]) {
-      reader.readAsDataURL(e.target.files[0]);
-
-      reader.onload = (readerEvent) => {
-        setPhotoToPost(readerEvent?.target?.result);
-      };
+      setTitle('Cannot send post to database');
+      setDescription('To stop spam I have locked the database');
     }
   };
 
   return (
     <div
-      className={` p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6  ${
+      className={`p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6  ${
         !theme ? 'themeLight' : 'themeDark shadow-blue-900 shadow-sm '
       }`}>
       <div className='flex gap-4 p-4 items-center'>
@@ -149,7 +154,11 @@ export const InputBox = () => {
         </div>
 
         <div
-          onClick={() => photoPickerRef?.current?.click()}
+          onClick={() => {
+            photoPickerRef?.current?.click();
+
+            // addPhotoToPost(photoPickerRef.current);
+          }}
           className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '}`}>
           <CameraIcon className='h-7 text-green-400' />
           <p

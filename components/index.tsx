@@ -7,4 +7,5 @@ export * from './Feed';
 export * from './Stories';
 export * from './StoriesCard';
 export * from './InputBox';
+export * from './Posts';
 export * from './Toast';
