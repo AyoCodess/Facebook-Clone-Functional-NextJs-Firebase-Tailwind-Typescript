@@ -6,15 +6,7 @@ import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
 import { useSession } from 'next-auth/react';
 import { db, storage } from '../firebase';
 import { collection, addDoc, Timestamp, setDoc, doc } from 'firebase/firestore';
-import {
-  ref,
-  uploadBytesResumable,
-  uploadBytes,
-  getDownloadURL,
-  listAll,
-  uploadString,
-} from 'firebase/storage';
-import { setDefaultResultOrder } from 'dns/promises';
+import { ref, getDownloadURL, uploadString } from 'firebase/storage';
 
 export const InputBox = () => {
   const { theme, setShow, setTitle, setDescription } = useContext(ThemeContext);
@@ -120,19 +112,26 @@ export const InputBox = () => {
         !theme ? 'themeLight' : 'themeDark shadow-blue-900 shadow-sm '
       }`}>
       <div className='flex gap-4 p-4 items-center'>
-        <Image
-          className='rounded-full'
-          src={session!.user!.image as string}
-          width={40}
-          height={40}
-          layout='fixed'
-        />
+        {session && (
+          <Image
+            className='rounded-full'
+            src={session!.user!.image as string}
+            width={40}
+            height={40}
+            layout='fixed'
+          />
+        )}
         <form className='flex flex-1'>
           <input
+            disabled={!session}
             ref={inputRef}
             className='rounded-full h-12 bg-gray-100 flex-grow px-5 focus:outline-none'
             type='text'
-            placeholder={`Whats on your mind ${session?.user?.name}`}
+            placeholder={
+              !session
+                ? `Please sign in to make a post`
+                : `Whats on your mind ${session?.user?.name && ''}`
+            }
           />
           <button hidden type='submit' onClick={sendPost}>
             Submit
@@ -152,8 +151,11 @@ export const InputBox = () => {
         )}
       </div>
       <div className='flex justify-evenly'>
-        <div className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '}`}>
-          <VideoCameraIcon className='h-7 text-red-500' />
+        <div
+          className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '} ${
+            session ? ' ' : ' hover:bg-transparent cursor-default'
+          }`}>
+          <VideoCameraIcon className={`h-7 text-red-500  `} />
           <p
             className={`text-xs sm:text-sm xl:text-base ${
               !theme ? 'themeLight' : 'themeDark bg-transparent'
@@ -168,7 +170,9 @@ export const InputBox = () => {
 
             // addPhotoToPost(photoPickerRef.current);
           }}
-          className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '}`}>
+          className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '} ${
+            session ? ' ' : ' hover:bg-transparent cursor-default'
+          }`}>
           <CameraIcon className='h-7 text-green-400' />
           <p
             className={`text-xs sm:text-sm xl:text-base ${
@@ -184,7 +188,10 @@ export const InputBox = () => {
           />
         </div>
 
-        <div className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '}`}>
+        <div
+          className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '} ${
+            session ? ' ' : ' hover:bg-transparent cursor-default'
+          }`}>
           <EmojiHappyIcon className='h-7 text-yellow-300' />
           <p
             className={`text-xs sm:text-sm xl:text-base  ${
