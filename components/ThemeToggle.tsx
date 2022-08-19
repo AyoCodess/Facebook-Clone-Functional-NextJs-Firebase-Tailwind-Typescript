@@ -7,7 +7,7 @@ function classNames(...classes: any) {
 }
 
 interface Props {
-  className: string;
+  className?: string;
 }
 
 export const ThemeToggle = ({ className }: Props) => {

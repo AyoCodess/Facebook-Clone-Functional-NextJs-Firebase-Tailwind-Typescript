@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ThemeContext } from '../Context';
 
 import { HeaderIcon, ThemeToggle } from '../components';
@@ -26,6 +26,8 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 export const Header = () => {
   const { theme, setTheme } = useContext(ThemeContext);
   const { data: session } = useSession();
+  const [openMenu, setOpenMenu] = useState(false);
+
   return (
     <>
       <div
@@ -69,7 +71,7 @@ export const Header = () => {
             <SearchIcon className='h-6 text-gray-600 ' />
             <input
               type='text'
-              className=' hidden md:inline-flex  ml-2 bg-transparent outline-none placeholder-gray-500 flex-shrink'
+              className=' hidden lg:inline-flex  ml-2 bg-transparent outline-none placeholder-gray-500 flex-shrink'
               placeholder='Search Metaspace'
             />
           </div>
@@ -79,7 +81,7 @@ export const Header = () => {
           className={`flex  ${
             session ? 'flex-grow justify-center mx-auto' : 'ml-auto'
           }`}>
-          <div className={`hidden sm:flex gap-6 md:gap-2`}>
+          <div className={`hidden sm:flex gap-6  `}>
             <HeaderIcon active Icon={HomeIcon} />
             <HeaderIcon Icon={FlagIcon} />
             <HeaderIcon Icon={PlayIcon} />
@@ -88,7 +90,7 @@ export const Header = () => {
           </div>
         </div>
         {/*Right */}
-        <div className={`hidden sm:block mx-auto mr-8 w-24`}>
+        <div className={`hidden lg:block mx-auto mr-8 w-24`}>
           <ThemeToggle />
         </div>
 
@@ -98,8 +100,8 @@ export const Header = () => {
               className='h-10 rounded-full mr-2'
               src={session.user?.image!}
             />
-            <DotsVerticalIcon className='sm:hidden icon block' />
-            <div className=' hidden sm:flex items-center sm:gap-2'>
+
+            <div className=' hidden md:flex items-center sm:gap-2'>
               <p
                 className={`whitespace-nowrap font-semibold pr-3 ${
                   !theme ? 'themeLight' : 'themeDark'
@@ -109,15 +111,19 @@ export const Header = () => {
               <ViewGridIcon className='icon' />
               <ChatIcon className='icon' />
               <BellIcon className='icon' />
-              <ChevronDownIcon className='icon' />
+              {/* <ChevronDownIcon className='icon' /> */}
             </div>
+            <DotsVerticalIcon
+              className='lg:hidden icon block'
+              onClick={() => setOpenMenu((prev) => !prev)}
+            />
           </div>
         )}
         {/*Mobile view */}
-        {session && (
-          <div className=' sm:hidden absolute bottom-[-13rem] right-0 w-42 mr-5 animate-popUp '>
+        {session && openMenu && (
+          <div className=' lg:hidden absolute bottom-[-13rem] right-0 w-42 mr-5 animate-popUp '>
             <div className=' flex flex-col gap-2 p-3 bg-white shadow rounded-lg'>
-              <ThemeToggle className='mb-2' />
+              <ThemeToggle className='mb-1' />
               <div className='flex gap-2 items-center'>
                 <ViewGridIcon className='icon block' />
                 <p className='font-medium'> More</p>
