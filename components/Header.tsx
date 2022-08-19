@@ -31,7 +31,7 @@ export const Header = () => {
   return (
     <>
       <div
-        className={`sticky top-0 z-40  flex items-center p-2  lg:px-5 shadow-md 
+        className={`sticky top-0 z-40  flex items-center p-[0.1rem]  lg:px-5 shadow-md 
      ${!theme ? 'themeLight ' : 'themeDark shadow-gray-800'}`}>
         {/* Left */}
         <div className='flex items-center'>
@@ -67,11 +67,14 @@ export const Header = () => {
               Sign Out
             </button>
           )}
-          <div className='flex ml-2 xl:ml-10 items-center rounded-full bg-gray-100 p-2 '>
+          <div
+            className={`flex ml-2 2xl:ml-5 items-center rounded-full bg-gray-100 p-2 `}>
             <SearchIcon className='h-6 text-gray-600 ' />
             <input
               type='text'
-              className=' hidden lg:inline-flex  ml-2 bg-transparent outline-none placeholder-gray-500 flex-shrink'
+              className={` hidden ${
+                !session ? 'md:inline-flex' : '2xl:inline-flex'
+              }  ml-2 bg-transparent outline-none placeholder-gray-500 flex-shrink`}
               placeholder='Search Metaspace'
             />
           </div>
@@ -81,18 +84,27 @@ export const Header = () => {
           className={`flex  ${
             session ? 'flex-grow justify-center mx-auto' : 'ml-auto'
           }`}>
-          <div className={`hidden sm:flex gap-6  `}>
-            <HeaderIcon active Icon={HomeIcon} />
-            <HeaderIcon Icon={FlagIcon} />
-            <HeaderIcon Icon={PlayIcon} />
-            <HeaderIcon Icon={ShoppingCartIcon} />
-            <HeaderIcon Icon={UserGroupIcon} />
-          </div>
+          {session && (
+            <div className={`hidden sm:flex gap-6  `}>
+              <HeaderIcon active Icon={HomeIcon} />
+              <HeaderIcon Icon={FlagIcon} />
+              <HeaderIcon Icon={PlayIcon} />
+              <HeaderIcon Icon={ShoppingCartIcon} />
+              <HeaderIcon Icon={UserGroupIcon} />
+            </div>
+          )}
         </div>
         {/*Right */}
-        <div className={`hidden lg:block mx-auto mr-8 w-24`}>
-          <ThemeToggle />
-        </div>
+        {session && (
+          <div className={`hidden xl:block mx-auto mr-8 w-24`}>
+            <ThemeToggle />
+          </div>
+        )}
+        {!session && (
+          <div className={` block mx-auto mr-8 w-24`}>
+            <ThemeToggle />
+          </div>
+        )}
 
         {session && (
           <div className='flex items-center sm:gap-2 justify-end'>
@@ -101,7 +113,7 @@ export const Header = () => {
               src={session.user?.image!}
             />
 
-            <div className=' hidden md:flex items-center sm:gap-2'>
+            <div className=' hidden xl:flex items-center sm:gap-2'>
               <p
                 className={`whitespace-nowrap font-semibold pr-3 ${
                   !theme ? 'themeLight' : 'themeDark'
@@ -114,7 +126,7 @@ export const Header = () => {
               {/* <ChevronDownIcon className='icon' /> */}
             </div>
             <DotsVerticalIcon
-              className='lg:hidden icon block'
+              className='xl:hidden icon block'
               onClick={() => setOpenMenu((prev) => !prev)}
             />
           </div>

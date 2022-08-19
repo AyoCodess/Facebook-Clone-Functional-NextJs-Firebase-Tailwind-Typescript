@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useContext, useEffect } from 'react';
 import { ThemeContext } from '../Context';
-import { Header, Sidebar, Feed, Toast } from '../components';
+import { Header, Sidebar, Feed, Toast, SidebarTwo } from '../components';
 
 interface Props {
   session: any;
@@ -58,6 +58,7 @@ const Home: NextPage<Props> = () => {
         className={`flex  ${!theme ? 'lightTheme bg-gray-100' : ' darkTheme'}`}>
         <Sidebar />
         <Feed />
+        <SidebarTwo />
       </main>
     </div>
   );

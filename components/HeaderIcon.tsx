@@ -1,5 +1,6 @@
 import React, { SVGProps, useContext } from 'react';
 import { ThemeContext } from '../Context';
+import { useSession } from 'next-auth/react';
 
 interface Props {
   Icon: React.FC<SVGProps<SVGSVGElement>>;
@@ -8,9 +9,13 @@ interface Props {
 export const HeaderIcon = ({ Icon, active }: Props) => {
   const { theme, setTheme } = useContext(ThemeContext);
 
+  const { data: session } = useSession();
+
   return (
     <div
-      className={`flex items-center cursor-pointer xl:px-3 sm:h-14  rounded-xl active:border-b-2 active:border-blue-500 group  group-hover:text-white-500 ${
+      className={`flex items-center cursor-pointer  ${
+        !session ? 'xl:px-6' : '2xl:px-8  xl:px-6 lg:px-3'
+      } sm:h-14  rounded-xl active:border-b-2 active:border-blue-500 group  group-hover:text-white-500 ${
         !theme ? 'themeLight hover:bg-gray-100' : 'themeDark hover:bg-blue-500'
       }`}>
       {!theme && (

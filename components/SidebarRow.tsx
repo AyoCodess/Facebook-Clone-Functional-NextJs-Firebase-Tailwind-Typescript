@@ -15,7 +15,7 @@ export const SidebarRow = ({ src, Icon, title }: Props) => {
     <div
       className={`flex items-center gap-2 p-4 rounded-xl  cursor-pointer ${
         !theme
-          ? ' themeLight hover:bg-gray-200 bg-transparent'
+          ? ' themeLight hover:bg-gray-100 bg-transparent'
           : 'hover:bg-blue-500'
       }`}>
       {src && (
