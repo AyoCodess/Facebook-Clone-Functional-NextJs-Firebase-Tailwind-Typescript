@@ -109,7 +109,7 @@ export const InputBox = () => {
   return (
     <div
       className={`p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6  ${
-        !theme ? 'themeLight' : 'themeDark shadow-blue-900 shadow-sm '
+        !theme ? 'themeLight' : 'themeDark shadow-slate-600 shadow-sm '
       }`}>
       <div className='flex gap-4 p-4 items-center'>
         {session && (
@@ -166,9 +166,9 @@ export const InputBox = () => {
 
         <div
           onClick={() => {
-            photoPickerRef?.current?.click();
-
-            // addPhotoToPost(photoPickerRef.current);
+            if (session) {
+              photoPickerRef?.current?.click();
+            }
           }}
           className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '} ${
             session ? ' ' : ' hover:bg-transparent cursor-default'

@@ -6,11 +6,15 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(' ');
 }
 
-export const ThemeToggle = () => {
+interface Props {
+  className: string;
+}
+
+export const ThemeToggle = ({ className }: Props) => {
   const { theme, setTheme } = useContext(ThemeContext);
 
   return (
-    <Switch.Group as='div' className='flex items-center'>
+    <Switch.Group as='div' className={`flex items-center ${className}`}>
       <Switch
         checked={theme}
         onChange={setTheme}
