@@ -41,7 +41,7 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <div className={`flex flex-col `}>
+    <div className={`flex flex-col bg-white rounded-lg mt-5 `}>
       <div
         className={`p-5  mt-5 rounded-t-2xl shadow-sm ${
           !theme ? 'lightTheme' : 'darkTheme shadow-blue-900   '

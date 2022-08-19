@@ -54,7 +54,8 @@ const Home: NextPage<Props> = () => {
       </Head>
       <Toast />
       <Header />
-      <main className='flex'>
+      <main
+        className={`flex  ${!theme ? 'lightTheme bg-gray-100' : ' darkTheme'}`}>
         <Sidebar />
         <Feed />
       </main>
