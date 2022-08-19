@@ -12,6 +12,7 @@ import {
   uploadBytes,
   getDownloadURL,
   listAll,
+  uploadString,
 } from 'firebase/storage';
 import { setDefaultResultOrder } from 'dns/promises';
 
@@ -37,9 +38,15 @@ export const InputBox = () => {
     if (e.target.files?.[0]) {
       reader.readAsDataURL(e.target.files[0]);
 
-      reader.onload = (readerEvent) => {
-        setPhotoToPost(readerEvent?.target?.result); //base64 string
-      };
+      if (e.target.files[0].type.includes('image')) {
+        reader.onload = (readerEvent) => {
+          setPhotoToPost(readerEvent?.target?.result); //base64 string
+        };
+      } else {
+        setShow(true);
+        setTitle('Please select an image');
+        setDescription(`other file types are not supported`);
+      }
     }
     photoPickerRef.current!.value = '';
   };
@@ -47,10 +54,15 @@ export const InputBox = () => {
   const sendPost = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
+    // if there is no comment to post, do nothing
     if (!inputRef.current!.value) {
       setShow(true);
       setTitle(`No empty thoughts allowed`);
-      setDescription(`Please share whats on your mind ${session?.user?.name}`);
+      setDescription(
+        `Please share whats on your mind ${session?.user?.name
+          ?.split(' ')
+          .slice(0, 1)}...`
+      );
       return;
     }
 
@@ -72,52 +84,27 @@ export const InputBox = () => {
 
       // handles posts with image attached
       if (photoToPost) {
-        console.log(photoToPost);
-        const metadata = {
-          contentType: 'image/jpeg',
-        };
+        const photoRef = ref(storage, `posts/photo-${Date.now()}.png`);
 
-        console.log('post with photo');
-        const photoRef = ref(storage, `posts/photo-${Date.now()}.jpeg`);
-        // const uploadTask = await uploadBytes(photoRef, photoToPost as any);
-        const uploadTask = uploadBytesResumable(
-          photoRef,
-          photoToPost as any,
-          metadata
+        // upload photo to firebase storage
+        await uploadString(photoRef, photoToPost as string, 'data_url').catch(
+          (err) => console.error('there was an error uploading the photo', err)
         );
 
-        uploadTask.on(
-          'state_changed',
-          null,
-          (error) => {
-            // handles unsuccessful uploads
-            console.error(error);
-          },
-          () => {
-            // when upload is complete adds post to collection
-            const attachImagePost = async () => {
-              const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+        const downloadURL = await getDownloadURL(photoRef);
 
-              // this is a downloads the image instead of DISPLAYING it. here lies  my problem.
-              console.log('downloadURL', downloadURL);
+        // adding the image URL to the object to be posted to the collection
+        await addDoc(collection(db, 'postsWithPhotos'), {
+          message: inputRef?.current?.value,
+          name: session?.user?.name,
+          email: session?.user?.email,
+          image: session?.user?.image,
+          imageURL: downloadURL,
+          timestamp: Timestamp.now(),
+        });
 
-              // adding the image URL to the object to be posted to the collection
-              await addDoc(collection(db, 'postsWithPhotos'), {
-                message: inputRef?.current?.value,
-                name: session?.user?.name,
-                email: session?.user?.email,
-                image: session?.user?.image,
-                imageURL: downloadURL,
-                timestamp: Timestamp.now(),
-              });
-
-              inputRef.current!.value = '';
-              setPhotoToPost(null);
-            };
-
-            attachImagePost();
-          }
-        );
+        inputRef.current!.value = '';
+        setPhotoToPost(null);
       }
     } catch (err) {
       console.error(err);

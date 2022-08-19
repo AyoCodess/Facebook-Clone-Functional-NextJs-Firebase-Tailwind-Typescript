@@ -1,3 +1,9 @@
 {
-  "cSpell.words": ["Metaspace"]
+  "cSpell.words": ["Metaspace"],
+  "search.exclude": {
+    "**/*.code-search": false,
+    "**/bower_components": false
+  },
+  "search.useParentIgnoreFiles": false,
+  "search.useGlobalIgnoreFiles": false
 }
