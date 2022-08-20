@@ -19,17 +19,11 @@ export const SidebarRow = ({ src, Icon, title }: Props) => {
           : 'hover:bg-blue-500'
       }`}>
       {src && (
-        <Image
-          className='rounded-full'
-          src={src}
-          width={30}
-          height={30}
-          layout='fixed'
-        />
+        <img className='rounded-full h-8 w-8 md:h-10 md:w-10' src={src} />
       )}
       {Icon && (
         <Icon
-          className={`h-8 w-8  ${
+          className={` h-8 w-8 md:h-10 md:w-10  ${
             !theme
               ? 'themeLight text-blue-500 bg-transparent'
               : 'themeDark bg-transparent'
@@ -37,7 +31,7 @@ export const SidebarRow = ({ src, Icon, title }: Props) => {
         />
       )}
       <p
-        className={`hidden sm:inline-flex font-medium  ${
+        className={`hidden sm:inline-flex font-medium text-xl  ${
           !theme ? 'themeLight bg-transparent' : 'themeDark bg-transparent'
         }`}>
         {title}

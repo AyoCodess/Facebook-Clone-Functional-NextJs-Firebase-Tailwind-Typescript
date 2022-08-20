@@ -13,7 +13,7 @@ import {
   UsersIcon,
 } from '@heroicons/react/solid';
 
-import { SidebarRow } from '../components';
+import { SidebarRow, SidebarYourShortcuts } from '../components';
 
 export const Sidebar = () => {
   const { data: session, status } = useSession();
@@ -21,7 +21,7 @@ export const Sidebar = () => {
 
   return (
     <div
-      className={`p-2 pt-5 max-w-[600px] xl:min-w-[300px] ${
+      className={` hidden xs:block p-2 pt-5 max-w-[600px] xl:min-w-[300px] ${
         !theme ? 'themeLight ' : 'themeDark bg-slate-800'
       }`}>
       {session && (
@@ -38,6 +38,7 @@ export const Sidebar = () => {
       <SidebarRow Icon={CalendarIcon} title='Events' />
       <SidebarRow Icon={ClockIcon} title='Memories' />
       <SidebarRow Icon={ChevronDownIcon} title='See More' />
+      <SidebarYourShortcuts />
     </div>
   );
 };

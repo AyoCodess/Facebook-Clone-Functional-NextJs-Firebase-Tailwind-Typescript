@@ -130,7 +130,9 @@ export const InputBox = () => {
             placeholder={
               !session
                 ? `Please sign in to make a post`
-                : `Whats on your mind ${session?.user?.name && ''}`
+                : `Whats on your mind, ${session?.user?.name
+                    ?.split(' ')
+                    ?.slice(0, 1)}?`
             }
           />
           <button hidden type='submit' onClick={sendPost}>

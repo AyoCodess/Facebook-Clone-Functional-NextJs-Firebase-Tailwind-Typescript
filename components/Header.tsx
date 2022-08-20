@@ -31,7 +31,7 @@ export const Header = () => {
   return (
     <>
       <div
-        className={`sticky top-0 z-40  flex items-center p-[0.1rem]  lg:px-5 shadow-md 
+        className={`sticky top-0 z-40  flex items-center p-1 sm:p-[0.1rem]  lg:px-5 shadow-md 
      ${!theme ? 'themeLight ' : 'themeDark shadow-gray-800'}`}>
         {/* Left */}
         <div className='flex items-center'>

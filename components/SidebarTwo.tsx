@@ -3,6 +3,8 @@ import {
   SidebarTwoFriendRequests,
   SidebarTwoPagesAndProfiles,
   SidebarTwoSponsored,
+  SidebarTwoBirthdays,
+  SidebarTwoContacts,
 } from '../components';
 
 export const SidebarTwo = () => {
@@ -11,6 +13,8 @@ export const SidebarTwo = () => {
       <SidebarTwoSponsored />
       <SidebarTwoPagesAndProfiles />
       <SidebarTwoFriendRequests />
+      <SidebarTwoBirthdays />
+      <SidebarTwoContacts />
     </div>
   );
 };
