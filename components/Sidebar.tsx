@@ -48,7 +48,7 @@ export const Sidebar = () => {
         title='See More'
         custom={'rounded-full p-2 bg-gray-200 text-black'}
       />
-      <hr className='mt-[0.1rem] mx-4 mb-2 border border-gray-200' />
+      <hr className='my-[1rem] mx-4 mb-6 border border-gray-200' />
       <SidebarYourShortcuts />
     </div>
   );

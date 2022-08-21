@@ -7,7 +7,7 @@ export const SidebarTwoPagesAndProfiles = () => {
   const { theme } = useContext(ThemeContext);
   return (
     <div>
-      <div className='flex items-center gap-10'>
+      <div className='flex items-center justify-between'>
         <SidebarTwoHeading title={'Your Pages and profiles'} custom={'mt-0'} />
         <DotsHorizontalIcon
           className={` h-8 w-8 md:h-10 md:w-10 cursor-pointer hover:bg-gray-300  ${

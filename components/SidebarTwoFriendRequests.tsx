@@ -20,7 +20,9 @@ export const SidebarTwoFriendRequests = () => {
       <div className='flex justify-between items-center mt-2 '>
         <SidebarTwoHeading title={'Friend Requests'} custom={'mt-0'} />
         <div>
-          <span className='text-blue-600'>See all</span>
+          <span className='text-blue-600 cursor-pointer hover:text-blue-700'>
+            See all
+          </span>
         </div>
       </div>
       {friendRequest.map((person) => (
@@ -69,7 +71,7 @@ export const SidebarTwoFriendRequests = () => {
           </div>
         </div>
       ))}
-      <hr className='mt-4 mx-4 mb-2 border border-gray-200' />
+      <hr className='mt-6 mx-4 mb-2 border border-gray-200 ' />
     </div>
   );
 };

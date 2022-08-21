@@ -9,6 +9,10 @@ const shortcuts = [
   { name: 'All about bruce lee', image: 'https://i.imgur.com/fKt5tuD.jpg' },
   { name: 'How to usw VScode', image: 'https://i.imgur.com/q2X94gw.png' },
   { name: 'Happy hour', image: 'https://i.imgur.com/fm3wJ0g.jpg' },
+  { name: 'How to usw VScode', image: 'https://i.imgur.com/q2X94gw.png' },
+  { name: 'Happy hour', image: 'https://i.imgur.com/fm3wJ0g.jpg' },
+  { name: 'How to usw VScode', image: 'https://i.imgur.com/q2X94gw.png' },
+  { name: 'Happy hour', image: 'https://i.imgur.com/fm3wJ0g.jpg' },
 
   ,
 ];

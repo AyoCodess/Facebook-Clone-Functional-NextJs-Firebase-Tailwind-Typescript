@@ -25,7 +25,7 @@ export const SidebarRow = ({ src, Icon, title, custom, image }: Props) => {
       )}
       {Icon && (
         <Icon
-          className={` h-8 w-8 md:h-10 md:w-10  ${
+          className={` h-8 w-8 md:h-10 md:w-10 ml-1 ${
             !theme
               ? 'themeLight text-blue-500 bg-transparent'
               : 'themeDark bg-transparent'
