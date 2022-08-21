@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React, { SVGProps, useContext } from 'react';
-import { ThemeContext } from '../Context';
+import { ThemeContext } from '../ThemeContext';
 
 interface Props {
   src?: string | null | undefined;
@@ -33,9 +33,7 @@ export const SidebarRow = ({ src, Icon, title, custom, image }: Props) => {
         />
       )}
       {image && (
-        <div className='ml-3 lg:ml-0'>
-          <Image src={image} width={50} height={50} alt='logo' layout='fixed' />
-        </div>
+        <Image src={image} width={50} height={50} alt='logo' layout='fixed' />
       )}
 
       <p

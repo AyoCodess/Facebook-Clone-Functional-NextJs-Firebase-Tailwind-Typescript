@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react';
 import React, { useContext } from 'react';
-import { ThemeContext } from '../Context';
+import { ThemeContext } from '../ThemeContext';
 import {
   ChevronDownIcon,
   ShoppingBagIcon,

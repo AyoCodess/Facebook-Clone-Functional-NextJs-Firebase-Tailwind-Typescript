@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Image from 'next/image';
-import { ThemeContext } from '../Context';
+import { ThemeContext } from '../ThemeContext';
 import { useSession } from 'next-auth/react';
 
 import { PlusCircleIcon } from '@heroicons/react/outline';

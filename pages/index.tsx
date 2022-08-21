@@ -2,7 +2,8 @@ import type { NextPage } from 'next';
 
 import Head from 'next/head';
 import React, { useContext, useEffect } from 'react';
-import { ThemeContext } from '../Context';
+import { ThemeContext } from '../ThemeContext';
+import { DataContext } from '../DataContext';
 import { Header, Sidebar, Feed, Toast, SidebarTwo } from '../components';
 
 interface Props {
@@ -10,7 +11,8 @@ interface Props {
 }
 
 const Home: NextPage<Props> = () => {
-  const { theme, setTheme, show, setShow } = useContext(ThemeContext);
+  const { theme, setTheme } = useContext(ThemeContext);
+  const { setShow, show } = useContext(DataContext);
 
   // - removes search field error toast
   useEffect(() => {

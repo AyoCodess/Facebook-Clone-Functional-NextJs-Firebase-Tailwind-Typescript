@@ -1,5 +1,5 @@
 import React, { SVGProps, useContext } from 'react';
-import { ThemeContext } from '../Context';
+import { ThemeContext } from '../ThemeContext';
 import { useSession } from 'next-auth/react';
 
 interface Props {

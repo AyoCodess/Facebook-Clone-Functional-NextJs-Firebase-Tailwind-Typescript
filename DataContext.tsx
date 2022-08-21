@@ -4,27 +4,28 @@ import React, {
   SetStateAction,
   Dispatch,
 } from 'react';
-export const ThemeContext = createContext<ThemeContextType>({});
+export const DataContext = createContext<DataContextType>({});
 
 interface Props {
   children: React.ReactNode;
 }
 
-interface ThemeContextType {
-  theme: boolean;
-  setTheme: Dispatch<SetStateAction<boolean>>;
+interface DataContextType {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
   title: string;
   setTitle: Dispatch<SetStateAction<string>>;
   description: string;
   setDescription: Dispatch<SetStateAction<string>>;
+  viewEveryonesPosts: boolean;
+  setViewEveryonesPosts: Dispatch<SetStateAction<boolean>>;
 }
 
-export const ThemeProvider = ({ children }: Props) => {
-  const [theme, setTheme] = useState(false); // default is light
+export const DataProvider = ({ children }: Props) => {
+  // view all posts from all users in the database
+  const [viewEveryonesPosts, setViewEveryonesPosts] = useState<boolean>(false);
 
-  // will be moved to a different context file if the aoo grows
+  // toast
   const [show, setShow] = useState(false); // used to alter user that the database is not writable yet
   const [title, setTitle] = useState('Cannot send post to database');
   const [description, setDescription] = useState(
@@ -32,18 +33,18 @@ export const ThemeProvider = ({ children }: Props) => {
   );
 
   return (
-    <ThemeContext.Provider
+    <DataContext.Provider
       value={{
-        theme,
-        setTheme,
         show,
         setShow,
         title,
         setTitle,
         description,
         setDescription,
+        viewEveryonesPosts,
+        setViewEveryonesPosts,
       }}>
       {children}
-    </ThemeContext.Provider>
+    </DataContext.Provider>
   );
 };

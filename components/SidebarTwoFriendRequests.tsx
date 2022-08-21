@@ -25,8 +25,8 @@ export const SidebarTwoFriendRequests = () => {
           </span>
         </div>
       </div>
-      {friendRequest.map((person) => (
-        <div className='grid grid-cols-[5rem_1fr_1fr] gap-x-3 mt-2 '>
+      {friendRequest.map((person, i) => (
+        <div key={i} className='grid grid-cols-[5rem_1fr_1fr] gap-x-3 mt-2 '>
           <div className='flex justify-between items-center row-span-2'>
             <img
               src={person.image}

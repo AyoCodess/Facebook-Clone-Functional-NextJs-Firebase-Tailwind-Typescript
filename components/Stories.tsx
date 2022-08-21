@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { StoriesHeader, StoriesCard } from '../components';
-import { ThemeContext } from '../Context';
+import { ThemeContext } from '../ThemeContext';
 
 const stories = [
   {

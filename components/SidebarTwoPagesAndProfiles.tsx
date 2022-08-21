@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { SidebarTwoHeading } from '../components';
 import { DotsHorizontalIcon } from '@heroicons/react/solid';
-import { ThemeContext } from '../Context';
+import { ThemeContext } from '../ThemeContext';
 
 export const SidebarTwoPagesAndProfiles = () => {
   const { theme } = useContext(ThemeContext);

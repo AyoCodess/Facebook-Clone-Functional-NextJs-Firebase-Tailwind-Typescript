@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ChatAltIcon, ShareIcon, ThumbUpIcon } from '@heroicons/react/solid';
 import { Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
-import { ThemeContext } from '../Context';
+import { ThemeContext } from '../ThemeContext';
 import { useSession } from 'next-auth/react';
 
 interface Props {

@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
-import { ThemeContext } from '../Context';
+import { ThemeContext } from '../ThemeContext';
+import { DataContext } from '../DataContext';
 import Image from 'next/image';
 import { EmojiHappyIcon } from '@heroicons/react/outline';
 import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
@@ -13,7 +14,8 @@ interface Props {
 }
 
 export const InputBox = ({ setForceUpdate }: Props) => {
-  const { theme, setShow, setTitle, setDescription } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
+  const { setShow, setTitle, setDescription } = useContext(DataContext);
   const { data: session } = useSession();
 
   const inputRef = useRef<HTMLInputElement>(null);

@@ -6,7 +6,7 @@ TBA
 
 ## Teach stack
 
-Next.js, NextAuth, Firebase, FileReader API & Tailwind CSS
+Next.js (Javascript Framework), Context API (State Management), NextAuth (User Authentication), Firebase Firestore (Database), FileReader API (Image upload) & Tailwind CSS (Styling)
 
 ## About
 

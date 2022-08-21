@@ -3,7 +3,8 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Post } from '../components';
 import { useSession } from 'next-auth/react';
-import { ThemeContext } from '../Context';
+import { ThemeContext } from '../ThemeContext';
+import { DataContext } from '../DataContext';
 
 // used when firebase quota has been exceeded
 const testData = [
@@ -40,7 +41,8 @@ interface Props {
 export const Posts = ({ forceUpdate }: Props) => {
   const { data: session } = useSession();
   const [realTimePosts, setRealTimePosts] = useState<any[] | null>(null);
-  const { theme, setShow, setTitle, setDescription } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
+  const { setShow, setTitle, setDescription } = useContext(DataContext);
 
   useEffect(() => {
     getUserPostsFromFirebase();
@@ -80,7 +82,6 @@ export const Posts = ({ forceUpdate }: Props) => {
       //     );
 
       //     setRealTimePosts(allPosts);
-      //
       //   }
       setRealTimePosts(testData); // for testing purposes
     } catch (error) {
