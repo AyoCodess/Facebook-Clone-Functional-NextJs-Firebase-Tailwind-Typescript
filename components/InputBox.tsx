@@ -63,40 +63,40 @@ export const InputBox = ({ setForceUpdate }: Props) => {
     }
 
     try {
-      // handles posts with no image attached
-      //   if (!photoToPost) {
-      //     console.log('post with NO photo');
-      //     await addDoc(collection(db, 'posts'), {
-      //       message: inputRef.current!.value,
-      //       name: session?.user?.name,
-      //       email: session?.user?.email,
-      //       image: session?.user?.image,
-      //       timestamp: Timestamp.now(),
-      //     });
-      //     inputRef.current!.value = '';
-      //     setPhotoToPost(null);
-      //   }
-      // handles posts with image attached
-      //   if (photoToPost) {
-      //     const photoRef = ref(storage, `posts/photo-${Date.now()}.png`);
-      //     console.log('post with photo');
-      //     // upload photo to firebase storage
-      //     await uploadString(photoRef, photoToPost as string, 'data_url').catch(
-      //       (err) => console.error('there was an error uploading the photo', err)
-      //     );
-      //     const downloadURL = await getDownloadURL(photoRef);
-      //     // adding the image URL to the object to be posted to the collection
-      //     await addDoc(collection(db, 'postsWithPhotos'), {
-      //       message: inputRef?.current?.value,
-      //       name: session?.user?.name,
-      //       email: session?.user?.email,
-      //       image: session?.user?.image,
-      //       imageURL: downloadURL,
-      //       timestamp: Timestamp.now(),
-      //     });
-      //     inputRef.current!.value = '';
-      //     setPhotoToPost(null);
-      //   }
+      //   handles posts with no image attached
+      if (!photoToPost) {
+        console.log('post with NO photo');
+        await addDoc(collection(db, 'posts'), {
+          message: inputRef.current!.value,
+          name: session?.user?.name,
+          email: session?.user?.email,
+          image: session?.user?.image,
+          timestamp: Timestamp.now(),
+        });
+        inputRef.current!.value = '';
+        setPhotoToPost(null);
+      }
+      //   handles posts with image attached
+      if (photoToPost) {
+        const photoRef = ref(storage, `posts/photo-${Date.now()}.png`);
+        console.log('post with photo');
+        // upload photo to firebase storage
+        await uploadString(photoRef, photoToPost as string, 'data_url').catch(
+          (err) => console.error('there was an error uploading the photo', err)
+        );
+        const downloadURL = await getDownloadURL(photoRef);
+        // adding the image URL to the object to be posted to the collection
+        await addDoc(collection(db, 'postsWithPhotos'), {
+          message: inputRef?.current?.value,
+          name: session?.user?.name,
+          email: session?.user?.email,
+          image: session?.user?.image,
+          imageURL: downloadURL,
+          timestamp: Timestamp.now(),
+        });
+        inputRef.current!.value = '';
+        setPhotoToPost(null);
+      }
 
       inputRef.current!.value = '';
       setPhotoToPost(null);

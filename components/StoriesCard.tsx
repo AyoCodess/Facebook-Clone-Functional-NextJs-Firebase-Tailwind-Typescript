@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
 import Image from 'next/image';
 import { ThemeContext } from '../Context';
+import { useSession } from 'next-auth/react';
+
+import { PlusCircleIcon } from '@heroicons/react/outline';
 interface Props {
   name: string;
   src: string;
@@ -11,6 +14,7 @@ interface Props {
 
 export const StoriesCard = ({ name, src, profile, active, hide }: Props) => {
   const { theme, setTheme } = useContext(ThemeContext);
+  const { data: session } = useSession();
 
   return (
     <div
@@ -41,11 +45,10 @@ export const StoriesCard = ({ name, src, profile, active, hide }: Props) => {
           layout='fill'
         />
       )}
-      {/*replaces commented out code below */}
-      {active && (
+      {active && session?.user && (
         <Image
-          className='object-cover filter rounded-xl'
-          src={'https://i.imgur.com/EcUJux4.png'}
+          className=' object-contain object-top filter rounded-xl'
+          src={session?.user?.image!}
           layout='fill'
         />
       )}
@@ -56,25 +59,15 @@ export const StoriesCard = ({ name, src, profile, active, hide }: Props) => {
       )}
       {active && (
         <>
-          {/* done with an image instead */}
-          {/* <div className='fixed  mt-[5rem] md:mt-[9rem] ml-3 xxxs:ml-3 xxs:ml-4 xs:ml-8 px-1 lg:bg-blue-500 z-40 rounded-full'>
-            <Image
-              className='  relative xs:mt-10 opacity-100 rounded-lg z-50'
-              src={profile}
-              width={40}
-              height={40}
-              layout='fixed'
-              objectFit='cover'
-            />
-          </div> */}
-          {/* <div className='relative  bg-white mt-[6.6rem] md:mt-[10.5rem] rounded-b-3xl py-2 opacity-100  text-blue-500 text-sm font-bold truncate'>
-            <div className='flex flex-col  items-center'>
+          <div className='relative  bg-white mt-[8.8rem] md:mt-[8.7rem] rounded-b-3xl py-2 opacity-100  text-blue-500 text-sm font-bold truncate'>
+            <div className='flex flex-col items-center'>
+              <PlusCircleIcon className='rounded-full  bg-blue-600  h-12 text-white' />
               <p className='text-white'>{name}</p>
-              <p className=' flex text-xs md:text-sm text-gray-400   font-normal '>
+              <p className=' flex text-base  text-gray-900  font-bold '>
                 Create <span className='hidden md:block'>&nbsp;story</span>
               </p>
             </div>
-          </div> */}
+          </div>
         </>
       )}
     </div>

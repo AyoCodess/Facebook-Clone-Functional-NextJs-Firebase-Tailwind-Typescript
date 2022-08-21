@@ -5,6 +5,34 @@ import { Post } from '../components';
 import { useSession } from 'next-auth/react';
 import { ThemeContext } from '../Context';
 
+// used when firebase quota has been exceeded
+const testData = [
+  {
+    name: 'Ayo',
+    message: 'post.message',
+    email: 'post.email',
+    timestamp: 54534534545,
+    image: 'https://i.imgur.com/fKt5tuD.jpg',
+    imageURL: 'https://i.imgur.com/yYI0g50.png',
+  },
+  {
+    name: 'chris',
+    message: 'post.message',
+    email: 'post.email',
+    timestamp: 54534534545,
+    image: 'https://i.imgur.com/fKt5tuD.jpg',
+    imageURL: 'https://i.imgur.com/KfrhNKl.pnge',
+  },
+  {
+    name: 'ruban',
+    message: 'post.message',
+    email: 'post.email',
+    timestamp: 54534534545,
+    image: 'https://i.imgur.com/fKt5tuD.jpg',
+    imageURL: 'https://i.imgur.com/FRIs3ds.png?',
+  },
+];
+
 interface Props {
   forceUpdate: boolean;
 }
@@ -20,65 +48,41 @@ export const Posts = ({ forceUpdate }: Props) => {
 
   const getUserPostsFromFirebase = async () => {
     try {
-      if (session?.user?.email) {
-        console.log('getUserPostsFromFirebase');
-        // const queryByEmailNoPhotos = query(
-        //   collection(db, 'posts'),
-        //   where('email', '==', session?.user?.email)
-        // );
-        // const queryByEmailPhotos = query(
-        //   collection(db, 'postsWithPhotos'),
-        //   where('email', '==', session?.user?.email)
-        // );
+      //   if (session?.user?.email) {
+      //     console.log('getUserPostsFromFirebase');
+      //     const queryByEmailNoPhotos = query(
+      //       collection(db, 'posts'),
+      //       where('email', '==', session?.user?.email)
+      //     );
+      //     const queryByEmailPhotos = query(
+      //       collection(db, 'postsWithPhotos'),
+      //       where('email', '==', session?.user?.email)
+      //     );
 
-        // let postsWithNoPhotosArray: Array<any> = [];
-        // let postsWithPhotosArray: Array<any> = [];
+      //     let postsWithNoPhotosArray: Array<any> = [];
+      //     let postsWithPhotosArray: Array<any> = [];
 
-        // const dataPostsWithNoPhotos = await getDocs(queryByEmailNoPhotos);
-        // const dataPostsWithPhotos = await getDocs(queryByEmailPhotos);
+      //     const dataPostsWithNoPhotos = await getDocs(queryByEmailNoPhotos);
+      //     const dataPostsWithPhotos = await getDocs(queryByEmailPhotos);
 
-        // dataPostsWithNoPhotos.forEach((doc: any) => {
-        //   postsWithNoPhotosArray.push(doc.data());
-        // });
+      //     dataPostsWithNoPhotos.forEach((doc: any) => {
+      //       postsWithNoPhotosArray.push(doc.data());
+      //     });
 
-        // dataPostsWithPhotos.forEach((doc: any) => {
-        //   postsWithPhotosArray.push(doc.data());
-        // });
+      //     dataPostsWithPhotos.forEach((doc: any) => {
+      //       postsWithPhotosArray.push(doc.data());
+      //     });
 
-        // const combined = [...postsWithNoPhotosArray, ...postsWithPhotosArray];
+      //     const combined = [...postsWithNoPhotosArray, ...postsWithPhotosArray];
 
-        // const allPosts = combined.sort(
-        //   (a, b) => b.timestamp.seconds - a.timestamp.seconds
-        // );
+      //     const allPosts = combined.sort(
+      //       (a, b) => b.timestamp.seconds - a.timestamp.seconds
+      //     );
 
-        // setRealTimePosts(allPosts);
-        setRealTimePosts([
-          {
-            name: 'Ayo',
-            message: 'post.message',
-            email: 'post.email',
-            timestamp: 54534534545,
-            image: 'https://i.imgur.com/fKt5tuD.jpg',
-            imageURL: 'https://i.imgur.com/yYI0g50.png',
-          },
-          {
-            name: 'chris',
-            message: 'post.message',
-            email: 'post.email',
-            timestamp: 54534534545,
-            image: 'https://i.imgur.com/fKt5tuD.jpg',
-            imageURL: 'https://i.imgur.com/KfrhNKl.pnge',
-          },
-          {
-            name: 'ruban',
-            message: 'post.message',
-            email: 'post.email',
-            timestamp: 54534534545,
-            image: 'https://i.imgur.com/fKt5tuD.jpg',
-            imageURL: 'https://i.imgur.com/FRIs3ds.png?',
-          },
-        ]);
-      }
+      //     setRealTimePosts(allPosts);
+      //
+      //   }
+      setRealTimePosts(testData); // for testing purposes
     } catch (error) {
       console.error(error);
       setShow(true);
