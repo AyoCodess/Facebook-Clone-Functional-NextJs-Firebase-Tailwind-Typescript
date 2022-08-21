@@ -53,7 +53,7 @@ export const Stories = () => {
     <>
       <StoriesHeader />
       <div
-        className={`flex  justify-center gap-3 mx-auto p-4 rounded-b-xl shadow-md ${
+        className={`flex  justify-center gap-3 mx-auto p-4 rounded-b-xl shadow-md h-[18rem] ${
           !theme ? 'lightTheme bg-white rounded-lg' : 'darkTheme'
         }`}>
         {stories.map((story) => (

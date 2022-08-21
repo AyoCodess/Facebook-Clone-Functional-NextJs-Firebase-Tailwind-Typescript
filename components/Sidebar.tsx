@@ -21,7 +21,7 @@ export const Sidebar = () => {
 
   return (
     <div
-      className={` hidden xs:block p-2 pt-5 max-w-[600px] 2xl:min-w-[500px] ${
+      className={` hidden md:block p-2 pt-5 max-w-[600px] 2xl:min-w-[500px] ${
         !theme ? 'themeLight bg-gray-50 shadow ' : 'themeDark bg-slate-800'
       }`}>
       {session && (
