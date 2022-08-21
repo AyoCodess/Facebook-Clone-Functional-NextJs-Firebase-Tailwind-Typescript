@@ -21,8 +21,8 @@ export const Sidebar = () => {
 
   return (
     <div
-      className={` hidden xs:block p-2 pt-5 max-w-[600px] xl:min-w-[300px] ${
-        !theme ? 'themeLight ' : 'themeDark bg-slate-800'
+      className={` hidden xs:block p-2 pt-5 max-w-[600px] 2xl:min-w-[500px] ${
+        !theme ? 'themeLight bg-gray-50 shadow ' : 'themeDark bg-slate-800'
       }`}>
       {session && (
         <SidebarRow
@@ -37,7 +37,12 @@ export const Sidebar = () => {
       <SidebarRow Icon={DesktopComputerIcon} title='Watch' />
       <SidebarRow Icon={CalendarIcon} title='Events' />
       <SidebarRow Icon={ClockIcon} title='Memories' />
-      <SidebarRow Icon={ChevronDownIcon} title='See More' />
+      <SidebarRow
+        Icon={ChevronDownIcon}
+        title='See More'
+        custom={'rounded-full p-2 bg-gray-200 text-black'}
+      />
+      <hr className='mt-[0.1rem] mx-4 mb-2 border border-gray-200' />
       <SidebarYourShortcuts />
     </div>
   );

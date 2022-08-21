@@ -38,6 +38,13 @@ const stories = [
     active: false,
     hide: false,
   },
+  {
+    name: 'React',
+    src: 'https://i.imgur.com/kA0tEOy.jpg',
+    profile: 'https://i.imgur.com/fm3wJ0g.jpg',
+    active: false,
+    hide: true,
+  },
 ];
 
 export const Stories = () => {

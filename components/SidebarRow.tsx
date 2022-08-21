@@ -6,9 +6,10 @@ interface Props {
   src?: string | null | undefined;
   Icon?: React.FC<SVGProps<SVGSVGElement>>;
   title: string | null | undefined;
+  custom?: string | null | undefined;
 }
 
-export const SidebarRow = ({ src, Icon, title }: Props) => {
+export const SidebarRow = ({ src, Icon, title, custom }: Props) => {
   const { theme, setTheme } = useContext(ThemeContext);
 
   return (
@@ -27,7 +28,7 @@ export const SidebarRow = ({ src, Icon, title }: Props) => {
             !theme
               ? 'themeLight text-blue-500 bg-transparent'
               : 'themeDark bg-transparent'
-          } `}
+          } ${custom}`}
         />
       )}
       <p

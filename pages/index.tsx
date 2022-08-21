@@ -22,10 +22,7 @@ const Home: NextPage<Props> = () => {
   }, [show]);
 
   return (
-    <div
-      className={` h-screen  overflow-hidden  ${
-        !theme ? 'themeLight' : 'themeDark'
-      } `}>
+    <div className={` h-screen  ${!theme ? 'themeLight' : 'themeDark'} `}>
       <Head>
         <title>Meta Space</title>
         <link rel='icon' href='/favicon.ico' />
