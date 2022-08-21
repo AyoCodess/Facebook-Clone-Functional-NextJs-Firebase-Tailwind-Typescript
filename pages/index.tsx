@@ -17,7 +17,7 @@ const Home: NextPage<Props> = () => {
     if (show) {
       setTimeout(() => {
         setShow(false);
-      }, 5000);
+      }, 8000);
     }
   }, [show]);
 
