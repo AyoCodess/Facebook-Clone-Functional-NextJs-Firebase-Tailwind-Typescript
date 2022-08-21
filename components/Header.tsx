@@ -31,7 +31,7 @@ export const Header = () => {
   return (
     <>
       <div
-        className={`sticky top-0 z-40  flex items-center p-1 sm:p-[0.1rem]  lg:px-5 shadow-md 
+        className={`sticky top-0 z-40  flex items-center p-1 sm:p-[0.1rem]  lg:px-5  shadow-md 
      ${!theme ? 'themeLight ' : 'themeDark shadow-gray-800'}`}>
         {/* Left */}
         <div className='flex items-center'>
@@ -81,11 +81,12 @@ export const Header = () => {
         </div>
         {/*Center */}
         <div
-          className={`flex  ${
+          className={`flex ${
             session ? 'flex-grow justify-center mx-auto' : 'ml-auto'
           }`}>
           {session && (
-            <div className={`hidden sm:flex gap-6  `}>
+            <div
+              className={`hidden sm:flex gap-6 xl:ml-0   xxxl:gap-0 xxxl:ml-[11rem]  xxxxl:gap-10   xxxxl:ml-[13rem]  `}>
               <HeaderIcon active Icon={HomeIcon} />
               <HeaderIcon Icon={FlagIcon} />
               <HeaderIcon Icon={PlayIcon} />

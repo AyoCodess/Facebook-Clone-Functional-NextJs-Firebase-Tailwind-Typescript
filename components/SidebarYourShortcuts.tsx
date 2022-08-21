@@ -22,7 +22,7 @@ export const SidebarYourShortcuts = () => {
           {shortcuts.map((shortcut) => (
             <li
               key={shortcut!.name}
-              className='py-3 pl-4 flex items-center cursor-pointer'>
+              className='py-3 pl-4 flex items-center cursor-pointer  hover:bg-gray-100 bg-transparent'>
               <img
                 className='h-12 w-12 rounded-lg object-cover'
                 src={shortcut!.image}

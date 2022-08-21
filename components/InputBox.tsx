@@ -158,7 +158,7 @@ export const InputBox = ({ setForceUpdate }: Props) => {
           </div>
         )}
       </div>
-
+      <hr className='mt-[0.1rem] mx-4 mb-2 border border-gray-200' />
       <div className='flex justify-evenly'>
         <div
           className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '} ${
