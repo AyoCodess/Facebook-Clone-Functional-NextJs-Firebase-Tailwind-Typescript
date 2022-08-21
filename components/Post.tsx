@@ -3,17 +3,19 @@ import { ChatAltIcon, ShareIcon, ThumbUpIcon } from '@heroicons/react/solid';
 import { Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
 import { ThemeContext } from '../Context';
+import { useSession } from 'next-auth/react';
 
 interface Props {
   name: string;
   message: string;
   email: string;
   postImage: string;
-  image: string;
+  image?: string;
   timestamp: Timestamp;
 }
 
 export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
+  const { data: session } = useSession();
   const dateTimestamp = new Timestamp(
     timestamp.seconds,
     timestamp.nanoseconds
@@ -45,7 +47,12 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
           !theme ? 'lightTheme' : 'darkTheme shadow-blue-900   '
         }`}>
         <div className='flex items-center space-x-2'>
-          <img className='rounded-full' src={image} width={40} height={40} />
+          <img
+            className='rounded-full'
+            src={session?.user?.image!}
+            width={40}
+            height={40}
+          />
           <div>
             <p className='font-medium'>{name}</p>
             {timestamp ? (

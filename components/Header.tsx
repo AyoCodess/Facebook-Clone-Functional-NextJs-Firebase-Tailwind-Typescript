@@ -7,7 +7,6 @@ import { HeaderIcon, ThemeToggle } from '../components';
 import {
   BellIcon,
   ChatIcon,
-  ChevronDownIcon,
   HomeIcon,
   UserGroupIcon,
   ViewGridIcon,
@@ -86,7 +85,7 @@ export const Header = () => {
           }`}>
           {session && (
             <div
-              className={`hidden sm:flex flex-grow justify-between max-w-xs lg:max-w-sm xl:max-w-md xxl:max-w-lg xxl:pr-6 xxxl:max-w-xl xxxxl:max-w-4xl xxxxl:pr-8 mx-auto  `}>
+              className={`hidden sm:flex flex-grow justify-between max-w-xs lg:max-w-sm xl:max-w-md xxl:max-w-xl xxl:pr-10 xxxl:max-w-2xl xxxxl:max-w-5xl xxxxl:px-12 mx-auto  `}>
               <HeaderIcon active Icon={HomeIcon} />
               <HeaderIcon Icon={FlagIcon} />
               <HeaderIcon Icon={PlayIcon} />
