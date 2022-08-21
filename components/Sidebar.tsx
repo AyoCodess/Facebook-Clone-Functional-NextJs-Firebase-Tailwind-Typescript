@@ -1,6 +1,7 @@
 import { useSession } from 'next-auth/react';
 import React, { useContext } from 'react';
 import { ThemeContext } from '../ThemeContext';
+import { DataContext } from '../DataContext';
 import {
   ChevronDownIcon,
   ShoppingBagIcon,
@@ -18,6 +19,7 @@ import { SidebarRow, SidebarYourShortcuts } from '../components';
 export const Sidebar = () => {
   const { data: session, status } = useSession();
   const { theme, setTheme } = useContext(ThemeContext);
+  const { setViewEveryonesPosts } = useContext(DataContext);
 
   return (
     <div
@@ -31,6 +33,11 @@ export const Sidebar = () => {
           title={session.user?.name}
         />
       )}
+      <SidebarRow
+        image={'/images/FacebookIcons/viewall.png'}
+        title={`View Everyone\'s Posts`}
+        onClick={() => setViewEveryonesPosts((prev) => !prev)}
+      />
       <SidebarRow image={'/images/FacebookIcons/friends.png'} title='Friends' />
       <SidebarRow image={'/images/FacebookIcons/groups.png'} title='Groups' />
       <SidebarRow

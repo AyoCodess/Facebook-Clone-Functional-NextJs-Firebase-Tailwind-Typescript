@@ -21,7 +21,12 @@ This project was mainly used to keep my css skills sharp, get familiar with fire
 3. You can share a post with or without an image and display it the UI just like Facebook
 4. Your data is persisbed via firebase.
 5. You will only posts linked to the account you signed up with, so get posting!
-6. Sleek design
-7. Light/Dark mode
-8. Mobile first approach
-9. error messages for api failures (firebaase quotra exceeded) as this app is on the free plan
+6. Can now view every users post with one button click, becarefull what you share, because only I can delete the posts
+7. Sleek design
+8. Light/Dark mode
+9. Mobile first approach
+10. error messages for api failures (firebaase quotra exceeded) as this app is on the free plan
+
+# TODOs
+
+1. search post function by facebook name and email.
