@@ -7,14 +7,15 @@ interface Props {
   Icon?: React.FC<SVGProps<SVGSVGElement>>;
   title: string | null | undefined;
   custom?: string | null | undefined;
+  image?: string;
 }
 
-export const SidebarRow = ({ src, Icon, title, custom }: Props) => {
+export const SidebarRow = ({ src, Icon, title, custom, image }: Props) => {
   const { theme, setTheme } = useContext(ThemeContext);
 
   return (
     <div
-      className={`flex items-center gap-2 p-4 rounded-xl  cursor-pointer ${
+      className={`flex items-center gap-2 p-3 rounded-xl  cursor-pointer ${
         !theme
           ? ' themeLight hover:bg-gray-100 bg-transparent'
           : 'hover:bg-blue-500'
@@ -31,6 +32,12 @@ export const SidebarRow = ({ src, Icon, title, custom }: Props) => {
           } ${custom}`}
         />
       )}
+      {image && (
+        <div className='ml-3 lg:ml-0'>
+          <Image src={image} width={50} height={50} alt='logo' layout='fixed' />
+        </div>
+      )}
+
       <p
         className={`hidden sm:inline-flex font-medium text-xl  ${
           !theme ? 'themeLight bg-transparent' : 'themeDark bg-transparent'

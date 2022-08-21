@@ -22,3 +22,4 @@ This project was mainly used to keep my css skills sharp and to try out nextAuth
 4. Sleek design
 5. Light/Dark mode
 6. Mobile first approach
+7. error messages for api failures (firebaase quotra exceeded) as this app is on the free plan

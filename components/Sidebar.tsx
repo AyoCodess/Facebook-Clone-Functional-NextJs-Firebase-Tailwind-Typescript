@@ -31,12 +31,18 @@ export const Sidebar = () => {
           title={session.user?.name}
         />
       )}
-      <SidebarRow Icon={UsersIcon} title='Friends' />
-      <SidebarRow Icon={UserGroupIcon} title='Groups' />
-      <SidebarRow Icon={ShoppingBagIcon} title='Marketplace' />
-      <SidebarRow Icon={DesktopComputerIcon} title='Watch' />
-      <SidebarRow Icon={CalendarIcon} title='Events' />
-      <SidebarRow Icon={ClockIcon} title='Memories' />
+      <SidebarRow image={'/images/FacebookIcons/friends.png'} title='Friends' />
+      <SidebarRow image={'/images/FacebookIcons/groups.png'} title='Groups' />
+      <SidebarRow
+        image={'/images/FacebookIcons/marketplace.png'}
+        title='Marketplace'
+      />
+      <SidebarRow image={'/images/FacebookIcons/watch.png'} title='Watch' />
+
+      <SidebarRow
+        image={'/images/FacebookIcons/memories.png'}
+        title='Memories'
+      />
       <SidebarRow
         Icon={ChevronDownIcon}
         title='See More'
