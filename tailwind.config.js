@@ -13,9 +13,9 @@ module.exports = {
         xxxs: '360px',
         xxs: '414px',
         xs: '460px',
-        xxl: '1802px',
-        xxxl: '1237px',
-        xxxxl: '2019px',
+        xxl: '1202px',
+        xxxl: '1692px',
+        xxxxl: '1914px',
       },
       animation: { popUp: 'popUp 0.3s' },
       keyframes: {

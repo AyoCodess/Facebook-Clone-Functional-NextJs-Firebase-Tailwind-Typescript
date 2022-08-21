@@ -13,9 +13,7 @@ export const HeaderIcon = ({ Icon, active }: Props) => {
 
   return (
     <div
-      className={`flex items-center cursor-pointer  ${
-        !session ? 'xl:px-6' : '2xl:px-10  xl:px-6 lg:px-3  xxl:px-12'
-      } sm:h-14  rounded-xl active:border-b-2 active:border-blue-500 group  group-hover:text-white-500 ${
+      className={`flex items-center cursor-pointer sm:h-14  rounded-xl active:border-b-2 active:border-blue-500 group  group-hover:text-white-500 ${
         !theme ? 'themeLight hover:bg-gray-100' : 'themeDark hover:bg-blue-500'
       }`}>
       {!theme && (

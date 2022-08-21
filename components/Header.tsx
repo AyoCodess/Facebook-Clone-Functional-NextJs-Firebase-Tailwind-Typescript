@@ -86,7 +86,7 @@ export const Header = () => {
           }`}>
           {session && (
             <div
-              className={`hidden sm:flex gap-6 xl:ml-0   xxxl:gap-0 xxxl:ml-[11rem]  xxxxl:gap-10   xxxxl:ml-[13rem]  `}>
+              className={`hidden sm:flex flex-grow justify-between max-w-xs lg:max-w-sm xl:max-w-md xxl:max-w-lg xxl:pr-6 xxxl:max-w-xl xxxxl:max-w-4xl xxxxl:pr-8 mx-auto  `}>
               <HeaderIcon active Icon={HomeIcon} />
               <HeaderIcon Icon={FlagIcon} />
               <HeaderIcon Icon={PlayIcon} />
@@ -96,11 +96,7 @@ export const Header = () => {
           )}
         </div>
         {/*Right */}
-        {session && (
-          <div className={`hidden xl:block mx-auto mr-8 w-24`}>
-            <ThemeToggle />
-          </div>
-        )}
+
         {!session && (
           <div className={` block mx-auto mr-8 w-24`}>
             <ThemeToggle />
@@ -108,29 +104,33 @@ export const Header = () => {
         )}
 
         {session && (
-          <div className='flex items-center sm:gap-2 justify-end'>
-            <img
-              className='h-10 rounded-full mr-2'
-              src={session.user?.image!}
-            />
+          <div className={`hidden xl:block mx-auto mr-8 w-24`}>
+            <ThemeToggle />
+          </div>
+        )}
 
+        {session && (
+          <div className='flex items-center sm:gap-2 justify-end'>
             <div className=' hidden xl:flex items-center sm:gap-2'>
-              <p
-                className={`whitespace-nowrap font-semibold pr-3 ${
-                  !theme ? 'themeLight' : 'themeDark'
-                } `}>
-                {session.user?.name}
-              </p>
               <ViewGridIcon className='icon' />
               <ChatIcon className='icon' />
               <BellIcon className='icon' />
               {/* <ChevronDownIcon className='icon' /> */}
             </div>
+          </div>
+        )}
+
+        {session && (
+          <>
+            <img
+              className='h-10 rounded-full mx-2'
+              src={session.user?.image!}
+            />
             <DotsVerticalIcon
               className='xl:hidden icon block'
               onClick={() => setOpenMenu((prev) => !prev)}
             />
-          </div>
+          </>
         )}
         {/*Mobile view */}
         {session && openMenu && (
