@@ -3,6 +3,7 @@ import { ChatAltIcon, ShareIcon, ThumbUpIcon } from '@heroicons/react/solid';
 import { Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
 import { ThemeContext } from '../ThemeContext';
+import { DataContext } from '../DataContext';
 import { useSession } from 'next-auth/react';
 
 interface Props {
@@ -39,6 +40,7 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
   const date_time = `${date} ${time}`;
 
   const { theme } = useContext(ThemeContext);
+  const { viewEveryonesPosts } = useContext(DataContext);
 
   return (
     <div className={`flex flex-col bg-white rounded-lg mt-5 shadow-md`}>
@@ -49,7 +51,7 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
         <div className='flex items-center space-x-2'>
           <img
             className='rounded-full'
-            src={session?.user?.image!}
+            src={!viewEveryonesPosts ? session?.user?.image! : image}
             width={40}
             height={40}
           />

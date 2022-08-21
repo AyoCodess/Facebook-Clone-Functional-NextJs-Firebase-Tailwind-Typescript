@@ -17,9 +17,10 @@ const Home: NextPage<Props> = () => {
   // - removes search field error toast
   useEffect(() => {
     if (show) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setShow(false);
       }, 8000);
+      return () => clearTimeout(timer);
     }
   }, [show]);
 

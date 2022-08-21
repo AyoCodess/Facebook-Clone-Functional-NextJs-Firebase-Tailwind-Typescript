@@ -2,6 +2,7 @@ import Image from 'next/image';
 
 import React, { useContext, useState } from 'react';
 import { ThemeContext } from '../ThemeContext';
+import { DataContext } from '../DataContext';
 
 import { HeaderIcon, ThemeToggle } from '../components';
 import {
@@ -11,6 +12,7 @@ import {
   UserGroupIcon,
   ViewGridIcon,
   DotsVerticalIcon,
+  ViewListIcon,
 } from '@heroicons/react/solid';
 
 import {
@@ -24,6 +26,7 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 
 export const Header = () => {
   const { theme, setTheme } = useContext(ThemeContext);
+  const { setViewEveryonesPosts } = useContext(DataContext);
   const { data: session } = useSession();
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -136,6 +139,12 @@ export const Header = () => {
           <div className=' lg:hidden absolute bottom-[-13rem] right-0 w-42 mr-5 animate-popUp '>
             <div className=' flex flex-col gap-2 p-3 bg-white shadow rounded-lg'>
               <ThemeToggle className='mb-1' />
+              <div
+                className='flex gap-2 items-center cursor-pointer'
+                onClick={() => setViewEveryonesPosts((prev) => !prev)}>
+                <ViewListIcon className='icon block' />
+                <p className='font-medium'> View All Posts!</p>
+              </div>
               <div className='flex gap-2 items-center'>
                 <ViewGridIcon className='icon block' />
                 <p className='font-medium'> More</p>
