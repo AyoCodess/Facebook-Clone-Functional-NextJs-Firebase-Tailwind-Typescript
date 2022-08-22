@@ -14,7 +14,7 @@ interface Props {
 
 const Home: NextPage<Props> = () => {
   const { theme, setTheme } = useContext(ThemeContext);
-  const { setShow, show, setLoggedInUserEmail } = useContext(DataContext);
+  const { setShow, show } = useContext(DataContext);
 
   const { data: session } = useSession();
 

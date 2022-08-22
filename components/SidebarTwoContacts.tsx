@@ -86,7 +86,6 @@ export const SidebarTwoContacts = () => {
       <ul className='mt-2'>
         {contacts.map((contact) => (
           <a
-            href='#'
             key={contact.id}
             href={contact.link}
             target='_blank'
@@ -102,7 +101,7 @@ export const SidebarTwoContacts = () => {
               <img
                 className='h-12 w-12 rounded-full object-cover'
                 src={contact!.image}
-                alt='contact person image'
+                alt={contact.name}
               />
               <div className='absolute bottom-3 left-[3.3rem] border-2 border-white bg-green-500 h-[0.9rem] w-[0.9rem] rounded-full'></div>
               <div className='ml-3'>

@@ -3,8 +3,8 @@ import React, {
   useState,
   SetStateAction,
   Dispatch,
+  useMemo,
 } from 'react';
-export const DataContext = createContext<DataContextType>({});
 
 interface Props {
   children: React.ReactNode;
@@ -19,9 +19,9 @@ interface DataContextType {
   setDescription: Dispatch<SetStateAction<string>>;
   viewEveryonesPosts: boolean;
   setViewEveryonesPosts: Dispatch<SetStateAction<boolean>>;
-  loggedInUserEmail: string | null;
-  setLoggedInUserEmail: Dispatch<SetStateAction<string>>;
 }
+
+export const DataContext = createContext<DataContextType>({});
 
 export const DataProvider = ({ children }: Props) => {
   // view all posts from all users in the database
@@ -34,18 +34,30 @@ export const DataProvider = ({ children }: Props) => {
     'To stop spam I have locked the database'
   );
 
+  const contextValues = useMemo(
+    () => ({
+      show,
+      setShow,
+      title,
+      setTitle,
+      description,
+      setDescription,
+      viewEveryonesPosts,
+      setViewEveryonesPosts,
+    }),
+    [
+      show,
+      setShow,
+      title,
+      setTitle,
+      description,
+      setDescription,
+      viewEveryonesPosts,
+      setViewEveryonesPosts,
+    ]
+  );
   return (
-    <DataContext.Provider
-      value={{
-        show,
-        setShow,
-        title,
-        setTitle,
-        description,
-        setDescription,
-        viewEveryonesPosts,
-        setViewEveryonesPosts,
-      }}>
+    <DataContext.Provider value={contextValues}>
       {children}
     </DataContext.Provider>
   );

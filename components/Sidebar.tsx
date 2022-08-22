@@ -2,17 +2,7 @@ import { useSession } from 'next-auth/react';
 import React, { useContext } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
-import {
-  ChevronDownIcon,
-  ShoppingBagIcon,
-  UserGroupIcon,
-} from '@heroicons/react/outline';
-import {
-  CalendarIcon,
-  ClockIcon,
-  DesktopComputerIcon,
-  UsersIcon,
-} from '@heroicons/react/solid';
+import { ChevronDownIcon } from '@heroicons/react/outline';
 
 import { Divider, SidebarRow, SidebarYourShortcuts } from '../components';
 

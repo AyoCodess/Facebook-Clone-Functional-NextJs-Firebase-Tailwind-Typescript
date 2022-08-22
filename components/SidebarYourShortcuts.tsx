@@ -3,7 +3,6 @@ import { SidebarTwoHeading } from './SidebarTwoHeading';
 import { ChevronDownIcon } from '@heroicons/react/outline';
 import { SidebarRow } from '../components';
 import { ThemeContext } from '../ThemeContext';
-import { link } from 'fs';
 
 const shortcuts = [
   {

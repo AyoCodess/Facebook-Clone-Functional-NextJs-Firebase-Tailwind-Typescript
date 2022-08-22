@@ -1,5 +1,15 @@
 {
-  "cSpell.words": ["Metaspace"],
+  "cSpell.words": [
+    "adriennemareebrown",
+    "alexisshotwell",
+    "jaiyajohn",
+    "Kyodo",
+    "martinlutherking",
+    "Merelli",
+    "Metaspace",
+    "saraking",
+    "Shotwell"
+  ],
   "search.exclude": {
     "**/*.code-search": false,
     "**/bower_components": false

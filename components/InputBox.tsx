@@ -11,7 +11,7 @@ import { ref, getDownloadURL, uploadString } from 'firebase/storage';
 import { Divider } from './Divider ';
 
 interface Props {
-  setForceUpdate: (forceUpdate: boolean) => void;
+  setForceUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const InputBox = ({ setForceUpdate }: Props) => {

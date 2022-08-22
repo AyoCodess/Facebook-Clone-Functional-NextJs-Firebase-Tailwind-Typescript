@@ -3,6 +3,7 @@ import React, {
   useState,
   SetStateAction,
   Dispatch,
+  useMemo,
 } from 'react';
 export const ThemeContext = createContext<ThemeContextType>({});
 
@@ -17,12 +18,16 @@ interface ThemeContextType {
 
 export const ThemeProvider = ({ children }: Props) => {
   const [theme, setTheme] = useState(false); // default is light
+
+  const contextValues = useMemo(
+    () => ({
+      theme,
+      setTheme,
+    }),
+    [theme, setTheme]
+  );
   return (
-    <ThemeContext.Provider
-      value={{
-        theme,
-        setTheme,
-      }}>
+    <ThemeContext.Provider value={contextValues}>
       {children}
     </ThemeContext.Provider>
   );
