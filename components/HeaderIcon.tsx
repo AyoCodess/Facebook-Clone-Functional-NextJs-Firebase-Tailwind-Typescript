@@ -7,9 +7,7 @@ interface Props {
   active?: boolean;
 }
 export const HeaderIcon = ({ Icon, active }: Props) => {
-  const { theme, setTheme } = useContext(ThemeContext);
-
-  const { data: session } = useSession();
+  const { theme } = useContext(ThemeContext);
 
   return (
     <div

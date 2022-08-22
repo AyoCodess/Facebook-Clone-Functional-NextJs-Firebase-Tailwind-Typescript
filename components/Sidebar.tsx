@@ -8,7 +8,7 @@ import { Divider, SidebarRow, SidebarYourShortcuts } from '../components';
 
 export const Sidebar = () => {
   const { data: session, status } = useSession();
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const { setViewEveryonesPosts, viewEveryonesPosts } = useContext(DataContext);
 
   return (

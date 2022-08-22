@@ -25,7 +25,7 @@ import {
 import { useSession, signIn, signOut } from 'next-auth/react';
 
 export const Header = () => {
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const { setViewEveryonesPosts, viewEveryonesPosts } = useContext(DataContext);
   const { data: session } = useSession();
   const [openMenu, setOpenMenu] = useState(false);

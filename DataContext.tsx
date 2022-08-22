@@ -9,7 +9,6 @@ import React, {
 interface Props {
   children: React.ReactNode;
 }
-
 interface DataContextType {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
@@ -20,16 +19,15 @@ interface DataContextType {
   viewEveryonesPosts: boolean;
   setViewEveryonesPosts: Dispatch<SetStateAction<boolean>>;
 }
-
-export const DataContext = createContext({
+export const DataContext = createContext<DataContextType>({
   show: false,
-  setShow: (show: boolean) => {},
+  setShow: () => {},
   title: '',
-  setTitle: (title: string) => {},
+  setTitle: () => {},
   description: '',
-  setDescription: (description: string) => {},
+  setDescription: () => {},
   viewEveryonesPosts: false,
-  setViewEveryonesPosts: (viewEveryonesPost: boolean) => {},
+  setViewEveryonesPosts: () => {},
 });
 
 export const DataProvider = ({ children }: Props) => {

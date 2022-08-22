@@ -1,14 +1,18 @@
 import React, {
   createContext,
   useState,
-  SetStateAction,
-  Dispatch,
   useMemo,
+  Dispatch,
+  SetStateAction,
 } from 'react';
+interface ThemeContextType {
+  theme: boolean;
+  setTheme: Dispatch<SetStateAction<boolean>>;
+}
 
-export const ThemeContext = createContext({
+export const ThemeContext = createContext<ThemeContextType>({
   theme: false,
-  setTheme: (theme: false) => {},
+  setTheme: () => {},
 });
 
 interface Props {

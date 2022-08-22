@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const StoriesCard = ({ name, src, profile, active, hide }: Props) => {
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const { data: session } = useSession();
 
   return (
