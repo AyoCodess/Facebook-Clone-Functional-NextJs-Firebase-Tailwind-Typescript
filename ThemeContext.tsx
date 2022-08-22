@@ -5,15 +5,14 @@ import React, {
   Dispatch,
   useMemo,
 } from 'react';
-export const ThemeContext = createContext<ThemeContextType>({});
+
+export const ThemeContext = createContext({
+  theme: false,
+  setTheme: (theme: false) => {},
+});
 
 interface Props {
   children: React.ReactNode;
-}
-
-interface ThemeContextType {
-  theme: boolean;
-  setTheme: Dispatch<SetStateAction<boolean>>;
 }
 
 export const ThemeProvider = ({ children }: Props) => {

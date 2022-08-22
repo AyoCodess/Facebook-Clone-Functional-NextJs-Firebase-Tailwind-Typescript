@@ -21,7 +21,16 @@ interface DataContextType {
   setViewEveryonesPosts: Dispatch<SetStateAction<boolean>>;
 }
 
-export const DataContext = createContext<DataContextType>({});
+export const DataContext = createContext({
+  show: false,
+  setShow: (show: boolean) => {},
+  title: '',
+  setTitle: (title: string) => {},
+  description: '',
+  setDescription: (description: string) => {},
+  viewEveryonesPosts: false,
+  setViewEveryonesPosts: (viewEveryonesPost: boolean) => {},
+});
 
 export const DataProvider = ({ children }: Props) => {
   // view all posts from all users in the database
