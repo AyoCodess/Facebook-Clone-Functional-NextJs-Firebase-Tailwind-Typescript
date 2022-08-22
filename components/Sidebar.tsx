@@ -1,55 +1,92 @@
 import { useSession } from 'next-auth/react';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 import { ChevronDownIcon } from '@heroicons/react/outline';
 
 import { Divider, SidebarRow, SidebarYourShortcuts } from '../components';
+import { ViewListIcon, XCircleIcon } from '@heroicons/react/solid';
 
 export const Sidebar = () => {
   const { data: session, status } = useSession();
   const { theme } = useContext(ThemeContext);
   const { setViewEveryonesPosts, viewEveryonesPosts } = useContext(DataContext);
+  const [openMenu, setOpenMenu] = useState(false);
 
   return (
     <div
-      className={` hidden md:block p-2 pt-5 max-w-[600px] 2xl:min-w-[500px] ${
+      className={` hidden md:block p-2 pt-5 max-w-[600px] ${
+        openMenu ? '2xl:min-w-[400px]' : 'w-12 '
+      }  ${
         !theme ? 'themeLight bg-gray-50 shadow ' : 'themeDark bg-slate-800'
       }`}>
-      {session && (
-        <SidebarRow
-          src={session.user?.image}
-          //   Icon={UsersIcon}
-          title={session.user?.name}
-        />
+      <p
+        onClick={() => setOpenMenu((prev) => !prev)}
+        className={`flex items-center gap-2 ${
+          openMenu ? 'ml-3' : 'mx-auto'
+        } mb-2 cursor-pointer ${
+          !theme
+            ? 'lightTheme  hover:text-gray-400'
+            : 'darkTheme hover:text-white'
+        }`}>
+        {openMenu && (
+          <XCircleIcon
+            className={` ${
+              !theme ? 'lightTheme' : 'darkTheme'
+            }text-gray-300 h-12`}
+          />
+        )}
+        {!openMenu && (
+          <ViewListIcon
+            className={` ${
+              !theme ? 'lightTheme' : 'darkTheme'
+            }text-gray-300 h-12`}
+          />
+        )}
+      </p>
+
+      {openMenu && (
+        <div>
+          {session && (
+            <SidebarRow
+              src={session.user?.image}
+              //   Icon={UsersIcon}
+              title={session.user?.name}
+            />
+          )}
+          <SidebarRow
+            image={'/images/FacebookIcons/viewall.png'}
+            title={`${
+              !viewEveryonesPosts ? "View Everyone's Posts" : ' View Your Posts'
+            }`}
+            onClick={() => setViewEveryonesPosts((prev) => !prev)}
+          />
+          <SidebarRow
+            image={'/images/FacebookIcons/friends.png'}
+            title='Friends'
+          />
+          <SidebarRow
+            image={'/images/FacebookIcons/groups.png'}
+            title='Groups'
+          />
+          <SidebarRow
+            image={'/images/FacebookIcons/marketplace.png'}
+            title='Marketplace'
+          />
+          <SidebarRow image={'/images/FacebookIcons/watch.png'} title='Watch' />
+          <SidebarRow
+            image={'/images/FacebookIcons/memories.png'}
+            title='Memories'
+          />
+          <SidebarRow
+            Icon={ChevronDownIcon}
+            title='See More'
+            custom={'rounded-full p-2 bg-gray-200 text-black'}
+          />
+          <Divider custom={'my-[1rem] mx-4 mb-6 '} />
+          <SidebarYourShortcuts />
+        </div>
       )}
-      <SidebarRow
-        image={'/images/FacebookIcons/viewall.png'}
-        title={`${
-          !viewEveryonesPosts ? "View Everyone's Posts" : ' View Your Posts'
-        }`}
-        onClick={() => setViewEveryonesPosts((prev) => !prev)}
-      />
-      <SidebarRow image={'/images/FacebookIcons/friends.png'} title='Friends' />
-      <SidebarRow image={'/images/FacebookIcons/groups.png'} title='Groups' />
-      <SidebarRow
-        image={'/images/FacebookIcons/marketplace.png'}
-        title='Marketplace'
-      />
-      <SidebarRow image={'/images/FacebookIcons/watch.png'} title='Watch' />
-
-      <SidebarRow
-        image={'/images/FacebookIcons/memories.png'}
-        title='Memories'
-      />
-      <SidebarRow
-        Icon={ChevronDownIcon}
-        title='See More'
-        custom={'rounded-full p-2 bg-gray-200 text-black'}
-      />
-
-      <Divider custom={'my-[1rem] mx-4 mb-6 '} />
-      <SidebarYourShortcuts />
     </div>
   );
 };
