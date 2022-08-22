@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react';
 import { db, storage } from '../firebase';
 import { collection, addDoc, Timestamp, setDoc, doc } from 'firebase/firestore';
 import { ref, getDownloadURL, uploadString } from 'firebase/storage';
+import { Divider } from './Divider ';
 
 interface Props {
   setForceUpdate: (forceUpdate: boolean) => void;
@@ -116,7 +117,9 @@ export const InputBox = ({ setForceUpdate }: Props) => {
   return (
     <div
       className={`p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6  ${
-        !theme ? 'themeLight' : 'themeDark shadow-slate-600 shadow-sm '
+        !theme
+          ? 'themeLight'
+          : 'themeDark  bg-slate-800 shadow-slate-600 shadow-sm '
       }`}>
       <div className='flex gap-4 p-4 items-center'>
         {session && (
@@ -160,7 +163,7 @@ export const InputBox = ({ setForceUpdate }: Props) => {
           </div>
         )}
       </div>
-      <hr className='mt-[0.1rem] mx-4 mb-2 border border-gray-200' />
+      <Divider />
       <div className='flex justify-evenly'>
         <div
           className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '} ${

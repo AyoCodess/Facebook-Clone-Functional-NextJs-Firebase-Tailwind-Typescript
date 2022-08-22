@@ -20,3 +20,4 @@ export * from './InputBox';
 export * from './Posts';
 export * from './Post';
 export * from './Toast';
+export * from './Divider ';

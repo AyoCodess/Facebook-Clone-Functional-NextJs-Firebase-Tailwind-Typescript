@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { SidebarTwoHeading } from '../components';
+import { Divider, SidebarTwoHeading } from '../components';
 import { DotsHorizontalIcon } from '@heroicons/react/solid';
 import { ThemeContext } from '../ThemeContext';
 
@@ -17,7 +17,7 @@ export const SidebarTwoPagesAndProfiles = () => {
           }`}
         />
       </div>
-      <hr className='mt-4 mx-4 mb-2 border border-gray-200' />
+      <Divider custom={'mt-4 mx-4 mb-2 '} />
     </div>
   );
 };

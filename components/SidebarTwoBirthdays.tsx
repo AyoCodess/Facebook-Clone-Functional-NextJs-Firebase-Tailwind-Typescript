@@ -1,6 +1,7 @@
 import React from 'react';
 import { SidebarTwoHeading } from './SidebarTwoHeading';
 import Image from 'next/image';
+import { Divider } from './Divider ';
 
 export const SidebarTwoBirthdays = () => {
   return (
@@ -8,7 +9,7 @@ export const SidebarTwoBirthdays = () => {
       <SidebarTwoHeading title={'Birthdays'} />
       <div className='flex items-center gap-2 mt-4'>
         <Image
-          src={'/images/bday.jpeg'}
+          src={'/images/FacebookIcons/bday.png'}
           width={60}
           height={50}
           alt='logo'
@@ -19,7 +20,7 @@ export const SidebarTwoBirthdays = () => {
           their birthdays today.
         </p>
       </div>
-      <hr className='mt-4 mx-4 mb-2 border border-gray-200' />
+      <Divider custom={'mt-4 mx-4 mb-2'} />
     </div>
   );
 };

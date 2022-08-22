@@ -1,64 +1,90 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SidebarTwoHeading } from './SidebarTwoHeading';
 import { ChevronDownIcon } from '@heroicons/react/outline';
 import { SidebarRow } from '../components';
+import { ThemeContext } from '../ThemeContext';
+import { link } from 'fs';
 
 const shortcuts = [
   {
     id: 1,
-    name: 'Stop holding back',
-    image: 'https://i.imgur.com/FRIs3ds.png?1',
+    name: 'Project Git Hub Repo',
+    image: '/images/github.png',
+    link: 'https://github.com/AyoCodess/Facebook-Clone-Functional-NextJs-Firebase-Tailwind-Typescript',
   },
   {
     id: 2,
-    name: 'Computer Science CS50',
-    image: 'https://i.imgur.com/21RSfVJ.jpg',
+    name: "Ayo's Linkedin",
+    image: '/images/linkedin.png',
+    link: 'https://www.linkedin.com/in/ayoadesanya/',
   },
   {
     id: 3,
-    name: 'All about bruce lee',
-    image: 'https://i.imgur.com/fKt5tuD.jpg',
+    name: "Ayo's Portfolio",
+    image: '/images/ayo.jpeg',
+    link: 'https://www.ayoadesanya.com/',
   },
   {
     id: 4,
-    name: 'How to usw VScode',
-    image: 'https://i.imgur.com/q2X94gw.png',
+    name: 'Stop Holding Back Foundation',
+    image: 'https://i.imgur.com/FRIs3ds.png?1',
+    link: 'https://www.stopholdingback.org/',
   },
-  { id: 5, name: 'Happy hour', image: 'https://i.imgur.com/fm3wJ0g.jpg' },
+  {
+    id: 5,
+    name: 'Greenpeace',
+    image: '/images/greenpeace.jpeg',
+    link: 'https://www.greenpeace.org/',
+  },
   {
     id: 6,
-    name: 'How to usw VScode',
-    image: 'https://i.imgur.com/q2X94gw.png',
+    name: "'Equity' Diversity & Inclusion",
+    image: '/images/equity.png',
+    link: 'https://ideal.com/diversity-equity-inclusion/',
   },
-  { id: 7, name: 'Happy hour', image: 'https://i.imgur.com/fm3wJ0g.jpg' },
   {
-    id: 8,
-    name: 'How to usw VScode',
-    image: 'https://i.imgur.com/q2X94gw.png',
+    id: 7,
+    name: 'Village Mindedness',
+    image: '/images/vill.webp',
+    link: 'https://www.ic.org/takes-village-organize-mind/',
   },
-  { id: 9, name: 'Happy hour', image: 'https://i.imgur.com/fm3wJ0g.jpg' },
 ];
 export const SidebarYourShortcuts = () => {
+  const { theme } = useContext(ThemeContext);
   return (
     <>
       <div className='hidden sm:block '>
         <SidebarTwoHeading title={'Your Shortcuts'} />
         <ul className='mt-2'>
           {shortcuts.map((shortcut) => (
-            <li
+            <a
               key={shortcut.id}
-              className='py-3 pl-4 flex items-center cursor-pointer  hover:bg-gray-100 bg-transparent'>
-              <img
-                className='h-12 w-12 rounded-lg object-cover'
-                src={shortcut!.image}
-                alt=''
-              />
-              <div className='ml-3'>
-                <p className='text-xl font-medium text-gray-900 p-2'>
-                  {shortcut!.name}
-                </p>
-              </div>
-            </li>
+              href={shortcut.link}
+              target='_blank'
+              rel='noopener'>
+              <li
+                className={`flex items-center gap-2 p-3 rounded-xl  cursor-pointer ${
+                  !theme
+                    ? ' themeLight hover:bg-gray-100 bg-transparent'
+                    : 'themeDark bg-slate-800 hover:bg-blue-500'
+                }`}>
+                <img
+                  className='h-12 w-12 rounded-lg object-cover'
+                  src={shortcut!.image}
+                  alt=''
+                />
+                <div className='ml-3'>
+                  <p
+                    className={`text-xl font-medium p-2 ${
+                      !theme
+                        ? 'themeLight  text-gray-900 bg-transparent '
+                        : 'themeDark text-white bg-transparent'
+                    }`}>
+                    {shortcut!.name}
+                  </p>
+                </div>
+              </li>
+            </a>
           ))}
         </ul>
       </div>

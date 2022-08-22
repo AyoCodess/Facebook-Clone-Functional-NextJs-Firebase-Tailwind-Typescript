@@ -14,7 +14,7 @@ import {
   UsersIcon,
 } from '@heroicons/react/solid';
 
-import { SidebarRow, SidebarYourShortcuts } from '../components';
+import { Divider, SidebarRow, SidebarYourShortcuts } from '../components';
 
 export const Sidebar = () => {
   const { data: session, status } = useSession();
@@ -57,7 +57,8 @@ export const Sidebar = () => {
         title='See More'
         custom={'rounded-full p-2 bg-gray-200 text-black'}
       />
-      <hr className='my-[1rem] mx-4 mb-6 border border-gray-200' />
+
+      <Divider custom={'my-[1rem] mx-4 mb-6 '} />
       <SidebarYourShortcuts />
     </div>
   );

@@ -59,7 +59,10 @@ export const StoriesCard = ({ name, src, profile, active, hide }: Props) => {
       )}
       {active && (
         <>
-          <div className='relative  bg-white mt-[8.8rem] md:mt-[8.7rem] rounded-b-3xl py-2 opacity-100  text-blue-500 text-sm font-bold truncate'>
+          <div
+            className={`relative   mt-[8.8rem] md:mt-[8.7rem] rounded-b-3xl py-2 opacity-100  text-blue-500 text-sm font-bold truncate ${
+              !theme ? 'lightTheme bg-white' : 'darkTheme'
+            }`}>
             <div className='flex flex-col items-center'>
               <PlusCircleIcon className='rounded-full  bg-blue-600  h-12 text-white' />
               <p className='text-white'>{name}</p>
