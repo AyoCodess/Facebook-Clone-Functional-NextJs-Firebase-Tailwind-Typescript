@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import {
+  Query,
+  collection,
+  DocumentData,
+  getDocs,
+  query,
+  where,
+} from 'firebase/firestore';
 import { db } from '../firebase';
 import { Post } from '../components';
 import { useSession, getSession } from 'next-auth/react';
@@ -44,9 +51,6 @@ export const Posts = ({ forceUpdate }: Props) => {
   const { theme } = useContext(ThemeContext);
   const { setShow, setTitle, setDescription, viewEveryonesPosts } =
     useContext(DataContext);
-
-  const [inSession, setInSession] = useState(false);
-
   useEffect(() => {
     getUserSession();
   }, [forceUpdate, viewEveryonesPosts]);
@@ -55,78 +59,62 @@ export const Posts = ({ forceUpdate }: Props) => {
     const theSession = await getSession();
     if (theSession) {
       getUserPostsFromFirebase();
-    } else {
-      console.error('THERE IS NO SESSION');
     }
+  };
+  const useGetUserPostsFromFirebase = async (
+    isQuery: 'individual' | 'everyone'
+  ) => {
+    // gets individual user posts by EMAIL or everyones posts from firebase
+    let queryByEmailNoPhotos: Query<DocumentData>;
+    let queryByEmailPhotos: Query<DocumentData>;
+
+    if (isQuery === 'individual') {
+      queryByEmailNoPhotos = query(
+        collection(db, 'posts'),
+        where('email', '==', session?.user?.email)
+      );
+      queryByEmailPhotos = query(
+        collection(db, 'postsWithPhotos'),
+        where('email', '==', session?.user?.email)
+      );
+    }
+
+    if (isQuery === 'everyone') {
+      queryByEmailNoPhotos = collection(db, 'posts');
+      queryByEmailPhotos = collection(db, 'postsWithPhotos');
+    }
+
+    const dataPostsWithNoPhotos = await getDocs(queryByEmailNoPhotos!);
+    const dataPostsWithPhotos = await getDocs(queryByEmailPhotos!);
+
+    let postsWithNoPhotosArray: Array<any> = [];
+    let postsWithPhotosArray: Array<any> = [];
+
+    dataPostsWithNoPhotos.forEach((doc: any) => {
+      postsWithNoPhotosArray.push(doc.data());
+    });
+
+    dataPostsWithPhotos.forEach((doc: any) => {
+      postsWithPhotosArray.push(doc.data());
+    });
+
+    const combined = [...postsWithNoPhotosArray, ...postsWithPhotosArray];
+
+    const allPosts = combined.sort(
+      (a, b) => b.timestamp.seconds - a.timestamp.seconds
+    );
+    setRealTimePosts(allPosts);
   };
 
   const getUserPostsFromFirebase = async () => {
     setRealTimePosts(null);
     try {
       if (session?.user?.email && !viewEveryonesPosts) {
-        const queryByEmailNoPhotos = query(
-          collection(db, 'posts'),
-          where('email', '==', session?.user?.email)
-        );
-        const queryByEmailPhotos = query(
-          collection(db, 'postsWithPhotos'),
-          where('email', '==', session?.user?.email)
-        );
-
-        let postsWithNoPhotosArray: Array<any> = [];
-        let postsWithPhotosArray: Array<any> = [];
-
-        const dataPostsWithNoPhotos = await getDocs(queryByEmailNoPhotos);
-        const dataPostsWithPhotos = await getDocs(queryByEmailPhotos);
-
-        dataPostsWithNoPhotos.forEach((doc: any) => {
-          postsWithNoPhotosArray.push(doc.data());
-        });
-
-        dataPostsWithPhotos.forEach((doc: any) => {
-          postsWithPhotosArray.push(doc.data());
-        });
-
-        const combined = [...postsWithNoPhotosArray, ...postsWithPhotosArray];
-
-        const allPosts = combined.sort(
-          (a, b) => b.timestamp.seconds - a.timestamp.seconds
-        );
-
-        setRealTimePosts(allPosts);
+        useGetUserPostsFromFirebase('individual');
       }
 
       if (viewEveryonesPosts) {
-        // setShow(true);
-        // setTitle(
-        //   'be careful what you share, only the admin can delete posts...'
-        // );
-        // setDescription('');
-
-        const everyonesPosts = collection(db, 'posts');
-        const everyonesPostsWithPhotos = collection(db, 'postsWithPhotos');
-
-        let postsWithNoPhotosArray: Array<any> = [];
-        let postsWithPhotosArray: Array<any> = [];
-
-        const dataPostsWithNoPhotos = await getDocs(everyonesPosts);
-        const dataPostsWithPhotos = await getDocs(everyonesPostsWithPhotos);
-
-        dataPostsWithNoPhotos.forEach((doc: any) => {
-          postsWithNoPhotosArray.push(doc.data());
-        });
-
-        dataPostsWithPhotos.forEach((doc: any) => {
-          postsWithPhotosArray.push(doc.data());
-        });
-
-        const combined = [...postsWithNoPhotosArray, ...postsWithPhotosArray];
-
-        const allPosts = combined.sort(
-          (a, b) => b.timestamp.seconds - a.timestamp.seconds
-        );
-
-        setRealTimePosts(allPosts);
+        useGetUserPostsFromFirebase('everyone');
       }
       //   setRealTimePosts(testData); // for testing purposes
     } catch (error) {
