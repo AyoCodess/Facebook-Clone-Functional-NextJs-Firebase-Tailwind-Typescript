@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Post } from '../components';
-import { useSession } from 'next-auth/react';
+import { useSession, getSession } from 'next-auth/react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 
@@ -42,36 +42,42 @@ export const Posts = ({ forceUpdate }: Props) => {
   const { data: session } = useSession();
   const [realTimePosts, setRealTimePosts] = useState<any[] | null>(null);
   const { theme } = useContext(ThemeContext);
-  const {
-    setShow,
-    setTitle,
-    setDescription,
-    viewEveryonesPosts,
-    setViewEveryonesPosts,
-  } = useContext(DataContext);
+  const { setShow, setTitle, setDescription, viewEveryonesPosts } =
+    useContext(DataContext);
+
+  const [inSession, setInSession] = useState(false);
 
   useEffect(() => {
-    getUserPostsFromFirebase();
-  }, [session, forceUpdate, viewEveryonesPosts]);
+    getUserSession();
+  }, [forceUpdate, viewEveryonesPosts]);
+
+  const getUserSession = async () => {
+    const theSession = await getSession();
+    if (theSession) {
+      getUserPostsFromFirebase();
+    } else {
+      console.error('THERE IS NO SESSION');
+    }
+  };
 
   const getUserPostsFromFirebase = async () => {
     setRealTimePosts(null);
     try {
-      if (viewEveryonesPosts) {
-        setShow(true);
-        setTitle('All users in our database posts are now loading');
-        setDescription(
-          'be careful what you share, only the admin can delete posts...'
+      if (session?.user?.email && !viewEveryonesPosts) {
+        const queryByEmailNoPhotos = query(
+          collection(db, 'posts'),
+          where('email', '==', session?.user?.email)
         );
-
-        const everyonesPosts = collection(db, 'posts');
-        const everyonesPostsWithPhotos = collection(db, 'postsWithPhotos');
+        const queryByEmailPhotos = query(
+          collection(db, 'postsWithPhotos'),
+          where('email', '==', session?.user?.email)
+        );
 
         let postsWithNoPhotosArray: Array<any> = [];
         let postsWithPhotosArray: Array<any> = [];
 
-        const dataPostsWithNoPhotos = await getDocs(everyonesPosts);
-        const dataPostsWithPhotos = await getDocs(everyonesPostsWithPhotos);
+        const dataPostsWithNoPhotos = await getDocs(queryByEmailNoPhotos);
+        const dataPostsWithPhotos = await getDocs(queryByEmailPhotos);
 
         dataPostsWithNoPhotos.forEach((doc: any) => {
           postsWithNoPhotosArray.push(doc.data());
@@ -90,26 +96,21 @@ export const Posts = ({ forceUpdate }: Props) => {
         setRealTimePosts(allPosts);
       }
 
-      if (session?.user?.email && !viewEveryonesPosts) {
-        setShow(true);
-        setTitle('Your personal posts only are now loading...');
-        setDescription('');
+      if (viewEveryonesPosts) {
+        // setShow(true);
+        // setTitle(
+        //   'be careful what you share, only the admin can delete posts...'
+        // );
+        // setDescription('');
 
-        console.log('getUserPostsFromFirebase');
-        const queryByEmailNoPhotos = query(
-          collection(db, 'posts'),
-          where('email', '==', session?.user?.email)
-        );
-        const queryByEmailPhotos = query(
-          collection(db, 'postsWithPhotos'),
-          where('email', '==', session?.user?.email)
-        );
+        const everyonesPosts = collection(db, 'posts');
+        const everyonesPostsWithPhotos = collection(db, 'postsWithPhotos');
 
         let postsWithNoPhotosArray: Array<any> = [];
         let postsWithPhotosArray: Array<any> = [];
 
-        const dataPostsWithNoPhotos = await getDocs(queryByEmailNoPhotos);
-        const dataPostsWithPhotos = await getDocs(queryByEmailPhotos);
+        const dataPostsWithNoPhotos = await getDocs(everyonesPosts);
+        const dataPostsWithPhotos = await getDocs(everyonesPostsWithPhotos);
 
         dataPostsWithNoPhotos.forEach((doc: any) => {
           postsWithNoPhotosArray.push(doc.data());

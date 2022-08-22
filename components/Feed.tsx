@@ -10,7 +10,7 @@ export const Feed = () => {
       <div className='mx-auto max-w-4xl '>
         <Stories />
         <InputBox setForceUpdate={setForceUpdate} />
-        <Posts forceUpdate={forceUpdate} />
+        {session && <Posts forceUpdate={forceUpdate} />}
       </div>
     </div>
   );

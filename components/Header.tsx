@@ -136,7 +136,7 @@ export const Header = () => {
         )}
         {/*Mobile view */}
         {session && openMenu && (
-          <div className=' lg:hidden absolute bottom-[-13rem] right-0 w-42 mr-5 animate-popUp '>
+          <div className=' lg:hidden absolute bottom-[-15.5rem] right-0 w-42 mr-5 animate-popUp '>
             <div className=' flex flex-col gap-2 p-3 bg-white shadow rounded-lg'>
               <ThemeToggle className='mb-1' />
               <div

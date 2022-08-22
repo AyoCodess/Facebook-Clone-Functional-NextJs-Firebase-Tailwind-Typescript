@@ -19,6 +19,8 @@ interface DataContextType {
   setDescription: Dispatch<SetStateAction<string>>;
   viewEveryonesPosts: boolean;
   setViewEveryonesPosts: Dispatch<SetStateAction<boolean>>;
+  loggedInUserEmail: string | null;
+  setLoggedInUserEmail: Dispatch<SetStateAction<string>>;
 }
 
 export const DataProvider = ({ children }: Props) => {

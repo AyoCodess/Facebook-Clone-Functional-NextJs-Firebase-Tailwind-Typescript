@@ -19,7 +19,7 @@ import { SidebarRow, SidebarYourShortcuts } from '../components';
 export const Sidebar = () => {
   const { data: session, status } = useSession();
   const { theme, setTheme } = useContext(ThemeContext);
-  const { setViewEveryonesPosts } = useContext(DataContext);
+  const { setViewEveryonesPosts, viewEveryonesPosts } = useContext(DataContext);
 
   return (
     <div
@@ -35,7 +35,9 @@ export const Sidebar = () => {
       )}
       <SidebarRow
         image={'/images/FacebookIcons/viewall.png'}
-        title={`View Everyone\'s Posts`}
+        title={`${
+          !viewEveryonesPosts ? "View Everyone's Posts" : ' View Your Posts'
+        }`}
         onClick={() => setViewEveryonesPosts((prev) => !prev)}
       />
       <SidebarRow image={'/images/FacebookIcons/friends.png'} title='Friends' />

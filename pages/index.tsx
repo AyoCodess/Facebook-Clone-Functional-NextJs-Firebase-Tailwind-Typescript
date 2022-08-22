@@ -5,6 +5,7 @@ import React, { useContext, useEffect } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 import { Header, Sidebar, Feed, Toast, SidebarTwo } from '../components';
+import { useSession } from 'next-auth/react';
 
 interface Props {
   session: any;
@@ -12,7 +13,9 @@ interface Props {
 
 const Home: NextPage<Props> = () => {
   const { theme, setTheme } = useContext(ThemeContext);
-  const { setShow, show } = useContext(DataContext);
+  const { setShow, show, setLoggedInUserEmail } = useContext(DataContext);
+
+  const { data: session } = useSession();
 
   // - removes search field error toast
   useEffect(() => {

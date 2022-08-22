@@ -74,7 +74,7 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
       </div>
       {postImage && (
         <div className='relative h-56 md:h-96 bg-white'>
-          <Image src={postImage} objectFit='cover' layout='fill' />
+          <Image src={postImage} objectFit='contain' layout='fill' />
           {/* <img src={postImage} alt='image' /> */}
         </div>
       )}
