@@ -1,25 +1,32 @@
 import React, { useContext } from 'react';
 import Image from 'next/image';
-import { ThemeContext } from '../Context';
+import { ThemeContext } from '../ThemeContext';
+import { useSession } from 'next-auth/react';
+
+import { PlusCircleIcon } from '@heroicons/react/outline';
 interface Props {
   name: string;
   src: string;
   profile: string;
   active: boolean;
+  hide: boolean;
 }
 
-export const StoriesCard = ({ name, src, profile, active }: Props) => {
+export const StoriesCard = ({ name, src, profile, active, hide }: Props) => {
   const { theme, setTheme } = useContext(ThemeContext);
+  const { data: session } = useSession();
 
   return (
     <div
-      className={`relative h-14 w-14 md:h-20 md:w-20 lg:h-56 lg:w-32 cursor-pointer overflow-x p-3 transition duration-200 transform ease-in hover:scale-105 hover:animate-pulse rounded-3xl  ${
+      className={` ${
+        hide ? 'hidden xl:block' : ' '
+      } relative h-64 w-40 cursor-pointer overflow-x transition duration-200 transform ease-in hover:scale-105 hover:animate-pulse rounded-b-xl  ${
         !theme
-          ? 'border border-gray-100 shadow'
+          ? 'border border-gray-100 shadow rounded-t-xl'
           : ' shadow-blue-900 shadow-sm hover:shadow-none'
       }`}>
       {!active && (
-        <div className=' flex relative p-1 lg:bg-blue-500 z-40 lg:rounded-full w-12  '>
+        <div className=' flex relative p-1 lg:bg-blue-500 z-40 lg:rounded-full w-12 mt-2 ml-2  '>
           <Image
             className='absolute opacity-0 lg:opacity-100 rounded-full z-50 top-10 '
             src={profile}
@@ -31,32 +38,37 @@ export const StoriesCard = ({ name, src, profile, active }: Props) => {
         </div>
       )}
 
-      <Image
-        className='object-cover filter brightness-75 rounded-full lg:rounded-3xl'
-        src={src}
-        layout='fill'
-      />
       {!active && (
-        <p className='absolute opacity-0 lg:opacity-100 bottom-4 w-5/6 text-white text-sm font-bold truncate'>
+        <Image
+          className='object-cover filter brightness-75 rounded-xl'
+          src={src}
+          layout='fill'
+        />
+      )}
+      {active && session?.user && (
+        <Image
+          className=' object-contain object-top filter rounded-xl'
+          src={session?.user?.image!}
+          layout='fill'
+        />
+      )}
+      {!active && (
+        <p className='absolute opacity-100 bottom-4 w-5/6 text-white text-sm font-bold truncate px-2'>
           {name}
         </p>
       )}
       {active && (
         <>
-          <div className=' flex top-[8rem] left-5 relative p-1 lg:bg-blue-500 z-40 lg:rounded-full w-12  '>
-            <Image
-              className='absolute  opacity-0 lg:opacity-100 rounded-full z-50  '
-              src={profile}
-              width={40}
-              height={40}
-              layout='fixed'
-              objectFit='cover'
-            />
-          </div>
-          <div className='absolute left-0 bottom-0 bg-white rounded-b-3xl py-2 px-4 opacity-0 lg:opacity-100   text-blue-500 text-sm font-bold truncate'>
-            <div className='flex flex-col  items-center'>
+          <div
+            className={`relative   mt-[8.8rem] md:mt-[8.7rem] rounded-b-3xl py-2 opacity-100  text-blue-500 text-sm font-bold truncate ${
+              !theme ? 'lightTheme bg-white' : 'darkTheme'
+            }`}>
+            <div className='flex flex-col items-center'>
+              <PlusCircleIcon className='rounded-full  bg-blue-600  h-12 text-white' />
               <p className='text-white'>{name}</p>
-              <p className='text-gray-400 '>Create story</p>
+              <p className=' flex text-base  text-gray-900  font-bold '>
+                Create <span className='hidden md:block'>&nbsp;story</span>
+              </p>
             </div>
           </div>
         </>

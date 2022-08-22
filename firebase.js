@@ -8,10 +8,10 @@ import { getFirestore } from 'firebase/firestore';
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: 'metaspace-fb-clone.firebaseapp.com',
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
   projectId: 'metaspace-fb-clone',
   storageBucket: 'metaspace-fb-clone.appspot.com',
-  messagingSenderId: '397875607389',
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.FIREBASE_APP_ID,
 };
 
@@ -19,5 +19,4 @@ const firebaseConfig = {
 const app = getApps().length < 1 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore(app);
 const storage = getStorage(app);
-
 export { db, storage };

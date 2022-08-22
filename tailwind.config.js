@@ -9,6 +9,14 @@ module.exports = {
       colors: {
         metaBlack: '#1F2022',
       },
+      screens: {
+        xxxs: '360px',
+        xxs: '414px',
+        xs: '460px',
+        xxl: '1202px',
+        xxxl: '1692px',
+        xxxxl: '1914px',
+      },
       animation: { popUp: 'popUp 0.3s' },
       keyframes: {
         popUp: {

@@ -2,18 +2,21 @@ import React, { useContext } from 'react';
 import { ChatAltIcon, ShareIcon, ThumbUpIcon } from '@heroicons/react/solid';
 import { Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
-import { ThemeContext } from '../Context';
+import { ThemeContext } from '../ThemeContext';
+import { DataContext } from '../DataContext';
+import { useSession } from 'next-auth/react';
 
 interface Props {
   name: string;
   message: string;
   email: string;
   postImage: string;
-  image: string;
+  image?: string;
   timestamp: Timestamp;
 }
 
 export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
+  const { data: session } = useSession();
   const dateTimestamp = new Timestamp(
     timestamp.seconds,
     timestamp.nanoseconds
@@ -34,20 +37,28 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
     .slice(0, 2)
     .join(':');
 
-  console.log(time);
-
   const date_time = `${date} ${time}`;
 
   const { theme } = useContext(ThemeContext);
+  const { viewEveryonesPosts } = useContext(DataContext);
 
   return (
-    <div className={`flex flex-col bg-white rounded-lg mt-5 `}>
+    <div
+      className={`flex flex-col  rounded-lg mt-5 shadow-md ${
+        !theme ? 'themeLight bg-white' : 'themeDark bg-slate-800'
+      }`}>
       <div
-        className={`p-5  mt-5 rounded-t-2xl shadow-sm ${
-          !theme ? 'lightTheme' : 'darkTheme shadow-blue-900   '
+        className={`p-5  mt-5  rounded-t-2xl shadow-sm ${
+          !theme ? 'lightTheme' : 'darkTheme  shadow-blue-900   '
         }`}>
-        <div className='flex items-center space-x-2'>
-          <img className='rounded-full' src={image} width={40} height={40} />
+        {/*post information */}
+        <div className='flex items-center gap-2'>
+          <img
+            className='rounded-full'
+            src={!viewEveryonesPosts ? session?.user?.image! : image}
+            width={40}
+            height={40}
+          />
           <div>
             <p className='font-medium'>{name}</p>
             {timestamp ? (
@@ -58,16 +69,20 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
                 {date_time}
               </p>
             ) : (
-              <p className='text-xs text-gray-400'>Loading</p>
+              <p className='text-xs text-gray-400'>Loading...</p>
             )}
           </div>
         </div>
-
-        <p className='pt-4'>{message}</p>
+        {/*post message */}
+        <p className='pt-4 mb-2'>{message}</p>
       </div>
+      {/*image section */}
       {postImage && (
-        <div className='relative h-56 md:h-96 bg-white'>
-          <Image src={postImage} objectFit='cover' layout='fill' />
+        <div
+          className={`relative h-56 md:h-96 ${
+            !theme ? 'themeLight bg-white ' : 'themeDark bg-slate-800'
+          }`}>
+          <Image src={postImage} objectFit='contain' layout='fill' />
           {/* <img src={postImage} alt='image' /> */}
         </div>
       )}
@@ -77,7 +92,7 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
         className={`flex justify-between items-center rounded-b-2xl  shadow-md text-gray-400 border-t ${
           !theme
             ? 'lightTheme'
-            : 'darkTheme transition-shadow duration-75 border-slate-800 shadow-slate-800'
+            : 'darkTheme transition-shadow duration-75 border-t-slate-700 shadow-slate-800'
         }`}>
         <div
           className={`inputIcon p-3 rounded-none rounded-bl-2xl group ${

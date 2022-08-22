@@ -1,7 +1,8 @@
 import '../styles/globals.css';
 import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
-import { ThemeProvider } from '../Context';
+import { ThemeProvider } from '../ThemeContext';
+import { DataProvider } from '../DataContext';
 
 const MyApp = ({
   Component,
@@ -9,9 +10,11 @@ const MyApp = ({
 }: AppProps) => {
   return (
     <ThemeProvider>
-      <SessionProvider session={session}>
-        <Component {...pageProps} />
-      </SessionProvider>
+      <DataProvider>
+        <SessionProvider session={session}>
+          <Component {...pageProps} />
+        </SessionProvider>
+      </DataProvider>
     </ThemeProvider>
   );
 };

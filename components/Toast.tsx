@@ -1,14 +1,14 @@
 /* This example requires Tailwind CSS v2.0+ */
-import React, { useContext, useEffect } from 'react';
-import { Fragment } from 'react';
+import React, { useContext, useEffect, Fragment } from 'react';
 import { Transition } from '@headlessui/react';
 import { XCircleIcon } from '@heroicons/react/outline';
 import { XIcon } from '@heroicons/react/solid';
-import { ThemeContext } from '../Context';
+import { ThemeContext } from '../ThemeContext';
+import { DataContext } from '../DataContext';
 
 export function Toast() {
-  const { theme, setTheme, show, setShow, title, description } =
-    useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
+  const { show, setShow, title, description } = useContext(DataContext);
 
   return (
     <>

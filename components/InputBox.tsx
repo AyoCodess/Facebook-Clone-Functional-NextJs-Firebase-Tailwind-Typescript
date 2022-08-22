@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
-import { ThemeContext } from '../Context';
+import { ThemeContext } from '../ThemeContext';
+import { DataContext } from '../DataContext';
 import Image from 'next/image';
 import { EmojiHappyIcon } from '@heroicons/react/outline';
 import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
@@ -7,9 +8,15 @@ import { useSession } from 'next-auth/react';
 import { db, storage } from '../firebase';
 import { collection, addDoc, Timestamp, setDoc, doc } from 'firebase/firestore';
 import { ref, getDownloadURL, uploadString } from 'firebase/storage';
+import { Divider } from './Divider ';
 
-export const InputBox = () => {
-  const { theme, setShow, setTitle, setDescription } = useContext(ThemeContext);
+interface Props {
+  setForceUpdate: (forceUpdate: boolean) => void;
+}
+
+export const InputBox = ({ setForceUpdate }: Props) => {
+  const { theme } = useContext(ThemeContext);
+  const { setShow, setTitle, setDescription } = useContext(DataContext);
   const { data: session } = useSession();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -59,7 +66,7 @@ export const InputBox = () => {
     }
 
     try {
-      // handles posts with no image attached
+      //   handles posts with no image attached
       if (!photoToPost) {
         console.log('post with NO photo');
         await addDoc(collection(db, 'posts'), {
@@ -69,22 +76,18 @@ export const InputBox = () => {
           image: session?.user?.image,
           timestamp: Timestamp.now(),
         });
-
         inputRef.current!.value = '';
         setPhotoToPost(null);
       }
-
-      // handles posts with image attached
+      //   handles posts with image attached
       if (photoToPost) {
         const photoRef = ref(storage, `posts/photo-${Date.now()}.png`);
-
+        console.log('post with photo');
         // upload photo to firebase storage
         await uploadString(photoRef, photoToPost as string, 'data_url').catch(
           (err) => console.error('there was an error uploading the photo', err)
         );
-
         const downloadURL = await getDownloadURL(photoRef);
-
         // adding the image URL to the object to be posted to the collection
         await addDoc(collection(db, 'postsWithPhotos'), {
           message: inputRef?.current?.value,
@@ -94,22 +97,29 @@ export const InputBox = () => {
           imageURL: downloadURL,
           timestamp: Timestamp.now(),
         });
-
         inputRef.current!.value = '';
         setPhotoToPost(null);
       }
-    } catch (err) {
-      console.error(err);
+
+      inputRef.current!.value = '';
+      setPhotoToPost(null);
+    } catch (error) {
+      console.error('input box error', error);
       setShow(true);
-      setTitle('Cannot send post to database');
-      setDescription('To stop spam I have locked the database');
+      setTitle('Error');
+      setDescription(`${error}`);
+    } finally {
+      console.log('running forced update');
+      setForceUpdate((prev) => !prev);
     }
   };
 
   return (
     <div
       className={`p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6  ${
-        !theme ? 'themeLight' : 'themeDark shadow-slate-600 shadow-sm '
+        !theme
+          ? 'themeLight'
+          : 'themeDark  bg-slate-800 shadow-slate-600 shadow-sm '
       }`}>
       <div className='flex gap-4 p-4 items-center'>
         {session && (
@@ -130,7 +140,9 @@ export const InputBox = () => {
             placeholder={
               !session
                 ? `Please sign in to make a post`
-                : `Whats on your mind ${session?.user?.name && ''}`
+                : `Whats on your mind, ${session?.user?.name
+                    ?.split(' ')
+                    ?.slice(0, 1)}?`
             }
           />
           <button hidden type='submit' onClick={sendPost}>
@@ -151,7 +163,7 @@ export const InputBox = () => {
           </div>
         )}
       </div>
-
+      <Divider />
       <div className='flex justify-evenly'>
         <div
           className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '} ${
