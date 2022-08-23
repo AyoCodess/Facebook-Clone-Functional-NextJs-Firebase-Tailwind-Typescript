@@ -44,11 +44,11 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
 
   return (
     <div
-      className={`flex flex-col  rounded-lg mt-5 shadow-md ${
+      className={`flex flex-col  sm:rounded-lg mt-5 shadow-md ${
         !theme ? 'themeLight bg-white' : 'themeDark bg-slate-800'
       }`}>
       <div
-        className={`p-5  mt-5  rounded-t-2xl shadow-sm ${
+        className={`p-5  mt-5  sm:rounded-t-2xl shadow-sm ${
           !theme ? 'lightTheme' : 'darkTheme  shadow-blue-900   '
         }`}>
         {/*post information */}
@@ -89,7 +89,7 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
 
       {/* Post Footer */}
       <div
-        className={`flex justify-between items-center rounded-b-2xl  shadow-md text-gray-400 border-t ${
+        className={`flex justify-between items-center sm:rounded-b-2xl  shadow-md text-gray-400 border-t ${
           !theme
             ? 'lightTheme'
             : 'darkTheme transition-shadow duration-75 border-t-slate-700 shadow-slate-800'

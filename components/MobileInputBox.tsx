@@ -14,7 +14,7 @@ interface Props {
   setForceUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const InputBox = ({ setForceUpdate }: Props) => {
+export const MobileInputBox = ({ setForceUpdate }: Props) => {
   const { theme } = useContext(ThemeContext);
   const { setShow, setTitle, setDescription } = useContext(DataContext);
   const { data: session } = useSession();
@@ -116,12 +116,12 @@ export const InputBox = ({ setForceUpdate }: Props) => {
 
   return (
     <div
-      className={` hidden sm:block p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6  ${
+      className={`  sm:hidden p-2  shadow-md text-gray-500 font-medium  ${
         !theme
           ? 'themeLight'
           : 'themeDark  bg-slate-800 shadow-slate-600 shadow-sm '
       }`}>
-      <div className='flex gap-4 p-4 items-center'>
+      <div className='flex  gap-4 p-4 items-center'>
         {session && (
           <Image
             className='rounded-full'

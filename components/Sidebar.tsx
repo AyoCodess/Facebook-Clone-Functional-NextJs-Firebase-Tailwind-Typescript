@@ -5,7 +5,7 @@ import { DataContext } from '../DataContext';
 import { ChevronDownIcon } from '@heroicons/react/outline';
 
 import { Divider, SidebarRow, SidebarYourShortcuts } from '../components';
-import { ViewListIcon, XCircleIcon } from '@heroicons/react/solid';
+import { ViewListIcon, XCircleIcon } from '@heroicons/react/outline';
 
 export const Sidebar = () => {
   const { data: session, status } = useSession();
@@ -26,21 +26,21 @@ export const Sidebar = () => {
           openMenu ? 'ml-3' : 'mx-auto'
         } mb-2 cursor-pointer ${
           !theme
-            ? 'lightTheme  hover:text-gray-400'
+            ? 'lightTheme text-gray-300 hover:text-gray-400'
             : 'darkTheme hover:text-white'
         }`}>
         {openMenu && (
           <XCircleIcon
-            className={` ${
+            className={` h-12 ${
               !theme ? 'lightTheme' : 'darkTheme'
             }text-gray-300 h-12`}
           />
         )}
         {!openMenu && (
           <ViewListIcon
-            className={` ${
+            className={` h-12 ${
               !theme ? 'lightTheme' : 'darkTheme'
-            }text-gray-300 h-12`}
+            }text-gray-400 `}
           />
         )}
       </p>

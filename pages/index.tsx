@@ -4,7 +4,15 @@ import Head from 'next/head';
 import React, { useContext, useEffect } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
-import { Header, Sidebar, Feed, Toast, SidebarTwo } from '../components';
+import {
+  Header,
+  Sidebar,
+  Feed,
+  Toast,
+  SidebarTwo,
+  MobileHeaderBottom,
+  MobileHeaderTop,
+} from '../components';
 import { useSession } from 'next-auth/react';
 import { Footer } from '../components/Footer';
 
@@ -30,7 +38,7 @@ const Home: NextPage<Props> = () => {
 
   return (
     <>
-      <div className={` h-screen  ${!theme ? 'themeLight ' : 'themeDark '} `}>
+      <div className={` h-screen   ${!theme ? 'themeLight ' : 'themeDark '} `}>
         <Head>
           <title>Meta Space</title>
           <link rel='icon' href='/favicon.ico' />
@@ -65,13 +73,17 @@ const Home: NextPage<Props> = () => {
         </Head>
         <Toast />
         <Header />
+        <MobileHeaderTop />
         <main
-          className={`flex   ${
+          className={`sm:flex   ${
             !theme ? 'lightTheme bg-gray-100' : ' darkTheme bg-slate-900'
           }`}>
+          {/*Ipad and larger screens App */}
           <Sidebar />
           <Feed />
           <SidebarTwo />
+          {/*Mobile App */}
+          <MobileHeaderBottom />
         </main>
         <Footer />
       </div>

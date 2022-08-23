@@ -5,7 +5,7 @@ export const Footer = () => {
   const { theme } = useContext(ThemeContext);
   return (
     <footer
-      className={` theme pb-10 pt-5 mx-w-lg mx-auto px-2  ${
+      className={` hidden sm:block theme pb-10 pt-5 mx-w-lg mx-auto px-2  ${
         !theme ? 'lightTheme bg-gray-100' : 'darkTheme bg-slate-900'
       }`}>
       <p className='text-center'>

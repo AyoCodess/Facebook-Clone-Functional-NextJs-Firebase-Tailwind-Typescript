@@ -21,3 +21,6 @@ export * from './Posts';
 export * from './Post';
 export * from './Toast';
 export * from './Divider ';
+export * from './MobileHeaderTop';
+export * from './MobileHeaderBottom';
+export * from './MobileInputBox';

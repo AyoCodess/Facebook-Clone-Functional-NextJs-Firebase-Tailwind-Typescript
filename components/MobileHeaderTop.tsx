@@ -4,7 +4,7 @@ import React, { useContext, useState } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 
-import { HeaderIcon, ThemeToggle } from '../components';
+import { HeaderIcon, ThemeToggle } from '.';
 import {
   BellIcon,
   ChatIcon,
@@ -24,7 +24,7 @@ import {
 
 import { useSession, signIn, signOut } from 'next-auth/react';
 
-export const Header = () => {
+export const MobileHeaderTop = () => {
   const { theme } = useContext(ThemeContext);
   const { setViewEveryonesPosts, viewEveryonesPosts } = useContext(DataContext);
   const { data: session } = useSession();
@@ -33,7 +33,7 @@ export const Header = () => {
   return (
     <>
       <div
-        className={` hidden sticky top-0 z-40  sm:flex items-center p-1 sm:p-[0.1rem]  lg:px-5 h-16 shadow-md 
+        className={`flex sticky top-0 z-40  sm:hidden items-center p-1 sm:p-[0.1rem]  lg:px-5 h-16 shadow-md 
      ${!theme ? 'themeLight ' : 'themeDark shadow-gray-800'}`}>
         {/* Left */}
         <div className='flex items-center'>
