@@ -25,3 +25,4 @@ export * from './MobileHeaderTop';
 export * from './MobileHeaderBottom';
 export * from './MobileInputbox';
 export * from './InputboxModal';
+export * from './MobileMenu';

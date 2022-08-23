@@ -26,19 +26,17 @@ export const MobileInputbox = () => {
             layout='fixed'
           />
         )}
-        <input
+        <div
           onClick={() => setModalOpen(true)}
-          disabled={!session}
-          className='rounded-full h-12 bg-gray-100 flex-grow px-5 focus:outline-none'
-          type='text'
-          placeholder={
-            !session
+          className='rounded-full h-12 bg-gray-100 flex-grow px-5'>
+          <p className='mt-3'>
+            {!session
               ? `Please sign in to make a post`
               : `Whats on your mind, ${session?.user?.name
                   ?.split(' ')
-                  ?.slice(0, 1)}?`
-          }
-        />
+                  ?.slice(0, 1)}?`}
+          </p>
+        </div>
       </div>
       <hr className='w-[100vw] border-[0.2rem] border-gray-300' />
     </div>

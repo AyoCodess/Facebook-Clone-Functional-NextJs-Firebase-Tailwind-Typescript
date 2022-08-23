@@ -4,7 +4,7 @@ import React, { useContext, useState } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 
-import { HeaderIcon, ThemeToggle } from '../components';
+import { HeaderIcon, ThemeToggle, MobileMenu } from '../components';
 import {
   BellIcon,
   ChatIcon,
@@ -12,7 +12,6 @@ import {
   UserGroupIcon,
   ViewGridIcon,
   DotsVerticalIcon,
-  ViewListIcon,
 } from '@heroicons/react/solid';
 
 import {
@@ -134,60 +133,8 @@ export const Header = () => {
             />
           </>
         )}
-        {/*Mobile view */}
-        {session && openMenu && (
-          <div className=' xl:hidden absolute bottom-[-19rem] right-0 w-42 mr-5 animate-popUp w-[17rem] '>
-            <div
-              className={` flex flex-col gap-2 p-3   rounded-lg ${
-                !theme
-                  ? 'lightTheme bg-white shadow'
-                  : 'darkTheme bg-slate-700 shadow-sm shadow-slate-400'
-              }`}>
-              <ThemeToggle className='mb-1' />
-              <div
-                className={`flex gap-2 items-center cursor-pointer rounded-xl p-2 ${
-                  !theme
-                    ? 'lightTheme hover:bg-gray-100'
-                    : 'darkTheme hover:bg-blue-500'
-                }`}
-                onClick={() => setViewEveryonesPosts((prev) => !prev)}>
-                <ViewListIcon className='icon block' />
-                <p className={`font-medium `}>{`${
-                  !viewEveryonesPosts
-                    ? "View Everyone's Posts"
-                    : ' View Your Posts'
-                }`}</p>
-              </div>
-              <div
-                className={`flex gap-2 items-center  rounded-xl p-2 ${
-                  !theme
-                    ? 'lightTheme hover:bg-gray-100'
-                    : 'darkTheme hover:bg-blue-500'
-                }`}>
-                <ViewGridIcon className='icon block' />
-                <p className='font-medium'> More</p>
-              </div>
-              <div
-                className={`flex gap-2 items-center rounded-xl p-2 ${
-                  !theme
-                    ? 'lightTheme hover:bg-gray-100'
-                    : 'darkTheme hover:bg-blue-500'
-                }`}>
-                <ChatIcon className='icon block' />
-                <p className='font-medium'> Messenger</p>
-              </div>
-              <div
-                className={`flex gap-2 items-center rounded-xl p-2 ${
-                  !theme
-                    ? 'lightTheme hover:bg-gray-100'
-                    : 'darkTheme hover:bg-blue-500'
-                }`}>
-                <BellIcon className='icon block' />
-                <p className='font-medium'> Notifications</p>
-              </div>
-            </div>
-          </div>
-        )}
+
+        <MobileMenu setOpenMenu={setOpenMenu} openMenu={openMenu} />
       </div>
     </>
   );

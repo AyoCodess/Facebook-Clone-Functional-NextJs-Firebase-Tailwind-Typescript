@@ -159,14 +159,22 @@ export const InputboxModal = () => {
             leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'>
             <div className=' w-96  justify-between inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:min-h-[20vh] sm:w-full'>
               <div>
-                <div className='bg-white px-2 pt-2 pb-4 sm:p-6 sm:pb-4'>
-                  <div className='sm:flex sm:items-start sm:mt-5'>
-                    <div className='text-center sm:mt-0 sm:ml-4 sm:text-left'>
+                <div className='bg-white px-2 pt-2 pb-4 '>
+                  <div className=''>
+                    <div className='text-center '>
                       <div className='flex justify-between items-center'>
                         {/*banner */}
-                        <XIcon className='h-6' />
+                        <XIcon
+                          className='h-6 hover:text-gray-500'
+                          onClick={() => setModalOpen(false)}
+                        />
                         <p className='text-sm'>Create post</p>
-                        <button className='px-2 py-1 bg-blue-500 font-medium text-white text-sm rounded-md'>
+                        <button
+                          onClick={(e) => {
+                            sendPost(e);
+                            setModalOpen(false);
+                          }}
+                          className='px-2 py-1 bg-blue-500 font-medium hover:bg-blue-400 text-white text-sm rounded-md'>
                           Post
                         </button>
                       </div>
@@ -205,7 +213,7 @@ export const InputboxModal = () => {
                           <textarea
                             disabled={!session}
                             ref={textareaRef}
-                            className='  flex-grow mt-4 px-2 focus:outline-none h-40 w-full break-words'
+                            className='  flex-grow mt-4 px-2 focus:outline-none h-28 w-full break-words'
                             placeholder={
                               !session
                                 ? `Please sign in to make a post`
@@ -228,9 +236,10 @@ export const InputboxModal = () => {
                               </p>
                             </div>
                           )}
-                          <button hidden type='submit' onClick={sendPost}>
+                          {/* <button hidden type='submit' onClick={sendPost}>
                             Submit
-                          </button>
+                          </button> */}{' '}
+                          {/*only works with input field */}
                         </form>
                       </div>
                     </div>
@@ -248,14 +257,16 @@ export const InputboxModal = () => {
                       }
                     }}
                     className={`inputIcon ${
-                      !theme ? '' : 'hover:bg-blue-500 '
-                    } ${
-                      session ? ' ' : ' hover:bg-transparent cursor-default'
-                    }`}>
+                      !theme
+                        ? 'themeLight'
+                        : 'themeDark bg-transparent hover:bg-blue-500 '
+                    } ${session ? '' : 'hover:bg-transparent cursor-default'}`}>
                     <CameraIcon className='h-7 text-green-400' />
                     <p
-                      className={`text-xs sm:text-sm xl:text-base ${
-                        !theme ? 'themeLight' : 'themeDark bg-transparent'
+                      className={`text-xs sm:text-sm xl:text-base  ${
+                        !theme
+                          ? 'themeLight bg-transparent'
+                          : 'themeDark bg-transparent'
                       }`}>
                       Photo/Video
                     </p>
