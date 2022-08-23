@@ -7,7 +7,13 @@ import {
   UserIcon,
   XIcon,
 } from '@heroicons/react/solid';
-import React, { useContext, useRef, useState, Fragment } from 'react';
+import React, {
+  useContext,
+  useRef,
+  useState,
+  Fragment,
+  useEffect,
+} from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 import { EmojiHappyIcon } from '@heroicons/react/outline';
@@ -21,9 +27,17 @@ export const InputboxModal = () => {
   const { setModalOpen, modalOpen, viewEveryonesPosts } =
     useContext(DataContext);
 
+  const [savedMessageRef, setSavedMessageRef] = useState<string | null>(null);
+
   const { theme } = useContext(ThemeContext);
-  const { setShow, setTitle, setDescription, setForceUpdate } =
-    useContext(DataContext);
+  const {
+    setShow,
+    setTitle,
+    setDescription,
+    setForceUpdate,
+    loading,
+    setLoading,
+  } = useContext(DataContext);
 
   const { data: session } = useSession();
 
@@ -58,9 +72,8 @@ export const InputboxModal = () => {
     photoPickerRef.current!.value = '';
   };
 
-  const sendPost = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const preSendPost = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
     // if there is no comment to post, do nothing
     if (!textareaRef.current!.value) {
       setShow(true);
@@ -72,51 +85,56 @@ export const InputboxModal = () => {
       );
       return;
     }
+    sendPost();
+  };
 
+  const sendPost = async () => {
     try {
+      setLoading(true);
       //   handles posts with no image attached
       if (!photoToPost) {
         console.log('post with NO photo');
         await addDoc(collection(db, 'posts'), {
-          message: textareaRef.current!.value,
+          message: savedMessageRef,
           name: session?.user?.name,
           email: session?.user?.email,
           image: session?.user?.image,
           timestamp: Timestamp.now(),
         });
-        textareaRef.current!.value = '';
         setPhotoToPost(null);
       }
       //   handles posts with image attached
       if (photoToPost) {
         const photoRef = ref(storage, `posts/photo-${Date.now()}.png`);
         console.log('post with photo');
+
         // upload photo to firebase storage
         await uploadString(photoRef, photoToPost as string, 'data_url').catch(
           (err) => console.error('there was an error uploading the photo', err)
         );
+
         const downloadURL = await getDownloadURL(photoRef);
+
         // adding the image URL to the object to be posted to the collection
         await addDoc(collection(db, 'postsWithPhotos'), {
-          message: textareaRef?.current?.value,
+          message: savedMessageRef,
           name: session?.user?.name,
           email: session?.user?.email,
           image: session?.user?.image,
           imageURL: downloadURL,
           timestamp: Timestamp.now(),
         });
-        textareaRef.current!.value = '';
-        setPhotoToPost(null);
-      }
 
-      textareaRef.current!.value = '';
-      setPhotoToPost(null);
+        setPhotoToPost(null);
+        setSavedMessageRef(null);
+      }
     } catch (error) {
-      console.error('input box error', error);
+      console.error('INPUT BOX ERROR', error);
       setShow(true);
       setTitle('Error');
       setDescription(`${error}`);
     } finally {
+      setLoading(false);
       console.log('running forced update');
       setForceUpdate((prev) => !prev);
     }
@@ -157,12 +175,19 @@ export const InputboxModal = () => {
             leave='ease-in duration-200'
             leaveFrom='opacity-100 translate-y-0 sm:scale-100'
             leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'>
-            <div className=' w-96  justify-between inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:min-h-[20vh] sm:w-full'>
+            <div
+              className={` w-96  justify-between inline-block align-bottom rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:min-h-[20vh] sm:w-full ${
+                !theme ? 'lightTheme bg-white' : 'darkTheme bg-transparent'
+              }`}>
               <div>
-                <div className='bg-white px-2 pt-2 pb-4 '>
+                <div
+                  className={` px-2 pt-2 pb-4 ${
+                    !theme ? 'lightTheme' : 'darkTheme bg-slate-800 text-white'
+                  }`}>
                   <div className=''>
                     <div className='text-center '>
-                      <div className='flex justify-between items-center'>
+                      <div
+                        className={`flex justify-between items-center cursor-pointer `}>
                         {/*banner */}
                         <XIcon
                           className='h-6 hover:text-gray-500'
@@ -171,7 +196,7 @@ export const InputboxModal = () => {
                         <p className='text-sm'>Create post</p>
                         <button
                           onClick={(e) => {
-                            sendPost(e);
+                            preSendPost(e);
                             setModalOpen(false);
                           }}
                           className='px-2 py-1 bg-blue-500 font-medium hover:bg-blue-400 text-white text-sm rounded-md'>
@@ -211,9 +236,14 @@ export const InputboxModal = () => {
                         </div>
                         <form className='flex flex-col  '>
                           <textarea
+                            onChange={(e) => setSavedMessageRef(e.target.value)}
                             disabled={!session}
                             ref={textareaRef}
-                            className='  flex-grow mt-4 px-2 focus:outline-none h-28 w-full break-words'
+                            className={`  flex-grow mt-4 px-2 focus:outline-none h-212 w-full break-words placeholder-inherit ${
+                              !theme
+                                ? 'lightTheme'
+                                : 'darkTheme bg-slate-800 text-white'
+                            }`}
                             placeholder={
                               !session
                                 ? `Please sign in to make a post`
@@ -247,7 +277,10 @@ export const InputboxModal = () => {
                 </div>
 
                 {/*footer */}
-                <div className='  border-t-4 shadow-lg rounded-2xl flex flex-col items-start p-2 '>
+                <div
+                  className={`border-t-4 shadow-lg rounded-2xl flex flex-col items-start p-2 ${
+                    !theme ? 'lightTheme' : 'darkTheme bg-slate-800'
+                  }`}>
                   <hr className='mx-auto w-10 border-2' />
 
                   <div

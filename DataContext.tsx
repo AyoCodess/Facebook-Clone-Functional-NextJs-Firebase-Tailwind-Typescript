@@ -22,6 +22,8 @@ interface DataContextType {
   setModalOpen: Dispatch<SetStateAction<boolean>>;
   forceUpdate: boolean;
   setForceUpdate: Dispatch<SetStateAction<boolean>>;
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }
 export const DataContext = createContext<DataContextType>({
   show: false,
@@ -36,6 +38,8 @@ export const DataContext = createContext<DataContextType>({
   setModalOpen: () => {},
   forceUpdate: false,
   setForceUpdate: () => {},
+  loading: false,
+  setLoading: () => {},
 });
 
 export const DataProvider = ({ children }: Props) => {
@@ -51,6 +55,7 @@ export const DataProvider = ({ children }: Props) => {
 
   const [forceUpdate, setForceUpdate] = useState(false); // updates posts when new post is added
   const [modalOpen, setModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false); // loading posts
 
   const contextValues = useMemo(
     () => ({
@@ -66,6 +71,8 @@ export const DataProvider = ({ children }: Props) => {
       setModalOpen,
       forceUpdate,
       setForceUpdate,
+      loading,
+      setLoading,
     }),
     [
       show,
@@ -80,6 +87,8 @@ export const DataProvider = ({ children }: Props) => {
       setModalOpen,
       forceUpdate,
       setForceUpdate,
+      loading,
+      setLoading,
     ]
   );
   return (

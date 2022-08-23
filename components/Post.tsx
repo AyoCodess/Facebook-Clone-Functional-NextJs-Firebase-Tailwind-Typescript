@@ -44,11 +44,11 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
 
   return (
     <div
-      className={`flex flex-col  sm:rounded-lg mt-5 shadow-md ${
+      className={`flex flex-col  sm:rounded-lg mt-3 shadow-md ${
         !theme ? 'themeLight bg-white' : 'themeDark bg-slate-800'
       }`}>
       <div
-        className={`p-5  mt-5  sm:rounded-t-2xl shadow-sm ${
+        className={`p-5    sm:rounded-t-2xl shadow-sm ${
           !theme ? 'lightTheme' : 'darkTheme  shadow-blue-900   '
         }`}>
         {/*post information */}

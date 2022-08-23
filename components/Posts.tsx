@@ -8,7 +8,7 @@ import {
   where,
 } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Post } from '../components';
+import { LoadingSpinner, Post } from '../components';
 import { useSession, getSession } from 'next-auth/react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
@@ -49,8 +49,14 @@ export const Posts = () => {
   const { data: session } = useSession();
   const [realTimePosts, setRealTimePosts] = useState<any[] | null>(null);
   const { theme } = useContext(ThemeContext);
-  const { setShow, setTitle, setDescription, viewEveryonesPosts, forceUpdate } =
-    useContext(DataContext);
+  const {
+    setShow,
+    setTitle,
+    setDescription,
+    viewEveryonesPosts,
+    forceUpdate,
+    loading,
+  } = useContext(DataContext);
   useEffect(() => {
     getUserSession();
   }, [forceUpdate, viewEveryonesPosts]);
@@ -128,20 +134,23 @@ export const Posts = () => {
 
   return (
     <div>
-      {realTimePosts &&
-        realTimePosts.map((post, i) => {
-          return (
-            <Post
-              key={i}
-              name={post.name}
-              message={post.message}
-              email={post.email}
-              timestamp={post.timestamp}
-              image={post.image}
-              postImage={post.imageURL}
-            />
-          );
-        })}
+      <>
+        {loading && <LoadingSpinner />}
+        {realTimePosts &&
+          realTimePosts.map((post, i) => {
+            return (
+              <Post
+                key={i}
+                name={post.name}
+                message={post.message}
+                email={post.email}
+                timestamp={post.timestamp}
+                image={post.image}
+                postImage={post.imageURL}
+              />
+            );
+          })}
+      </>
     </div>
   );
 };

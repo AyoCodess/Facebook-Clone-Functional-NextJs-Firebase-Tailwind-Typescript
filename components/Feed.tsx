@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Stories, InputBox, Posts, MobileInputbox } from '../components';
 import { useSession } from 'next-auth/react';
+import { DataContext } from '../DataContext';
 
 export const Feed = () => {
   const { data: session } = useSession();

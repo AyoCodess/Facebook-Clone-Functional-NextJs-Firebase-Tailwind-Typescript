@@ -60,10 +60,10 @@ export const MobileMenu = ({ openMenu, setOpenMenu }: Props) => {
               leaveFrom='opacity-100 translate-y-0 sm:scale-100'
               leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'>
               <div
-                className={` absolute top-16 right-0 xl:hidden animate-popUp mr-5  bg-white rounded-lg  shadow-xl transform transition-all h-80 w-60 ${
+                className={` absolute top-16 right-0 xl:hidden animate-popUp mr-5  bg-white rounded-lg  transform transition-all h-80 w-60 ${
                   !theme
-                    ? 'lightTheme bg-white shadow'
-                    : 'darkTheme bg-slate-700 shadow-sm shadow-slate-400'
+                    ? 'lightTheme bg-white  shadow-xl '
+                    : 'darkTheme bg-slate-800  shadow-slate-400'
                 }`}>
                 <div>
                   {session && (
@@ -73,7 +73,7 @@ export const MobileMenu = ({ openMenu, setOpenMenu }: Props) => {
                         className={`flex gap-2 items-center cursor-pointer rounded-xl p-2 ${
                           !theme
                             ? 'lightTheme hover:bg-gray-100'
-                            : 'darkTheme hover:bg-blue-500'
+                            : 'darkTheme hover:bg-blue-500 text-white'
                         }`}
                         onClick={() => setViewEveryonesPosts((prev) => !prev)}>
                         <ViewListIcon className='icon block' />
@@ -87,7 +87,7 @@ export const MobileMenu = ({ openMenu, setOpenMenu }: Props) => {
                         className={`flex gap-2 items-center  rounded-xl p-2 ${
                           !theme
                             ? 'lightTheme hover:bg-gray-100'
-                            : 'darkTheme hover:bg-blue-500'
+                            : 'darkTheme hover:bg-blue-500 text-white'
                         }`}>
                         <ViewGridIcon className='icon block' />
                         <p className='font-medium'> More</p>
@@ -96,7 +96,7 @@ export const MobileMenu = ({ openMenu, setOpenMenu }: Props) => {
                         className={`flex gap-2 items-center rounded-xl p-2 ${
                           !theme
                             ? 'lightTheme hover:bg-gray-100'
-                            : 'darkTheme hover:bg-blue-500'
+                            : 'darkTheme hover:bg-blue-500 text-white'
                         }`}>
                         <ChatIcon className='icon block' />
                         <p className='font-medium'> Messenger</p>
@@ -105,7 +105,7 @@ export const MobileMenu = ({ openMenu, setOpenMenu }: Props) => {
                         className={`flex gap-2 items-center rounded-xl p-2 ${
                           !theme
                             ? 'lightTheme hover:bg-gray-100'
-                            : 'darkTheme hover:bg-blue-500'
+                            : 'darkTheme hover:bg-blue-500 text-white'
                         }`}>
                         <BellIcon className='icon block' />
                         <p className='font-medium'> Notifications</p>
