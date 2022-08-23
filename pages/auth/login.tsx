@@ -16,18 +16,18 @@ interface Props {
 const login = ({ providers }: Props) => {
   console.log('providers', providers);
   return (
-    <div className='grid place-content-center meta-gradient h-screen'>
+    <div className='grid place-content-center bg-white h-screen'>
       <div>
-        <Image src='/images/withWords.png' width={400} height={400} />
+        <Image src='/images/noWords.png' width={600} height={600} />
       </div>
-      {providers &&
-        Object.values(providers).map((provider) => (
-          <div
-            className='grid place-content-center'
-            key={provider.name}
-            style={{ marginBottom: 0 }}>
+      {providers && (
+        <div
+          className='flex flex-col gap-2 mx-auto'
+          style={{ marginBottom: 0 }}>
+          {Object.values(providers).map((provider) => (
             <button
-              className='p-5 bg-blue-500 text-white rounded-full'
+              key={provider.name}
+              className='p-5 w-60 bg-blu-500 text-white bg-black hover:bg-blue-500 transition duration-300 rounded-full'
               onClick={() =>
                 signIn(provider.id, {
                   callbackUrl: `${window.location.origin}/`,
@@ -35,8 +35,9 @@ const login = ({ providers }: Props) => {
               }>
               Sign in with {provider.name}
             </button>
-          </div>
-        ))}
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -22,6 +22,7 @@ import { useSession } from 'next-auth/react';
 import { db, storage } from '../firebase';
 import { collection, addDoc, Timestamp, setDoc, doc } from 'firebase/firestore';
 import { ref, getDownloadURL, uploadString } from 'firebase/storage';
+import { InputboxModalButton } from '.';
 
 export const InputboxModal = () => {
   const { setModalOpen, modalOpen, viewEveryonesPosts } =
@@ -195,6 +196,7 @@ export const InputboxModal = () => {
                         />
                         <p className='text-sm'>Create post</p>
                         <button
+                          disabled={!session}
                           onClick={(e) => {
                             preSendPost(e);
                             setModalOpen(false);
@@ -210,7 +212,11 @@ export const InputboxModal = () => {
                         <div className='flex items-center gap-2 ml-1 '>
                           <img
                             className='rounded-full'
-                            src={session?.user?.image!}
+                            src={
+                              session?.user?.image!
+                                ? session?.user?.image!
+                                : '/images/noWords.png'
+                            }
                             width={40}
                             height={40}
                           />
@@ -241,12 +247,12 @@ export const InputboxModal = () => {
                             ref={textareaRef}
                             className={`  flex-grow mt-4 px-2 focus:outline-none h-212 w-full break-words placeholder-inherit ${
                               !theme
-                                ? 'lightTheme'
+                                ? 'lightTheme bg-white'
                                 : 'darkTheme bg-slate-800 text-white'
                             }`}
                             placeholder={
                               !session
-                                ? `Please sign in to make a post`
+                                ? `Please sign in to make a post, add photos and leave your mark!`
                                 : `Whats on your mind, ${session?.user?.name
                                     ?.split(' ')
                                     ?.slice(0, 1)}?`
@@ -261,7 +267,12 @@ export const InputboxModal = () => {
                                 className='object-contain max-h-60'
                                 alt='image post'
                               />
-                              <p className='text-xl text-red-500 mt-6 text-center p-2 bg-gray-100 rounded-xl'>
+                              <p
+                                className={`text-xl  mt-6 text-center p-2  rounded-xl w-40 mx-auto ${
+                                  !theme
+                                    ? 'lightTheme text-blue-500 bg-gray-100'
+                                    : 'darkTheme  text-white bg-blue-500'
+                                }`}>
                                 Remove Photo
                               </p>
                             </div>
@@ -310,20 +321,11 @@ export const InputboxModal = () => {
                       hidden
                     />
                   </div>
-                  <div
-                    className={`inputIcon ${
-                      !theme ? '' : 'hover:bg-blue-500 '
-                    } ${
-                      session ? ' ' : ' hover:bg-transparent cursor-default'
-                    }`}>
-                    <VideoCameraIcon className={`h-7 text-red-500  `} />
-                    <p
-                      className={`text-xs sm:text-sm xl:text-base ${
-                        !theme ? 'themeLight' : 'themeDark bg-transparent'
-                      }`}>
-                      Live Video
-                    </p>
-                  </div>
+
+                  <InputboxModalButton
+                    title='Live Video'
+                    iconColor='text-red-500 '
+                  />
                   <div
                     className={`inputIcon ${
                       !theme ? '' : 'hover:bg-blue-500 '
@@ -333,7 +335,9 @@ export const InputboxModal = () => {
                     <UserIcon className='h-7 text-blue-600' />
                     <p
                       className={`text-xs sm:text-sm xl:text-base  ${
-                        !theme ? 'themeLight' : 'themeDark bg-transparent'
+                        !theme
+                          ? 'themeLight bg-transparent'
+                          : 'themeDark bg-transparent'
                       }`}>
                       Tag People
                     </p>
@@ -348,7 +352,9 @@ export const InputboxModal = () => {
                     <EmojiHappyIcon className='h-7 text-yellow-300' />
                     <p
                       className={`text-xs sm:text-sm xl:text-base  ${
-                        !theme ? 'themeLight' : 'themeDark bg-transparent'
+                        !theme
+                          ? 'themeLight bg-transparent'
+                          : 'themeDark bg-transparent'
                       }`}>
                       Feeling/Activity
                     </p>
@@ -362,7 +368,9 @@ export const InputboxModal = () => {
                     <LocationMarkerIcon className='h-7 text-orange-600' />
                     <p
                       className={`text-xs sm:text-sm xl:text-base  ${
-                        !theme ? 'themeLight' : 'themeDark bg-transparent'
+                        !theme
+                          ? 'themeLight bg-transparent'
+                          : 'themeDark bg-transparent'
                       }`}>
                       Check In
                     </p>
@@ -377,7 +385,9 @@ export const InputboxModal = () => {
                     <ColorSwatchIcon className='h-7 text-teal-400' />
                     <p
                       className={`text-xs sm:text-sm xl:text-base  ${
-                        !theme ? 'themeLight' : 'themeDark bg-transparent'
+                        !theme
+                          ? 'themeLight bg-transparent'
+                          : 'themeDark bg-transparent'
                       }`}>
                       Background Color
                     </p>

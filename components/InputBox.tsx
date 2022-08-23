@@ -1,13 +1,10 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 import Image from 'next/image';
 import { EmojiHappyIcon } from '@heroicons/react/outline';
 import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
 import { useSession } from 'next-auth/react';
-import { db, storage } from '../firebase';
-import { collection, addDoc, Timestamp, setDoc, doc } from 'firebase/firestore';
-import { ref, getDownloadURL, uploadString } from 'firebase/storage';
 import { Divider } from './Divider ';
 
 export const InputBox = () => {
@@ -54,7 +51,7 @@ export const InputBox = () => {
           <VideoCameraIcon className={`h-7 text-red-500  `} />
           <p
             className={`text-xs sm:text-sm xl:text-base ${
-              !theme ? 'themeLight' : 'themeDark bg-transparent'
+              !theme ? 'themeLight bg-transparent' : 'themeDark bg-transparent'
             }`}>
             Live Video
           </p>
@@ -68,7 +65,7 @@ export const InputBox = () => {
           <CameraIcon className='h-7 text-green-400' />
           <p
             className={`text-xs sm:text-sm xl:text-base ${
-              !theme ? 'themeLight' : 'themeDark bg-transparent'
+              !theme ? 'themeLight bg-transparent' : 'themeDark bg-transparent'
             }`}>
             Photo/Video
           </p>
@@ -82,7 +79,7 @@ export const InputBox = () => {
           <EmojiHappyIcon className='h-7 text-yellow-300' />
           <p
             className={`text-xs sm:text-sm xl:text-base  ${
-              !theme ? 'themeLight' : 'themeDark bg-transparent'
+              !theme ? 'themeLight bg-transparent' : 'themeDark bg-transparent'
             }`}>
             Feeling/Activity
           </p>

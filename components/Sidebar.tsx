@@ -2,7 +2,7 @@ import { useSession } from 'next-auth/react';
 import React, { useContext, useState } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
-import { ChevronDownIcon } from '@heroicons/react/outline';
+import { ChevronDownIcon, XIcon } from '@heroicons/react/outline';
 
 import { Divider, SidebarRow, SidebarYourShortcuts } from '../components';
 import { ViewListIcon, XCircleIcon } from '@heroicons/react/outline';
@@ -11,7 +11,7 @@ export const Sidebar = () => {
   const { data: session, status } = useSession();
   const { theme } = useContext(ThemeContext);
   const { setViewEveryonesPosts, viewEveryonesPosts } = useContext(DataContext);
-  const [openMenu, setOpenMenu] = useState(false);
+  const [openMenu, setOpenMenu] = useState(true);
 
   return (
     <div
@@ -30,15 +30,15 @@ export const Sidebar = () => {
             : 'darkTheme hover:text-white'
         }`}>
         {openMenu && (
-          <XCircleIcon
-            className={` h-12 ${
+          <XIcon
+            className={` h-8 ${
               !theme ? 'lightTheme' : 'darkTheme'
-            }text-gray-300 h-12`}
+            }text-gray-300 h-12 ml-2`}
           />
         )}
         {!openMenu && (
           <ViewListIcon
-            className={` h-12 ${
+            className={` h-8 ${
               !theme ? 'lightTheme' : 'darkTheme'
             }text-gray-400 `}
           />

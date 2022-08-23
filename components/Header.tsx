@@ -4,7 +4,14 @@ import React, { useContext, useState } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 
-import { HeaderIcon, ThemeToggle, MobileMenu } from '../components';
+import {
+  HeaderIcon,
+  ThemeToggle,
+  MobileMenu,
+  Search,
+  SignInOutBtn,
+  SignInOutButton,
+} from '../components';
 import {
   BellIcon,
   ChatIcon,
@@ -21,11 +28,10 @@ import {
   ShoppingCartIcon,
 } from '@heroicons/react/outline';
 
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 export const Header = () => {
   const { theme } = useContext(ThemeContext);
-  const { setViewEveryonesPosts, viewEveryonesPosts } = useContext(DataContext);
   const { data: session } = useSession();
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -45,40 +51,9 @@ export const Header = () => {
               layout='fixed'
             />
           </div>
-          {!session && (
-            <button
-              className={`py-2 px-3 rounded-full w-24 ml-5  ${
-                !theme
-                  ? 'themeLight bg-blue-500 text-white '
-                  : ' themeDark shadow border border-white hover:bg-blue-500 hover:border-0'
-              }`}
-              onClick={() => signIn()}>
-              Sign In
-            </button>
-          )}
-
-          {session && (
-            <button
-              className={`py-2 px-3 rounded-full w-24 ml-5  ${
-                !theme
-                  ? 'themeLight bg-blue-500 text-white '
-                  : 'themeDark shadow border border-white hover:bg-blue-500 hover:border-0'
-              }`}
-              onClick={() => signOut()}>
-              Sign Out
-            </button>
-          )}
-          <div
-            className={`flex ml-2 2xl:ml-5 items-center rounded-full bg-gray-100 p-2 `}>
-            <SearchIcon className='h-6 text-gray-600 ' />
-            <input
-              type='text'
-              className={` hidden ${
-                !session ? 'md:inline-flex' : '2xl:inline-flex'
-              }  ml-2 bg-transparent outline-none placeholder-gray-500 flex-shrink`}
-              placeholder='Search Metaspace'
-            />
-          </div>
+          {!session && <SignInOutButton login='signin' />}
+          {session && <SignInOutButton login='signout' />}
+          <Search />
         </div>
         {/*Center */}
         <div

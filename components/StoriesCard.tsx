@@ -45,10 +45,14 @@ export const StoriesCard = ({ name, src, profile, active, hide }: Props) => {
           layout='fill'
         />
       )}
-      {active && session?.user && (
+      {active && (
         <Image
           className=' object-contain object-top filter rounded-xl'
-          src={session?.user?.image!}
+          src={
+            session?.user?.image!
+              ? session?.user?.image!
+              : '/images/noWords.png'
+          }
           layout='fill'
         />
       )}
