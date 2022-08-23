@@ -23,4 +23,5 @@ export * from './Toast';
 export * from './Divider ';
 export * from './MobileHeaderTop';
 export * from './MobileHeaderBottom';
-export * from './MobileInputBox';
+export * from './MobileInputbox';
+export * from './InputboxModal';

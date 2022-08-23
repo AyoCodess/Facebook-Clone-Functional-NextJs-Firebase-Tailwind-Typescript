@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { Stories, InputBox, Posts, MobileInputBox } from '../components';
+import { Stories, InputBox, Posts, MobileInputbox } from '../components';
 import { useSession } from 'next-auth/react';
 
 export const Feed = () => {
   const { data: session } = useSession();
-  const [forceUpdate, setForceUpdate] = useState<boolean>(false); // updates posts when new post is added
+
   return (
     <div className='flex-grow h-[85vh] sm:h-screen pb-5 sm:pt-6 sm:ml-2  sm:mr-4 overflow-y-auto scrollbar-hide sm:px-2'>
       <div className='mx-auto max-w-4xl'>
-        <MobileInputBox setForceUpdate={setForceUpdate} />
+        <MobileInputbox />
         <Stories />
-        <InputBox setForceUpdate={setForceUpdate} />
-        {session && <Posts forceUpdate={forceUpdate} />}
+        <InputBox />
+        {session && <Posts />}
       </div>
     </div>
   );

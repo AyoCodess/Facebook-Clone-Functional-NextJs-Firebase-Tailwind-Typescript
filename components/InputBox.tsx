@@ -10,13 +10,11 @@ import { collection, addDoc, Timestamp, setDoc, doc } from 'firebase/firestore';
 import { ref, getDownloadURL, uploadString } from 'firebase/storage';
 import { Divider } from './Divider ';
 
-interface Props {
-  setForceUpdate: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
-export const InputBox = ({ setForceUpdate }: Props) => {
+
+export const InputBox = () => {
   const { theme } = useContext(ThemeContext);
-  const { setShow, setTitle, setDescription } = useContext(DataContext);
+  const { setShow, setTitle, setDescription, setForceUpdate } = useContext(DataContext);
   const { data: session } = useSession();
 
   const inputRef = useRef<HTMLInputElement>(null);

@@ -45,11 +45,11 @@ interface Props {
   forceUpdate: boolean;
 }
 
-export const Posts = ({ forceUpdate }: Props) => {
+export const Posts = () => {
   const { data: session } = useSession();
   const [realTimePosts, setRealTimePosts] = useState<any[] | null>(null);
   const { theme } = useContext(ThemeContext);
-  const { setShow, setTitle, setDescription, viewEveryonesPosts } =
+  const { setShow, setTitle, setDescription, viewEveryonesPosts, forceUpdate } =
     useContext(DataContext);
   useEffect(() => {
     getUserSession();

@@ -12,6 +12,7 @@ import {
   SidebarTwo,
   MobileHeaderBottom,
   MobileHeaderTop,
+  InputboxModal,
 } from '../components';
 import { useSession } from 'next-auth/react';
 import { Footer } from '../components/Footer';
@@ -72,6 +73,7 @@ const Home: NextPage<Props> = () => {
           {/* <!-- * META TAGS FOR SOCIAL MEDIA ENDS * -->*/}
         </Head>
         <Toast />
+        <InputboxModal />
         <Header />
         <MobileHeaderTop />
         <main

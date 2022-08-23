@@ -20,7 +20,7 @@ export const StoriesCard = ({ name, src, profile, active, hide }: Props) => {
     <div
       className={` ${
         hide ? 'hidden 2xl:block' : ' '
-      } relative h-64 w-40 cursor-pointer overflow-x transition duration-200 transform ease-in hover:scale-105 hover:animate-pulse rounded-b-xl  ${
+      } relative h-40 sm:h-64 w-40 cursor-pointer overflow-x transition duration-200 transform ease-in hover:scale-105 hover:animate-pulse rounded-b-xl  ${
         !theme
           ? 'border border-gray-100 shadow rounded-t-xl'
           : ' shadow-blue-900 shadow-sm hover:shadow-none'
@@ -60,11 +60,11 @@ export const StoriesCard = ({ name, src, profile, active, hide }: Props) => {
       {active && (
         <>
           <div
-            className={`relative   mt-[8.8rem] md:mt-[8.7rem] rounded-b-3xl py-2 opacity-100  text-blue-500 text-sm font-bold truncate ${
+            className={`relative   mt-[3.4rem] sm:mt-[8.8rem] md:mt-[8.7rem] rounded-b-3xl py-2 opacity-100  text-blue-500 text-sm font-bold truncate ${
               !theme ? 'lightTheme bg-white' : 'darkTheme'
             }`}>
             <div className='flex flex-col items-center'>
-              <PlusCircleIcon className='rounded-full  bg-blue-600  h-12 text-white' />
+              <PlusCircleIcon className='rounded-full  bg-blue-600  h-10 text-white' />
               <p className='text-white'>{name}</p>
               <p className='text-sm flex   text-gray-900  font-bold px-1 '>
                 Create <span className='hidden md:block'>&nbsp;story</span>

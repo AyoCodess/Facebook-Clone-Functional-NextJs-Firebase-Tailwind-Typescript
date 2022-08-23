@@ -5,7 +5,7 @@ export const StoriesHeader = () => {
   const { theme } = useContext(ThemeContext);
   return (
     <div
-      className={`flex justify-between sm:rounded-t-xl items-center text-xl py-1 ${
+      className={`flex justify-between sm:rounded-t-xl items-center sm:text-xl py-1 ${
         !theme
           ? 'lightTheme bg-white border-gray-200  border-b  '
           : 'darkTheme bg-slate-700'

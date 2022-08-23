@@ -18,6 +18,10 @@ interface DataContextType {
   setDescription: Dispatch<SetStateAction<string>>;
   viewEveryonesPosts: boolean;
   setViewEveryonesPosts: Dispatch<SetStateAction<boolean>>;
+  modalOpen: boolean;
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
+  forceUpdate: boolean;
+  setForceUpdate: Dispatch<SetStateAction<boolean>>;
 }
 export const DataContext = createContext<DataContextType>({
   show: false,
@@ -28,11 +32,15 @@ export const DataContext = createContext<DataContextType>({
   setDescription: () => {},
   viewEveryonesPosts: false,
   setViewEveryonesPosts: () => {},
+  modalOpen: false,
+  setModalOpen: () => {},
+  forceUpdate: false,
+  setForceUpdate: () => {},
 });
 
 export const DataProvider = ({ children }: Props) => {
   // view all posts from all users in the database
-  const [viewEveryonesPosts, setViewEveryonesPosts] = useState<boolean>(false);
+  const [viewEveryonesPosts, setViewEveryonesPosts] = useState(false);
 
   // toast
   const [show, setShow] = useState(false); // used to alter user that the database is not writable yet
@@ -40,6 +48,9 @@ export const DataProvider = ({ children }: Props) => {
   const [description, setDescription] = useState(
     'To stop spam I have locked the database'
   );
+
+  const [forceUpdate, setForceUpdate] = useState(false); // updates posts when new post is added
+  const [modalOpen, setModalOpen] = useState(false);
 
   const contextValues = useMemo(
     () => ({
@@ -51,6 +62,10 @@ export const DataProvider = ({ children }: Props) => {
       setDescription,
       viewEveryonesPosts,
       setViewEveryonesPosts,
+      modalOpen,
+      setModalOpen,
+      forceUpdate,
+      setForceUpdate,
     }),
     [
       show,
@@ -61,6 +76,10 @@ export const DataProvider = ({ children }: Props) => {
       setDescription,
       viewEveryonesPosts,
       setViewEveryonesPosts,
+      modalOpen,
+      setModalOpen,
+      forceUpdate,
+      setForceUpdate,
     ]
   );
   return (
