@@ -56,7 +56,7 @@ This project was mainly used to keep my CSS skills sharp, get familiar with fire
 <img src='https://i.imgur.com/7JeVYmj.png' width='700px' height='500px'>
 
 <img src='https://i.imgur.com/OFF04Pr.png' width='600px' height='750px'>
-<img src='https://i.imgur.com/16IsQF1.png' width='600px' height='600px'>
+<img src='https://i.imgur.com/16IsQF1.png' width='600px' height='500px'>
 
 <img src='https://i.imgur.com/uwSiFxe.png' width='600px' height='730px'>
 <img src='https://i.imgur.com/U0JD4Uq.png' width='600px' height='730px'>
