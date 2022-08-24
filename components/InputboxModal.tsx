@@ -1,28 +1,26 @@
 import { Dialog, Transition } from '@headlessui/react';
 import {
   ColorSwatchIcon,
-  InformationCircleIcon,
   LocationMarkerIcon,
-  ScaleIcon,
   UserIcon,
+  VideoCameraIcon,
   XIcon,
 } from '@heroicons/react/solid';
-import React, {
-  useContext,
-  useRef,
-  useState,
-  Fragment,
-  useEffect,
-} from 'react';
+import React, { useContext, useRef, useState, Fragment } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 import { EmojiHappyIcon } from '@heroicons/react/outline';
-import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
+import { CameraIcon } from '@heroicons/react/solid';
 import { useSession } from 'next-auth/react';
 import { db, storage } from '../firebase';
-import { collection, addDoc, Timestamp, setDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { ref, getDownloadURL, uploadString } from 'firebase/storage';
-import { InputboxModalButton } from '.';
+import {
+  InputboxModalButton,
+  InputboxModalHeader,
+  InputboxModalTextareaForm,
+  InputboxModalUserInfo,
+} from '.';
 
 export const InputboxModal = () => {
   const { setModalOpen, modalOpen, viewEveryonesPosts } =
@@ -187,106 +185,24 @@ export const InputboxModal = () => {
                   }`}>
                   <div className=''>
                     <div className='text-center '>
-                      <div
-                        className={`flex justify-between items-center cursor-pointer `}>
-                        {/*banner */}
-                        <XIcon
-                          className='h-6 hover:text-gray-500'
-                          onClick={() => setModalOpen(false)}
-                        />
-                        <p className='text-sm'>Create post</p>
-                        <button
-                          disabled={!session}
-                          onClick={(e) => {
-                            preSendPost(e);
-                            setModalOpen(false);
-                          }}
-                          className='px-2 py-1 bg-blue-500 font-medium hover:bg-blue-400 text-white text-sm rounded-md'>
-                          Post
-                        </button>
-                      </div>
+                      <InputboxModalHeader
+                        Icon={XIcon}
+                        setModalOpen={setModalOpen}
+                        preSendPost={preSendPost}
+                      />
                       <hr className='border mt-2 w-[100vw] ml-[-2rem]' />
-
                       <div className='mt-2'>
-                        {/*post information */}
-                        <div className='flex items-center gap-2 ml-1 '>
-                          <img
-                            className='rounded-full'
-                            src={
-                              session?.user?.image!
-                                ? session?.user?.image!
-                                : '/images/noWords.png'
-                            }
-                            width={40}
-                            height={40}
-                          />
-                          <div>
-                            <p className='font-medium'>{session?.user?.name}</p>
-                            <div
-                              className={` flex gap-1 text-xs  ${
-                                !theme
-                                  ? 'lightTheme text-gray-400'
-                                  : 'darkTheme text-white'
-                              }`}>
-                              <p className='border p-[0.1rem] rounded-md'>
-                                friends
-                              </p>
-                              <p className='border p-[0.1rem] rounded-md'>
-                                album
-                              </p>
-                              <p className='border p-[0.1rem] rounded-md'>
-                                off
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <form className='flex flex-col  '>
-                          <textarea
-                            onChange={(e) => setSavedMessageRef(e.target.value)}
-                            disabled={!session}
-                            ref={textareaRef}
-                            className={`  flex-grow mt-4 px-2 focus:outline-none h-212 w-full break-words placeholder-inherit ${
-                              !theme
-                                ? 'lightTheme bg-white'
-                                : 'darkTheme bg-slate-800 text-white'
-                            }`}
-                            placeholder={
-                              !session
-                                ? `Please sign in to make a post, add photos and leave your mark!`
-                                : `Whats on your mind, ${session?.user?.name
-                                    ?.split(' ')
-                                    ?.slice(0, 1)}?`
-                            }
-                          />
-                          {photoToPost && (
-                            <div
-                              onClick={removePhotoToPost}
-                              className='flex flex-col filter mt-4 hover:brightness-110  hover:scale-105 transition duration-150 cursor-pointer '>
-                              <img
-                                src={photoToPost as string}
-                                className='object-contain max-h-60'
-                                alt='image post'
-                              />
-                              <p
-                                className={`text-xl  mt-6 text-center p-2  rounded-xl w-40 mx-auto ${
-                                  !theme
-                                    ? 'lightTheme text-blue-500 bg-gray-100'
-                                    : 'darkTheme  text-white bg-blue-500'
-                                }`}>
-                                Remove Photo
-                              </p>
-                            </div>
-                          )}
-                          {/* <button hidden type='submit' onClick={sendPost}>
-                            Submit
-                          </button> */}{' '}
-                          {/*only works with input field */}
-                        </form>
+                        <InputboxModalUserInfo />
+                        <InputboxModalTextareaForm
+                          setSavedMessageRef={setSavedMessageRef}
+                          removePhotoToPost={removePhotoToPost}
+                          photoToPost={photoToPost}
+                          textareaRef={textareaRef}
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
-
                 {/*footer */}
                 <div
                   className={`border-t-4 shadow-lg rounded-2xl flex flex-col items-start p-2 ${
@@ -294,104 +210,44 @@ export const InputboxModal = () => {
                   }`}>
                   <hr className='mx-auto w-10 border-2' />
 
-                  <div
+                  <InputboxModalButton
                     onClick={() => {
                       if (session) {
                         photoPickerRef?.current?.click();
                       }
                     }}
-                    className={`inputIcon ${
-                      !theme
-                        ? 'themeLight'
-                        : 'themeDark bg-transparent hover:bg-blue-500 '
-                    } ${session ? '' : 'hover:bg-transparent cursor-default'}`}>
-                    <CameraIcon className='h-7 text-green-400' />
-                    <p
-                      className={`text-xs sm:text-sm xl:text-base  ${
-                        !theme
-                          ? 'themeLight bg-transparent'
-                          : 'themeDark bg-transparent'
-                      }`}>
-                      Photo/Video
-                    </p>
-                    <input
-                      type='file'
-                      ref={photoPickerRef}
-                      onChange={(e) => addPhotoToPost(e)}
-                      hidden
-                    />
-                  </div>
-
+                    Icon={CameraIcon}
+                    title='Photo/Video'
+                    iconColor=' text-green-400'
+                    fileUpload={true}
+                    fileUploadOnChange={(e) => addPhotoToPost(e)}
+                    refProp={photoPickerRef}
+                  />
                   <InputboxModalButton
+                    Icon={VideoCameraIcon}
                     title='Live Video'
                     iconColor='text-red-500 '
                   />
-                  <div
-                    className={`inputIcon ${
-                      !theme ? '' : 'hover:bg-blue-500 '
-                    } ${
-                      session ? ' ' : ' hover:bg-transparent cursor-default'
-                    }`}>
-                    <UserIcon className='h-7 text-blue-600' />
-                    <p
-                      className={`text-xs sm:text-sm xl:text-base  ${
-                        !theme
-                          ? 'themeLight bg-transparent'
-                          : 'themeDark bg-transparent'
-                      }`}>
-                      Tag People
-                    </p>
-                  </div>
-
-                  <div
-                    className={`inputIcon ${
-                      !theme ? '' : 'hover:bg-blue-500 '
-                    } ${
-                      session ? ' ' : ' hover:bg-transparent cursor-default'
-                    }`}>
-                    <EmojiHappyIcon className='h-7 text-yellow-300' />
-                    <p
-                      className={`text-xs sm:text-sm xl:text-base  ${
-                        !theme
-                          ? 'themeLight bg-transparent'
-                          : 'themeDark bg-transparent'
-                      }`}>
-                      Feeling/Activity
-                    </p>
-                  </div>
-                  <div
-                    className={`inputIcon ${
-                      !theme ? '' : 'hover:bg-blue-500 '
-                    } ${
-                      session ? ' ' : ' hover:bg-transparent cursor-default'
-                    }`}>
-                    <LocationMarkerIcon className='h-7 text-orange-600' />
-                    <p
-                      className={`text-xs sm:text-sm xl:text-base  ${
-                        !theme
-                          ? 'themeLight bg-transparent'
-                          : 'themeDark bg-transparent'
-                      }`}>
-                      Check In
-                    </p>
-                  </div>
-
-                  <div
-                    className={`inputIcon ${
-                      !theme ? '' : 'hover:bg-blue-500 '
-                    } ${
-                      session ? ' ' : ' hover:bg-transparent cursor-default'
-                    }`}>
-                    <ColorSwatchIcon className='h-7 text-teal-400' />
-                    <p
-                      className={`text-xs sm:text-sm xl:text-base  ${
-                        !theme
-                          ? 'themeLight bg-transparent'
-                          : 'themeDark bg-transparent'
-                      }`}>
-                      Background Color
-                    </p>
-                  </div>
+                  <InputboxModalButton
+                    Icon={UserIcon}
+                    title='Tag People'
+                    iconColor='text-blue-600 '
+                  />
+                  <InputboxModalButton
+                    Icon={EmojiHappyIcon}
+                    title='Feeling/Activity'
+                    iconColor='text-yellow-300 '
+                  />
+                  <InputboxModalButton
+                    Icon={LocationMarkerIcon}
+                    title='Check In'
+                    iconColor='text-orange-600 '
+                  />
+                  <InputboxModalButton
+                    Icon={ColorSwatchIcon}
+                    title='Check In'
+                    iconColor='text-teal-400'
+                  />
                 </div>
               </div>
             </div>
