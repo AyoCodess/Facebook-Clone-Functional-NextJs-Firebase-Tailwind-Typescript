@@ -24,7 +24,7 @@ export * from './Post';
 export * from './PostButton';
 export * from './Toast';
 export * from './Divider ';
-export * from './MobileInputbox';
+export * from './MobileInputboxx';
 export * from './MobileHeaderTop';
 export * from './MobileHeaderBottom';
 export * from './InputboxModal';
