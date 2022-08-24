@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stories, InputBox, Posts, MobileInputbox } from '../components';
+import { Stories, InputBox, Posts, MobileInputbox } from '.';
 import { useSession } from 'next-auth/react';
 
 export const Feed = () => {
