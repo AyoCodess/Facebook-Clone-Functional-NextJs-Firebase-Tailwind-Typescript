@@ -2,14 +2,12 @@ import Image from 'next/image';
 
 import React, { useContext, useState } from 'react';
 import { ThemeContext } from '../ThemeContext';
-import { DataContext } from '../DataContext';
 
 import {
   HeaderIcon,
   ThemeToggle,
   MobileMenu,
   Search,
-  SignInOutBtn,
   SignInOutButton,
 } from '../components';
 import {
@@ -21,12 +19,7 @@ import {
   DotsVerticalIcon,
 } from '@heroicons/react/solid';
 
-import {
-  FlagIcon,
-  PlayIcon,
-  SearchIcon,
-  ShoppingCartIcon,
-} from '@heroicons/react/outline';
+import { FlagIcon, PlayIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 
 import { useSession } from 'next-auth/react';
 

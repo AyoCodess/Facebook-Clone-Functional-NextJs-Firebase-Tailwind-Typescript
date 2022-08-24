@@ -10,7 +10,9 @@
     "saraking",
     "Shotwell",
     "signin",
-    "signout"
+    "signout",
+    "xxxl",
+    "xxxxl"
   ],
   "search.exclude": {
     "**/*.code-search": false,

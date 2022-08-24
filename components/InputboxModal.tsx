@@ -245,7 +245,7 @@ export const InputboxModal = () => {
                   />
                   <InputboxModalButton
                     Icon={ColorSwatchIcon}
-                    title='Check In'
+                    title='Background Change'
                     iconColor='text-teal-400'
                   />
                 </div>

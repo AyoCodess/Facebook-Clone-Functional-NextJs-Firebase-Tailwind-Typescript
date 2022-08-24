@@ -12,6 +12,7 @@ import {
 
 import { useSession } from 'next-auth/react';
 import { Dialog, Transition } from '@headlessui/react';
+import { MobileMenuButton } from './MobileMenuButton';
 
 interface Props {
   openMenu: boolean;
@@ -67,49 +68,16 @@ export const MobileMenu = ({ openMenu, setOpenMenu }: Props) => {
                 }`}>
                 <div>
                   {session && (
-                    <div className={` flex flex-col gap-2 p-3    `}>
+                    <div className={` flex flex-col gap-2 p-3 my-2  `}>
                       <ThemeToggle className='mb-1' />
-                      <div
-                        className={`flex gap-2 items-center cursor-pointer rounded-xl p-2 ${
-                          !theme
-                            ? 'lightTheme hover:bg-gray-100'
-                            : 'darkTheme hover:bg-blue-500 text-white'
-                        }`}
-                        onClick={() => setViewEveryonesPosts((prev) => !prev)}>
-                        <ViewListIcon className='icon block' />
-                        <p className={`font-medium `}>{`${
-                          !viewEveryonesPosts
-                            ? "View Everyone's Posts"
-                            : ' View Your Posts'
-                        }`}</p>
-                      </div>
-                      <div
-                        className={`flex gap-2 items-center  rounded-xl p-2 ${
-                          !theme
-                            ? 'lightTheme hover:bg-gray-100'
-                            : 'darkTheme hover:bg-blue-500 text-white'
-                        }`}>
-                        <ViewGridIcon className='icon block' />
-                        <p className='font-medium'> More</p>
-                      </div>
-                      <div
-                        className={`flex gap-2 items-center rounded-xl p-2 ${
-                          !theme
-                            ? 'lightTheme hover:bg-gray-100'
-                            : 'darkTheme hover:bg-blue-500 text-white'
-                        }`}>
-                        <ChatIcon className='icon block' />
-                        <p className='font-medium'> Messenger</p>
-                      </div>
-                      <div
-                        className={`flex gap-2 items-center rounded-xl p-2 ${
-                          !theme
-                            ? 'lightTheme hover:bg-gray-100'
-                            : 'darkTheme hover:bg-blue-500 text-white'
-                        }`}>
-                        <BellIcon className='icon block' />
-                        <p className='font-medium'> Notifications</p>
-                      </div>
+                      <MobileMenuButton
+                        Icon={ViewListIcon}
+                        onClick={() => setViewEveryonesPosts((prev) => !prev)}
+                        viewEveryonesPosts={viewEveryonesPosts}
+                      />
+                      <MobileMenuButton Icon={ViewGridIcon} title='More' />
+                      <MobileMenuButton Icon={ChatIcon} title='Messenger' />
+                      <MobileMenuButton Icon={BellIcon} title='Notifications' />
                     </div>
                   )}
                 </div>

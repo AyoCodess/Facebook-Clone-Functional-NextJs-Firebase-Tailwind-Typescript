@@ -5,7 +5,7 @@ import { DataContext } from '../DataContext';
 import { ChevronDownIcon, XIcon } from '@heroicons/react/outline';
 
 import { Divider, SidebarRow, SidebarYourShortcuts } from '../components';
-import { ViewListIcon, XCircleIcon } from '@heroicons/react/outline';
+import { ViewListIcon } from '@heroicons/react/outline';
 
 export const Sidebar = () => {
   const { data: session, status } = useSession();

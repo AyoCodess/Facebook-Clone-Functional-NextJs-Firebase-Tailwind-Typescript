@@ -1,34 +1,13 @@
-import Image from 'next/image';
-
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { ThemeContext } from '../ThemeContext';
-import { DataContext } from '../DataContext';
 
-import { HeaderIcon, ThemeToggle } from '.';
-import {
-  BellIcon,
-  ChatIcon,
-  HomeIcon,
-  UserGroupIcon,
-  ViewGridIcon,
-  DotsVerticalIcon,
-  ViewListIcon,
-} from '@heroicons/react/solid';
+import { HeaderIcon } from '.';
+import { HomeIcon, UserGroupIcon } from '@heroicons/react/solid';
 
-import {
-  FlagIcon,
-  PlayIcon,
-  SearchIcon,
-  ShoppingCartIcon,
-} from '@heroicons/react/outline';
-
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { FlagIcon, PlayIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 
 export const MobileHeaderBottom = () => {
   const { theme } = useContext(ThemeContext);
-  const { setViewEveryonesPosts, viewEveryonesPosts } = useContext(DataContext);
-  const { data: session } = useSession();
-  const [openMenu, setOpenMenu] = useState(false);
 
   return (
     <>

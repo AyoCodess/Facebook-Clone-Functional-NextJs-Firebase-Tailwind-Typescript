@@ -6,6 +6,7 @@ import { EmojiHappyIcon } from '@heroicons/react/outline';
 import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
 import { useSession } from 'next-auth/react';
 import { Divider } from './Divider ';
+import { InputboxModalButton } from './InputboxModalButton';
 
 export const InputBox = () => {
   const { theme } = useContext(ThemeContext);
@@ -43,47 +44,26 @@ export const InputBox = () => {
       </div>
       <Divider />
       <div className='flex justify-evenly'>
-        <div
+        <InputboxModalButton
+          Icon={VideoCameraIcon}
+          iconColor='text-red-500'
+          title='Live Video'
           onClick={() => setModalOpen(true)}
-          className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '} ${
-            session ? ' ' : ' hover:bg-transparent cursor-default'
-          }`}>
-          <VideoCameraIcon className={`h-7 text-red-500  `} />
-          <p
-            className={`text-xs sm:text-sm xl:text-base ${
-              !theme ? 'themeLight bg-transparent' : 'themeDark bg-transparent'
-            }`}>
-            Live Video
-          </p>
-        </div>
+        />
 
-        <div
+        <InputboxModalButton
+          Icon={CameraIcon}
+          iconColor='text-green-400'
+          title='Photo/Video'
           onClick={() => setModalOpen(true)}
-          className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '} ${
-            session ? ' ' : ' hover:bg-transparent cursor-default'
-          }`}>
-          <CameraIcon className='h-7 text-green-400' />
-          <p
-            className={`text-xs sm:text-sm xl:text-base ${
-              !theme ? 'themeLight bg-transparent' : 'themeDark bg-transparent'
-            }`}>
-            Photo/Video
-          </p>
-        </div>
+        />
 
-        <div
+        <InputboxModalButton
+          Icon={EmojiHappyIcon}
+          iconColor='text-yellow-300'
+          title='Feeling/Activity'
           onClick={() => setModalOpen(true)}
-          className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '} ${
-            session ? ' ' : ' hover:bg-transparent cursor-default'
-          }`}>
-          <EmojiHappyIcon className='h-7 text-yellow-300' />
-          <p
-            className={`text-xs sm:text-sm xl:text-base  ${
-              !theme ? 'themeLight bg-transparent' : 'themeDark bg-transparent'
-            }`}>
-            Feeling/Activity
-          </p>
-        </div>
+        />
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 import { useSession } from 'next-auth/react';
+import { PostButton } from '.';
 
 interface Props {
   name: string;
@@ -82,53 +83,25 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
           className={`relative h-56 md:h-96 ${
             !theme ? 'themeLight bg-white ' : 'themeDark bg-slate-800'
           }`}>
-          <Image src={postImage} objectFit='contain' layout='fill' />
-          {/* <img src={postImage} alt='image' /> */}
+          <Image
+            src={postImage}
+            objectFit='contain'
+            layout='fill'
+            alt={`${name}'s post image on leave your mark website, by ayo adesanya`}
+          />
         </div>
       )}
 
       {/* Post Footer */}
       <div
-        className={`flex justify-between items-center sm:rounded-b-2xl  shadow-md text-gray-400 border-t ${
+        className={`flex justify-between items-center sm:rounded-b-2xl  shadow-md text-gray-400 border-t mt-2 ${
           !theme
             ? 'lightTheme'
             : 'darkTheme transition-shadow duration-75 border-t-slate-700 shadow-slate-800'
         }`}>
-        <div
-          className={`inputIcon p-3 rounded-none rounded-bl-2xl group ${
-            !theme ? 'lightTheme' : 'darkTheme hover:bg-blue-500 text-white'
-          }`}>
-          <ThumbUpIcon
-            className={`h-4 text-blue-500  ${
-              !theme ? 'lightTheme  ' : ' darkTheme group-hover:text-white'
-            }`}
-          />
-          <p className='text-xs sm:text-base'>Like</p>
-        </div>
-
-        <div
-          className={`inputIcon p-3 rounded-none group  ${
-            !theme ? 'lightTheme' : 'darkTheme hover:bg-blue-500 text-white'
-          }`}>
-          <ChatAltIcon
-            className={`h-4 text-blue-500 ${
-              !theme ? 'lightTheme  ' : ' darkTheme group-hover:text-white'
-            }`}
-          />
-          <p className={`text-xs sm:text-base `}>Comment</p>
-        </div>
-
-        <div
-          className={`inputIcon p-3 rounded-none rounded-br-2xl group ${
-            !theme ? 'lightTheme' : 'darkTheme hover:bg-blue-500 text-white'
-          }`}>
-          <ShareIcon
-            className={`h-4 text-blue-500 ${
-              !theme ? 'lightTheme  ' : ' darkTheme group-hover:text-white'
-            }`}
-          />
-          <p className='text-xs sm:text-base'>Share</p>
-        </div>
+        <PostButton Icon={ThumbUpIcon} title='Like' />
+        <PostButton Icon={ChatAltIcon} title='Comment' />
+        <PostButton Icon={ShareIcon} title='Share' />
       </div>
     </div>
   );

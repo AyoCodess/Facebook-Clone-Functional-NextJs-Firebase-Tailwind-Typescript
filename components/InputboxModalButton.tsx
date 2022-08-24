@@ -1,7 +1,6 @@
 import React, { SVGProps, useContext } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { useSession } from 'next-auth/react';
-import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
 
 interface Props {
   iconColor: string;

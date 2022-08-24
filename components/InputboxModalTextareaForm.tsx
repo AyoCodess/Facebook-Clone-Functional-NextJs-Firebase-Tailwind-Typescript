@@ -1,6 +1,5 @@
 import React, { SetStateAction, useContext } from 'react';
 import { ThemeContext } from '../ThemeContext';
-import { DataContext } from '../DataContext';
 import { useSession } from 'next-auth/react';
 
 interface Props {

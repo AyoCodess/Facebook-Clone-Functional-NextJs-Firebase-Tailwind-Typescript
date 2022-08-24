@@ -16,16 +16,18 @@ This project was mainly used to keep my css skills sharp, get familiar with fire
 
 ## Features
 
+1. a focus on modularity and code structure for easy modification and expansion
 1. Facebook, Google and Github Login enabled
-2. Custom login page
-3. You can share a post with or without an image and display it the UI just like Facebook
-4. Your data is persisted via firebase.
-5. You will only posts linked to the account you signed up with, so get posting!
-6. Can now view every users post with one button click, careful what you share, because only I can delete the posts
-7. Sleek design
-8. Light/Dark mode
-9. Mobile first approach
-10. error messages for api failures (firebase quota exceeded) as this app is on the free plan
+1. Custom login page
+1. You can share a post with or without an image and display it the UI just like Facebook
+1. Your data is persisted via firebase.
+1. You will only posts linked to the account you signed up with, so get posting!
+1. Can now view every users post with one button click, careful what you share, because only I can delete the posts
+1. Sleek design
+1. Light/Dark mode
+1. Mobile first approach
+1. error messages for api failures (firebase quota exceeded) as this app is on the free plan
+1. my own custom tailwind animations and utility classes
 
 # TODOs
 

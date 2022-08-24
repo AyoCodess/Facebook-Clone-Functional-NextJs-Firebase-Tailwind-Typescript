@@ -21,6 +21,7 @@ export * from './StoriesHeader';
 export * from './InputBox';
 export * from './Posts';
 export * from './Post';
+export * from './PostButton';
 export * from './Toast';
 export * from './Divider ';
 export * from './MobileHeaderTop';
