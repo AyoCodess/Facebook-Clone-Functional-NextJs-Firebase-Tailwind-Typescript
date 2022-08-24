@@ -67,13 +67,13 @@ export const Header = () => {
         {/*Right */}
 
         {!session && (
-          <div className={` block mx-auto mr-8 w-24`}>
+          <div className={` block mx-auto mr-8 w-28`}>
             <ThemeToggle />
           </div>
         )}
 
         {session && (
-          <div className={`hidden xl:block mx-auto mr-8 w-24`}>
+          <div className={`hidden xl:block mx-auto mr-8 w-28`}>
             <ThemeToggle />
           </div>
         )}

@@ -33,7 +33,7 @@ export const MobileInputboxx = () => {
               ? 'lightTheme bg-gray-100 '
               : 'darkTheme bg-slate-700 text-white'
           }`}>
-          <p className='mt-3'>
+          <p className='mt-3 text-sm'>
             {!session
               ? `Please sign in to make a post, click here.`
               : `Whats on your mind, ${session?.user?.name

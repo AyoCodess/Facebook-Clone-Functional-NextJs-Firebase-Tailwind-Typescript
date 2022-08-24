@@ -1,5 +1,10 @@
 import React, { useContext } from 'react';
-import { ChatAltIcon, ShareIcon, ThumbUpIcon } from '@heroicons/react/solid';
+import {
+  ChatAltIcon,
+  DotsHorizontalIcon,
+  ShareIcon,
+  ThumbUpIcon,
+} from '@heroicons/react/solid';
 import { Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
 import { ThemeContext } from '../ThemeContext';
@@ -53,27 +58,33 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
           !theme ? 'lightTheme' : 'darkTheme  shadow-blue-900   '
         }`}>
         {/*post information */}
-        <div className='flex items-center gap-2'>
-          <img
-            className='rounded-full'
-            src={!viewEveryonesPosts ? session?.user?.image! : image}
-            width={40}
-            height={40}
-          />
-          <div>
-            <p className='font-medium'>{name}</p>
-            {timestamp ? (
-              <p
-                className={`text-xs  ${
-                  !theme ? 'lightTheme text-gray-400' : 'darkTheme text-white'
-                }`}>
-                {date_time}
-              </p>
-            ) : (
-              <p className='text-xs text-gray-400'>Loading...</p>
-            )}
+
+        <div className='flex justify-between'>
+          <div className='flex items-center gap-2  '>
+            {' '}
+            <img
+              className='rounded-full'
+              src={!viewEveryonesPosts ? session?.user?.image! : image}
+              width={40}
+              height={40}
+            />
+            <div>
+              <p className='font-medium'>{name}</p>
+              {timestamp ? (
+                <p
+                  className={`text-xs  ${
+                    !theme ? 'lightTheme text-gray-400' : 'darkTheme text-white'
+                  }`}>
+                  {date_time}
+                </p>
+              ) : (
+                <p className='text-xs text-gray-400'>Loading...</p>
+              )}
+            </div>
           </div>
+          <DotsHorizontalIcon className='p-2 h-10 hover:bg-gray-100 text-gray-600 hover:rounded-full' />
         </div>
+
         {/*post message */}
         <p className='pt-4 mb-2'>{message}</p>
       </div>

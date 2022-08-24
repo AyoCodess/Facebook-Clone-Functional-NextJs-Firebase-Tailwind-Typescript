@@ -14,7 +14,9 @@ export const ThemeToggle = ({ className }: Props) => {
   const { theme, setTheme } = useContext(ThemeContext);
 
   return (
-    <Switch.Group as='div' className={`flex items-center ${className}`}>
+    <Switch.Group
+      as='div'
+      className={`  w-[9rem] flex items-center   ${className}`}>
       <Switch
         checked={theme}
         onChange={setTheme}
@@ -35,7 +37,7 @@ export const ThemeToggle = ({ className }: Props) => {
           className={`text-sm font-medium ${
             theme ? 'text-white' : 'text-gray-900'
           }`}>
-          {theme ? 'Dark' : 'Light'}
+          {theme ? 'Dark Mode' : 'Light Mode'}
         </span>
         {/* <span className='text-sm text-gray-500'>(Save 10%)</span> */}
       </Switch.Label>
