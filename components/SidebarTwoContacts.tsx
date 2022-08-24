@@ -95,7 +95,7 @@ export const SidebarTwoContacts = () => {
               className={` relative py-3 pl-4 flex items-center cursor-pointer   
              rounded-xl ${
                !theme
-                 ? 'lightTheme hover:bg-gray-50'
+                 ? 'lightTheme hover:bg-gray-200'
                  : 'darkTheme hover:bg-blue-500 '
              }`}>
               <img
