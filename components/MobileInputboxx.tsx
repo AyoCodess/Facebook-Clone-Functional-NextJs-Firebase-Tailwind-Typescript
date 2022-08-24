@@ -4,7 +4,7 @@ import { DataContext } from '../DataContext';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 
-export const MobileInputbox = () => {
+export const MobileInputboxx = () => {
   const { theme } = useContext(ThemeContext);
   const { setModalOpen } = useContext(DataContext);
   const { data: session } = useSession();
