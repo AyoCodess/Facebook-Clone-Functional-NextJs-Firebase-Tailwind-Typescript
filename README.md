@@ -1,35 +1,46 @@
-# Facebook Clone (Metaspace) - social media platform
+# Leave Your Mark - Share your moments! (Facebook Clone)
 
-## Live Link
+### Live Link
 
 https://leaveyourmark.vercel.app/
 
-## Teach stack
+### Teach stack
 
 Next.js (Javascript Framework), Context API (State Management), NextAuth (User Authentication), Firebase Firestore (Database), FileReader API (Image upload) & Tailwind CSS (Styling)
 
-## About
+### About
 
-The design is based off the facebook platform.
+This app acts a pin board for anyone to use. Make your own text and image posts. You can also view everyone elses posts too. Think of it like a mood board, a Pinterest type app with a facebook user interface.
 
-This project was mainly used to keep my css skills sharp, get familiar with firebase and to try out nextAuth (User Authentication package)
+### Motivation
 
-## Features
+This project was mainly used to keep my CSS skills sharp, get familiar with firebase and to try out nextAuth (User Authentication package)
 
-1. a focus on modularity and code structure for easy modification and expansion
-1. Facebook, Google and Github Login enabled
-1. Custom login page
-1. You can share a post with or without an image and display it the UI just like Facebook
-1. Your data is persisted via firebase.
-1. You will only posts linked to the account you signed up with, so get posting!
-1. Can now view every users post with one button click, careful what you share, because only I can delete the posts
-1. Sleek design
-1. Light/Dark mode
-1. Mobile first approach
-1. error messages for api failures (firebase quota exceeded) as this app is on the free plan
-1. my own custom tailwind animations and utility classes
+### Features
 
-# TODOs
+1. A clear focus on code modularity and code structure for easy modification and expansion
+2. We have different apps for mobile vs larger screens. Please test the app on different screen sizes. Use your browsers `inspect` tool.
+3. Facebook, Google login enabled
+4. Custom login page
+5. Can share a post with or without an image and display it in the User interface in real-time just like Facebook
+6. Your data is persisted via firebase, meaning when you sign in and out your posts will be there. They are essentially there forever!
+7. Can view every other users post with one button click. Careful what you share as only I can delete the posts from the database.
+8. Light/Dark mode
+9. Mobile first approach
+10. Error messages for API failures i.e if the firebase day quota is exceeded you will get a notification as to why you can't make posts as this app is on the free plan
+11. My own custom tailwind animations and utility classes using the @layout feature
 
-1. search post function by facebook name and email.
-2. creating other pages in the style of facebook but repurposing them, if you have any got ideas, let me know.
+### TODOs
+
+1. Search pos by user name and email
+2. Allow users to post images to their own story section
+3. Allow users to like, comment and share posts externally.
+4. Creating other pages in the style of facebook but repurposing them, if you have any got ideas, let me know.
+
+### App Images
+
+#### Mobile
+
+<img src='https://i.imgur.com/BAcGWY5.png' width='500px' height='500px'>
+
+#### Larger Screens
