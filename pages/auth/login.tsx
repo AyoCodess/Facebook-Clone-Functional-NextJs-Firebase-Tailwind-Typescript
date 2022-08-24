@@ -16,7 +16,7 @@ interface Props {
 const login = ({ providers }: Props) => {
   console.log('providers', providers);
   return (
-    <div className='grid place-content-center bg-white h-screen'>
+    <div className='grid place-content-center bg-white h-screen overflow-y-hidden'>
       <div>
         <Image src='/images/noWords.png' width={600} height={600} />
       </div>

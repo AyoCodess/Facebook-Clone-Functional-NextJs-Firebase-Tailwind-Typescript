@@ -56,7 +56,9 @@ export const Posts = () => {
     viewEveryonesPosts,
     forceUpdate,
     loading,
+    setLoading,
   } = useContext(DataContext);
+
   useEffect(() => {
     getUserSession();
   }, [forceUpdate, viewEveryonesPosts]);
@@ -67,9 +69,11 @@ export const Posts = () => {
       getUserPostsFromFirebase();
     }
   };
+
   const useGetUserPostsFromFirebase = async (
     isQuery: 'individual' | 'everyone'
   ) => {
+    setLoading(true);
     // gets individual user posts by EMAIL or everyones posts from firebase
     let queryByEmailNoPhotos: Query<DocumentData>;
     let queryByEmailPhotos: Query<DocumentData>;
@@ -110,10 +114,12 @@ export const Posts = () => {
       (a, b) => b.timestamp.seconds - a.timestamp.seconds
     );
     setRealTimePosts(allPosts);
+    setLoading(false);
   };
 
   const getUserPostsFromFirebase = async () => {
     setRealTimePosts(null);
+
     try {
       if (session?.user?.email && !viewEveryonesPosts) {
         useGetUserPostsFromFirebase('individual');

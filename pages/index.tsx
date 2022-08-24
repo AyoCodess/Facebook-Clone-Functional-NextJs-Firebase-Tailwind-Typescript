@@ -39,9 +39,9 @@ const Home: NextPage<Props> = () => {
 
   return (
     <>
-      <div className={` h-screen   ${!theme ? 'themeLight ' : 'themeDark '}  `}>
+      <div className={` h-screen ${!theme ? 'themeLight ' : 'themeDark '}  `}>
         <Head>
-          <title>Meta Space</title>
+          <title>Leave Your Mark!</title>
           <link rel='icon' href='/favicon.ico' />
           {/* <!-- * META TAGS FOR SOCIAL MEDIA * --> */}
           <meta property='og:title' content='Metaspace' />
@@ -77,7 +77,7 @@ const Home: NextPage<Props> = () => {
         <Header />
         <MobileHeaderTop />
         <main
-          className={`sm:flex   ${
+          className={` relative sm:flex   ${
             !theme ? 'lightTheme bg-gray-100' : ' darkTheme bg-slate-900'
           }`}>
           {/*Ipad and larger screens App */}

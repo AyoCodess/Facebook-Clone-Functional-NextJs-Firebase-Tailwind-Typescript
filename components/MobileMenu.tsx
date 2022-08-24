@@ -21,8 +21,7 @@ interface Props {
 
 export const MobileMenu = ({ openMenu, setOpenMenu }: Props) => {
   const { theme } = useContext(ThemeContext);
-  const { setViewEveryonesPosts, viewEveryonesPosts, modalOpen, setModalOpen } =
-    useContext(DataContext);
+  const { setViewEveryonesPosts, viewEveryonesPosts } = useContext(DataContext);
   const { data: session } = useSession();
   const getLink = useRef(null);
   return (

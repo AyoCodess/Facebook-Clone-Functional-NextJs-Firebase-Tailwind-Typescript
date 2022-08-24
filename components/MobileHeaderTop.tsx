@@ -34,8 +34,8 @@ export const MobileHeaderTop = () => {
         className={`flex sticky top-0 z-40  sm:hidden items-center p-1 sm:p-[0.1rem]  lg:px-5 h-16 shadow-md 
      ${!theme ? 'themeLight ' : 'themeDark shadow-gray-800'}`}>
         {/* Left */}
-        <div className='flex items-center'>
-          <div className='ml-3 lg:ml-0'>
+        <div className='flex items-center gap-1'>
+          <div className='ml-3 lg:ml-0 pt-2'>
             <Image
               src='/images/noWords.png'
               width={40}

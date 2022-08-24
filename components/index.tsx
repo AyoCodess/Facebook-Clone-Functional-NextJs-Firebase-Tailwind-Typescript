@@ -18,6 +18,7 @@ export * from './Feed';
 export * from './Stories';
 export * from './StoriesCard';
 export * from './StoriesHeader';
+export * from './StoriesHeaderButton';
 export * from './InputBox';
 export * from './Posts';
 export * from './Post';

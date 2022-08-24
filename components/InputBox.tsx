@@ -35,7 +35,7 @@ export const InputBox = () => {
           className='rounded-full h-12 bg-gray-100 flex-grow px-5'>
           <p className='mt-3'>
             {!session
-              ? `Please sign in to make a post`
+              ? `Please sign in to make a post, click here.`
               : `Whats on your mind, ${session?.user?.name
                   ?.split(' ')
                   ?.slice(0, 1)}?`}

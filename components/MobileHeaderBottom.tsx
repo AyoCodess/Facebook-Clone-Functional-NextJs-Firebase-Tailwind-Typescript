@@ -12,7 +12,7 @@ export const MobileHeaderBottom = () => {
   return (
     <>
       <div
-        className={` flex sticky top-0 z-40  sm:hidden items-center p-1 h-16 shadow-md 
+        className={` flex sticky bottom-0 z-40  sm:hidden items-center p-1 h-16 shadow-md 
      ${!theme ? 'themeLight ' : 'themeDark shadow-gray-800'}`}>
         <div className={`flex-grow justify-center mx-auto px-6`}>
           <div className={`flex flex-grow justify-between  `}>

@@ -28,17 +28,25 @@ export const MobileInputboxx = () => {
         )}
         <div
           onClick={() => setModalOpen(true)}
-          className='rounded-full h-12 bg-gray-100 flex-grow px-5'>
+          className={`rounded-full h-12 flex-grow px-5 ${
+            !theme
+              ? 'lightTheme bg-gray-100 '
+              : 'darkTheme bg-slate-700 text-white'
+          }`}>
           <p className='mt-3'>
             {!session
-              ? `Please sign in to make a post`
+              ? `Please sign in to make a post, click here.`
               : `Whats on your mind, ${session?.user?.name
                   ?.split(' ')
                   ?.slice(0, 1)}?`}
           </p>
         </div>
       </div>
-      <hr className='w-[100vw] border-[0.2rem] border-gray-300' />
+      <hr
+        className={`w-[100vw] ${
+          !theme ? 'lightTheme  border-gray-300' : 'darkTheme border-blue-500'
+        } `}
+      />
     </div>
   );
 };
