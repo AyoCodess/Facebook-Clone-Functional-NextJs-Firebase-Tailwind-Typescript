@@ -27,7 +27,7 @@ This project was mainly used to keep my css skills sharp, get familiar with fire
 1. Light/Dark mode
 1. Mobile first approach
 1. error messages for api failures (firebase quota exceeded) as this app is on the free plan
-1. my own custom tailwind animations and utility classes.
+1. my own custom tailwind animations and utility classes
 
 # TODOs
 
