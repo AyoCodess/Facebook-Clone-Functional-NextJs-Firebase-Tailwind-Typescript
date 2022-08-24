@@ -63,12 +63,15 @@ export const MobileMenu = ({ openMenu, setOpenMenu }: Props) => {
                 className={` absolute top-16 right-0 xl:hidden animate-popUp mr-5  bg-white rounded-lg  transform transition-all h-80 w-60 ${
                   !theme
                     ? 'lightTheme bg-white  shadow-xl '
-                    : 'darkTheme bg-slate-800  shadow-slate-400'
+                    : 'darkTheme bg-slate-700  shadow-slate-400'
                 }`}>
                 <div>
                   {session && (
                     <div className={` flex flex-col gap-2 p-3 my-2  `}>
-                      <ThemeToggle className='mb-1' />
+                      <div className='flex items-center gap-1'>
+                        <hr className='mx-auto w-10 border-2' />
+                        <ThemeToggle className='mb-1 ml-auto' />
+                      </div>
                       <MobileMenuButton
                         Icon={ViewListIcon}
                         onClick={() => setViewEveryonesPosts((prev) => !prev)}

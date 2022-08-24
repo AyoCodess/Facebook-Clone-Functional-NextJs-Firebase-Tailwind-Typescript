@@ -41,33 +41,39 @@ const Home: NextPage<Props> = () => {
     <>
       <div className={` h-screen ${!theme ? 'themeLight ' : 'themeDark '}  `}>
         <Head>
-          <title>Leave Your Mark!</title>
-          <link rel='icon' href='/favicon.ico' />
+          <title>Leave Your Mark! - Share your moments</title>
+          <link rel='icon' href='/images/noWords.png' />
           {/* <!-- * META TAGS FOR SOCIAL MEDIA * --> */}
-          <meta property='og:title' content='Metaspace' />
+          <meta
+            property='og:title'
+            content='Leave Your Mask - Share your moments'
+          />
           <meta
             property='og:description'
-            content='The Decentralized Social Space'
+            content='Leave Your Mask - Share your moments'
           />
-          <meta name='description' content='The Decentralized Social Space' />
-          <meta property='og:image' content='https://i.imgur.com/7iee3YZ.png' />
-          <meta property='og:url' content='https://coincora-blog.vercel.app/' />
+          <meta
+            name='description'
+            content='Leave Your Mask - Share your moments'
+          />
+          <meta property='og:image' content='https://i.imgur.com/OWYUr7a.png' />
+          <meta property='og:url' content='https://leaveyourmark.vercel.app/' />
           <meta
             property='og:site_name'
-            content='Ayo Codes - Portfolio Website'
+            content='Leave Your Mask - Share your moments'
           />
           <meta property='og:locale' content='en_GB' />
           <meta property='og:type' content='website' />
           <meta
             name='twitter:image'
-            content='https://i.imgur.com/7iee3YZ.png'
+            content='https://i.imgur.com/OWYUr7a.png'
           />
           <meta name='twitter:card' content='summary_large_image' />
-          <meta name='twitter:title' content='Metaspace' />
           <meta
-            name='twitter:description'
-            content='The Decentralized Social Space'
+            name='twitter:title'
+            content='leave your mark - Share your moments'
           />
+          <meta name='twitter:description' content='social posting board' />
           <meta name='twitter:site' content='@ayo__codes' />
           <meta name='twitter:creator' content='@ayo__codes' />
           {/* <!-- * META TAGS FOR SOCIAL MEDIA ENDS * -->*/}
