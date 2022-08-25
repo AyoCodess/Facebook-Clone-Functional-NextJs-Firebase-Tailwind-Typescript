@@ -74,7 +74,10 @@ export const MobileMenu = ({ openMenu, setOpenMenu }: Props) => {
                       </div>
                       <MobileMenuButton
                         Icon={ViewListIcon}
-                        onClick={() => setViewEveryonesPosts((prev) => !prev)}
+                        onClick={() => {
+                          setViewEveryonesPosts((prev) => !prev);
+                          setOpenMenu(false);
+                        }}
                         viewEveryonesPosts={viewEveryonesPosts}
                       />
                       <MobileMenuButton Icon={ViewGridIcon} title='More' />
