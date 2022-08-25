@@ -4,6 +4,7 @@ import React, {
   useMemo,
   Dispatch,
   SetStateAction,
+  useEffect,
 } from 'react';
 interface ThemeContextType {
   theme: boolean;
@@ -21,6 +22,16 @@ interface Props {
 
 export const ThemeProvider = ({ children }: Props) => {
   const [theme, setTheme] = useState(false); // default is light
+
+  useEffect(() => {
+    const mode = localStorage.getItem('theme');
+    if (mode === 'true') {
+      setTheme(true);
+    }
+    if (mode === 'false') {
+      setTheme(false);
+    }
+  }, [theme]);
 
   const contextValues = useMemo(
     () => ({

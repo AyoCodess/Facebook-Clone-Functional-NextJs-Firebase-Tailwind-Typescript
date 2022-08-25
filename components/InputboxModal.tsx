@@ -134,7 +134,7 @@ export const InputboxModal = () => {
       setDescription(`${error}`);
     } finally {
       setLoading(false);
-      console.log('running forced update');
+      //   console.log('running forced update');
       setForceUpdate((prev) => !prev);
     }
   };
