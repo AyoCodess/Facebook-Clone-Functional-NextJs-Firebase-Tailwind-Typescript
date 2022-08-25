@@ -46,21 +46,21 @@ const Home: NextPage<Props> = () => {
           {/* <!-- * META TAGS FOR SOCIAL MEDIA * --> */}
           <meta
             property='og:title'
-            content='Leave Your Mask - Share your moments'
+            content='Leave Your Mark - Share your moments'
           />
           <meta
             property='og:description'
-            content='Leave Your Mask - Share your moments'
+            content='Leave Your Mark - Share your moments'
           />
           <meta
             name='description'
-            content='Leave Your Mask - Share your moments'
+            content='Leave Your Mark - Share your moments'
           />
           <meta property='og:image' content='https://i.imgur.com/OWYUr7a.png' />
           <meta property='og:url' content='https://leaveyourmark.vercel.app/' />
           <meta
             property='og:site_name'
-            content='Leave Your Mask - Share your moments'
+            content='Leave Your Mark - Share your moments'
           />
           <meta property='og:locale' content='en_GB' />
           <meta property='og:type' content='website' />
