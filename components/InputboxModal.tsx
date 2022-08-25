@@ -13,7 +13,7 @@ import { EmojiHappyIcon } from '@heroicons/react/outline';
 import { CameraIcon } from '@heroicons/react/solid';
 import { useSession } from 'next-auth/react';
 import { db, storage } from '../firebase';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { collection, addDoc, Timestamp, doc } from 'firebase/firestore';
 import { ref, getDownloadURL, uploadString } from 'firebase/storage';
 import {
   InputboxModalButton,
@@ -88,12 +88,16 @@ export const InputboxModal = () => {
   };
 
   const sendPost = async () => {
+    // initializes users the firebase collection
+    const usersRef = doc(db, 'users', `${session?.user?.email}`);
+
     try {
       setLoading(true);
       //   handles posts with no image attached
       if (!photoToPost) {
         console.log('post with NO photo');
-        await addDoc(collection(db, 'posts'), {
+        const postRef = collection(usersRef, 'posts');
+        await addDoc(postRef, {
           message: savedMessageRef,
           name: session?.user?.name,
           email: session?.user?.email,
@@ -115,7 +119,8 @@ export const InputboxModal = () => {
         const downloadURL = await getDownloadURL(photoRef);
 
         // adding the image URL to the object to be posted to the collection
-        await addDoc(collection(db, 'postsWithPhotos'), {
+        const postRef = collection(usersRef, 'posts');
+        await addDoc(postRef, {
           message: savedMessageRef,
           name: session?.user?.name,
           email: session?.user?.email,

@@ -60,3 +60,11 @@ This project was mainly used to keep my CSS skills sharp, get familiar with fire
 
 <img src='https://i.imgur.com/uwSiFxe.png' width='600px' height='730px'>
 <img src='https://i.imgur.com/U0JD4Uq.png' width='600px' height='730px'>
+
+#### Database Schema
+
+The database was designed this way to make it easy to find, organize and add new user data systematically. This enables easy create, read, write and update functionally based on user emails.
+
+<img src='https://i.imgur.com/OLoWTm7.png' width='707px' height='256px'>
+<img src='https://i.imgur.com/H4JZn8w.png' width='922px' height='400px'>
+<img src='https://i.imgur.com/ptA0jmF.png' width='635px' height='228.5px'>
