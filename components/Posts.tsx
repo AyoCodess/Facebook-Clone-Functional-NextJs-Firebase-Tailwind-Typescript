@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, SetStateAction } from 'react';
 import {
-  Query,
   collection,
-  DocumentData,
   getDocs,
   query,
-  where,
+  collectionGroup,
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { LoadingSpinner, Post } from '../components';
@@ -14,36 +12,32 @@ import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 
 // used when firebase quota has been exceeded
-const testData = [
-  {
-    name: 'Ayo',
-    message: 'post.message',
-    email: 'post.email',
-    timestamp: 54534534545,
-    image: 'https://i.imgur.com/fKt5tuD.jpg',
-    imageURL: 'https://i.imgur.com/yYI0g50.png',
-  },
-  {
-    name: 'chris',
-    message: 'post.message',
-    email: 'post.email',
-    timestamp: 54534534545,
-    image: 'https://i.imgur.com/fKt5tuD.jpg',
-    imageURL: 'https://i.imgur.com/KfrhNKl.pnge',
-  },
-  {
-    name: 'ruban',
-    message: 'post.message',
-    email: 'post.email',
-    timestamp: 54534534545,
-    image: 'https://i.imgur.com/fKt5tuD.jpg',
-    imageURL: 'https://i.imgur.com/FRIs3ds.png?',
-  },
-];
-
-interface Props {
-  forceUpdate: boolean;
-}
+// const testData = [
+//   {
+//     name: 'Ayo',
+//     message: 'post.message',
+//     email: 'post.email',
+//     timestamp: 54534534545,
+//     image: 'https://i.imgur.com/fKt5tuD.jpg',
+//     imageURL: 'https://i.imgur.com/yYI0g50.png',
+//   },
+//   {
+//     name: 'chris',
+//     message: 'post.message',
+//     email: 'post.email',
+//     timestamp: 54534534545,
+//     image: 'https://i.imgur.com/fKt5tuD.jpg',
+//     imageURL: 'https://i.imgur.com/KfrhNKl.pnge',
+//   },
+//   {
+//     name: 'ruban',
+//     message: 'post.message',
+//     email: 'post.email',
+//     timestamp: 54534534545,
+//     image: 'https://i.imgur.com/fKt5tuD.jpg',
+//     imageURL: 'https://i.imgur.com/FRIs3ds.png?',
+//   },
+// ];
 
 export const Posts = () => {
   const { data: session } = useSession();
@@ -74,46 +68,35 @@ export const Posts = () => {
     isQuery: 'individual' | 'everyone'
   ) => {
     setLoading(true);
-    // gets individual user posts by EMAIL or everyones posts from firebase
-    let queryByEmailNoPhotos: Query<DocumentData>;
-    let queryByEmailPhotos: Query<DocumentData>;
+
+    let userPosts: Array<any> = [];
+    let allUserPosts: Array<any> = [];
 
     if (isQuery === 'individual') {
-      queryByEmailNoPhotos = query(
-        collection(db, 'posts'),
-        where('email', '==', session?.user?.email)
+      const userQuery = query(
+        collection(db, 'users', `${session?.user?.email}`, 'posts')
       );
-      queryByEmailPhotos = query(
-        collection(db, 'postsWithPhotos'),
-        where('email', '==', session?.user?.email)
-      );
+
+      const snapshot = await getDocs(userQuery);
+      userPosts = snapshot.docs.map((posts: any) => posts.data());
     }
 
     if (isQuery === 'everyone') {
-      queryByEmailNoPhotos = collection(db, 'posts');
-      queryByEmailPhotos = collection(db, 'postsWithPhotos');
+      const getAllUsers = query(collectionGroup(db, 'posts'));
+      const getAllUsersSnapshot = await getDocs(getAllUsers);
+
+      getAllUsersSnapshot.forEach((posts: any) => {
+        allUserPosts.push(posts.data());
+      });
     }
 
-    const dataPostsWithNoPhotos = await getDocs(queryByEmailNoPhotos!);
-    const dataPostsWithPhotos = await getDocs(queryByEmailPhotos!);
+    const combined = [...userPosts, ...allUserPosts];
 
-    let postsWithNoPhotosArray: Array<any> = [];
-    let postsWithPhotosArray: Array<any> = [];
-
-    dataPostsWithNoPhotos.forEach((doc: any) => {
-      postsWithNoPhotosArray.push(doc.data());
-    });
-
-    dataPostsWithPhotos.forEach((doc: any) => {
-      postsWithPhotosArray.push(doc.data());
-    });
-
-    const combined = [...postsWithNoPhotosArray, ...postsWithPhotosArray];
-
-    const allPosts = combined.sort(
+    const sorted = combined.sort(
       (a, b) => b.timestamp.seconds - a.timestamp.seconds
     );
-    setRealTimePosts(allPosts);
+
+    setRealTimePosts(sorted);
     setLoading(false);
   };
 
