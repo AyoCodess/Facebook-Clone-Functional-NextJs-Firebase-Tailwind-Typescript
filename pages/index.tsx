@@ -35,6 +35,7 @@ const Home: NextPage<Props> = () => {
       }, 8000);
       return () => clearTimeout(timer);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show]);
 
   return (

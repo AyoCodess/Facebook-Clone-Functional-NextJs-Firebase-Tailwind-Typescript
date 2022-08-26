@@ -60,11 +60,11 @@ export const Posts = () => {
   const getUserSession = async () => {
     const theSession = await getSession();
     if (theSession) {
-      getUserPostsFromFirebase();
+      initiateGetUserPostsFromFirebase();
     }
   };
 
-  const useGetUserPostsFromFirebase = async (
+  const getUserPostsFromFirebase = async (
     isQuery: 'individual' | 'everyone'
   ) => {
     setLoading(true);
@@ -100,16 +100,16 @@ export const Posts = () => {
     setLoading(false);
   };
 
-  const getUserPostsFromFirebase = async () => {
+  const initiateGetUserPostsFromFirebase = async () => {
     setRealTimePosts(null);
 
     try {
       if (session?.user?.email && !viewEveryonesPosts) {
-        useGetUserPostsFromFirebase('individual');
+        getUserPostsFromFirebase('individual');
       }
 
       if (viewEveryonesPosts) {
-        useGetUserPostsFromFirebase('everyone');
+        getUserPostsFromFirebase('everyone');
       }
       //   setRealTimePosts(testData); // for testing purposes
     } catch (error) {

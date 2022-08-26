@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useContext } from 'react';
 import { SidebarTwoHeading, Divider } from '../components';
 import { PlusCircleIcon } from '@heroicons/react/solid';
@@ -66,7 +67,7 @@ export const SidebarTwoFriendRequests = () => {
             </div>
           </div>
           <div className='flex justify-between items-center col-start-2 row-start-3'>
-            <a href={person.link} target='_blank' rel='noopener'>
+            <a href={person.link} target='_blank' rel='noopener noreferrer'>
               <div className='bg-blue-600 py-2 px-3 text-white rounded-lg w-40 text-center font-medium text-xl hover:bg-blue-500 cursor-pointer transition duration-300'>
                 Confirm
               </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useContext } from 'react';
 import {
   ChatAltIcon,
@@ -67,6 +68,7 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
               src={!viewEveryonesPosts ? session?.user?.image! : image}
               width={40}
               height={40}
+              alt='user image'
             />
             <div>
               <p className='font-medium'>{name}</p>

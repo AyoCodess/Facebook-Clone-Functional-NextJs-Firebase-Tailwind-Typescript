@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import React, { SVGProps, useContext } from 'react';
 import { ThemeContext } from '../ThemeContext';
@@ -30,7 +31,11 @@ export const SidebarRow = ({
           : 'hover:bg-blue-500'
       }`}>
       {src && (
-        <img className='rounded-full h-8 w-8 md:h-10 md:w-10 ml-1' src={src} />
+        <img
+          className='rounded-full h-8 w-8 md:h-10 md:w-10 ml-1'
+          src={src}
+          alt='icon image'
+        />
       )}
       {Icon && (
         <Icon

@@ -18,7 +18,12 @@ const login = ({ providers }: Props) => {
   return (
     <div className='grid place-content-center bg-white h-screen overflow-y-hidden'>
       <div>
-        <Image src='/images/noWords.png' width={600} height={600} />
+        <Image
+          src='/images/noWords.png'
+          width={600}
+          height={600}
+          alt='app logo'
+        />
       </div>
       {providers && (
         <div

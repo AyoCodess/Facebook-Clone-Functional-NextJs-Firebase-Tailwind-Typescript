@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { useContext } from 'react';
 import { ThemeContext } from '../ThemeContext';
@@ -16,6 +17,7 @@ export const InputboxModalUserInfo = () => {
         }
         width={40}
         height={40}
+        alt='user image'
       />
       <div>
         <p className='font-medium'>{session?.user?.name}</p>

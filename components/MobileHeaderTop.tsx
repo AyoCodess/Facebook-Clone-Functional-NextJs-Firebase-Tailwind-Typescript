@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 
 import React, { useContext, useState } from 'react';
@@ -94,6 +95,7 @@ export const MobileHeaderTop = () => {
             <img
               className='h-10 rounded-full mx-2'
               src={session.user?.image!}
+              alt='profile'
             />
             <DotsVerticalIcon
               className='xl:hidden icon block'

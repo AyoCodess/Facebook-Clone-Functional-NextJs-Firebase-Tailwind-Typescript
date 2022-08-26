@@ -28,6 +28,7 @@ export const InputBox = () => {
             width={40}
             height={40}
             layout='fixed'
+            alt='user image'
           />
         )}
         <div

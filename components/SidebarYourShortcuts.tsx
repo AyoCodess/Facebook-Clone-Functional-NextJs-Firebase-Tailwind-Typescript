@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useContext } from 'react';
 import { SidebarTwoHeading } from './SidebarTwoHeading';
 import { ChevronDownIcon } from '@heroicons/react/outline';
@@ -60,7 +61,7 @@ export const SidebarYourShortcuts = () => {
               key={shortcut.id}
               href={shortcut.link}
               target='_blank'
-              rel='noopener'>
+              rel='noopener noreferrer'>
               <li
                 className={`flex items-center gap-2 p-3 rounded-xl  cursor-pointer ${
                   !theme
@@ -70,7 +71,7 @@ export const SidebarYourShortcuts = () => {
                 <img
                   className='h-12 w-12 rounded-lg object-cover'
                   src={shortcut!.image}
-                  alt=''
+                  alt='shortcut icon'
                 />
                 <div className='ml-3'>
                   <p

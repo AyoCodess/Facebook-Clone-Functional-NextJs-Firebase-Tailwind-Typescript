@@ -18,7 +18,7 @@ export const SidebarTwoBirthdays = () => {
         <p className='text-lg font-medium'>
           <a
             href='https://twitter.com/BayoAkomolafe'
-            rel='noopener'
+            rel='noopener noreferrer'
             target='_blank'>
             Bayo Akomolafe
           </a>{' '}

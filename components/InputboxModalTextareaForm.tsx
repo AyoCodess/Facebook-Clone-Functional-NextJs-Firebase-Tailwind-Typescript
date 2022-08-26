@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { SetStateAction, useContext } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { useSession } from 'next-auth/react';

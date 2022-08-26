@@ -34,6 +34,7 @@ export const StoriesCard = ({ name, src, profile, active, hide }: Props) => {
             height={40}
             layout='fixed'
             objectFit='cover'
+            alt='profile image'
           />
         </div>
       )}
@@ -43,6 +44,7 @@ export const StoriesCard = ({ name, src, profile, active, hide }: Props) => {
           className='object-cover filter brightness-75 rounded-xl'
           src={src}
           layout='fill'
+          alt='story image'
         />
       )}
       {active && (
@@ -54,6 +56,7 @@ export const StoriesCard = ({ name, src, profile, active, hide }: Props) => {
               : '/images/noWords.png'
           }
           layout='fill'
+          alt='profile image'
         />
       )}
       {!active && (
