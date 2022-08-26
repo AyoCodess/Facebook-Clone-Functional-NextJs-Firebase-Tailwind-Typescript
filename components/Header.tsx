@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 
 import React, { useContext, useState } from 'react';
@@ -94,9 +95,12 @@ export const Header = () => {
             <img
               className='h-10 rounded-full mx-2'
               src={session.user?.image!}
+              alt={`${session.user?.name} - profile image `}
             />
             <DotsVerticalIcon
-              className='xl:hidden icon block'
+              className={`xl:hidden icon block ${
+                !theme ? 'lightTheme bg-slate-100 ' : 'darkTheme bg-white'
+              }`}
               onClick={() => setOpenMenu((prev) => !prev)}
             />
           </>

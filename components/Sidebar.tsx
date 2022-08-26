@@ -59,7 +59,7 @@ export const Sidebar = () => {
             title={`${
               !viewEveryonesPosts ? "View Everyone's Posts" : ' View Your Posts'
             }`}
-            onClick={() => setViewEveryonesPosts((prev) => !prev)}
+            onClick={() => setViewEveryonesPosts((prev: any) => !prev)}
           />
           <SidebarRow
             image={'/images/FacebookIcons/friends.png'}

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { SearchIcon } from '@heroicons/react/outline';
 import { CameraIcon, DotsHorizontalIcon } from '@heroicons/react/solid';
 import React, { useContext } from 'react';
@@ -76,10 +77,9 @@ export const SidebarTwoContacts = () => {
       <div className='flex justify-between items-center mt-3 '>
         <SidebarTwoHeading title={'Contacts'} custom={'mt-0'} />
         <div className='flex items-center justify-between w-40'>
-          <CameraIcon className='h-6 hover:text-gray-400' />
-
-          <SearchIcon className='h-6 hover:text-gray-400' />
-          <DotsHorizontalIcon className='h-6 hover:text-gray-400' />
+          <CameraIcon className='h-6 hover:text-gray-400 cursor-pointer' />
+          <SearchIcon className='h-6 hover:text-gray-400 cursor-pointer' />
+          <DotsHorizontalIcon className='h-6 hover:text-gray-400 cursor-pointer' />
         </div>
       </div>
 
@@ -89,7 +89,7 @@ export const SidebarTwoContacts = () => {
             key={contact.id}
             href={contact.link}
             target='_blank'
-            rel='noopener'>
+            rel='noopener noreferrer'>
             <li
               key={contact.id}
               className={` relative py-3 pl-4 flex items-center cursor-pointer   
