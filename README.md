@@ -46,27 +46,47 @@ This project was mainly used to keep my CSS skills sharp, get familiar with fire
 
 #### Larger Screens (click on the images to view larger)
 
-<a href="https://i.imgur.com/BAcGWY5.png"><img src="https://i.imgur.com/BAcGWY5.png" width='351.33px' title="source: imgur.com" /></a>
-<a href="https://i.imgur.com/eH8O6P4.png"><img src="https://i.imgur.com/eH8O6P4.png" width='348.66px'  title="source: imgur.com" /></a>
+<a href="https://i.imgur.com/BAcGWY5.png" target='_blank'
+rel='noopener noreferrer'><img src="https://i.imgur.com/BAcGWY5.png" width='351.33px' title="source: imgur.com" /></a>
+<a href="https://i.imgur.com/eH8O6P4.png" target='_blank'
+rel='noopener noreferrer'><img src="https://i.imgur.com/eH8O6P4.png" width='348.66px'  title="source: imgur.com" /></a>
 
-<a href="https://i.imgur.com/16IsQF1.png"><img src="https://i.imgur.com/16IsQF1.png" width='350.66px'  title="source: imgur.com" /></a>
-<a href="https://i.imgur.com/yw7PBxO.png"><img src="https://i.imgur.com/yw7PBxO.png" width='350.66px'  title="source: imgur.com" /></a>
+<a href="https://i.imgur.com/16IsQF1.png" target='_blank'
+rel='noopener noreferrer'><img src="https://i.imgur.com/16IsQF1.png" width='350.66px'  title="source: imgur.com" /></a>
+<a href="https://i.imgur.com/yw7PBxO.png" target='_blank'
+rel='noopener noreferrer'><img src="https://i.imgur.com/yw7PBxO.png" width='350.66px'  title="source: imgur.com" /></a>
 
-<a href="https://i.imgur.com/PXnNGZ1.png"><img src="https://i.imgur.com/PXnNGZ1.png" width='198.66px'  title="source: imgur.com" /></a>
-<a href="https://i.imgur.com/OFF04Pr.png"><img src="https://i.imgur.com/OFF04Pr.png" width='196.33px'  title="source: imgur.com" /></a>
+<a href="https://i.imgur.com/PXnNGZ1.png" target='_blank'
+rel='noopener noreferrer'><img src="https://i.imgur.com/PXnNGZ1.png" width='198.66px'  title="source: imgur.com" /></a>
+<a href="https://i.imgur.com/OFF04Pr.png" target='_blank'
+rel='noopener noreferrer'><img src="https://i.imgur.com/OFF04Pr.png" width='196.33px'  title="source: imgur.com" /></a>
 
-<a href="https://i.imgur.com/uwSiFxe.png"><img src="https://i.imgur.com/uwSiFxe.png" width='197.66px' title="source: imgur.com" /></a>
-<a href="https://i.imgur.com/U0JD4Uq.png"><img src="https://i.imgur.com/U0JD4Uq.png" width='196.33px'  title="source: imgur.com" /></a>
+<a href="https://i.imgur.com/uwSiFxe.png" target='_blank'
+rel='noopener noreferrer'><img src="https://i.imgur.com/uwSiFxe.png" width='197.66px' title="source: imgur.com" /></a>
+<a href="https://i.imgur.com/U0JD4Uq.png" target='_blank'
+rel='noopener noreferrer'><img src="https://i.imgur.com/U0JD4Uq.png" width='196.33px'  title="source: imgur.com" /></a>
 
-<a href="https://i.imgur.com/DtK3K6A.png"><img src="https://i.imgur.com/DtK3K6A.png" width='236.66px' title="source: imgur.com" /></a>
-<a href="https://i.imgur.com/7JeVYmj.png"><img src="https://i.imgur.com/7JeVYmj.png" width='313px'  title="source: imgur.com" /></a>
+<a href="https://i.imgur.com/DtK3K6A.png" target='_blank'
+rel='noopener noreferrer'><img src="https://i.imgur.com/DtK3K6A.png" width='236.66px' title="source: imgur.com" /></a>
+<a href="https://i.imgur.com/7JeVYmj.png" target='_blank'
+rel='noopener noreferrer'><img src="https://i.imgur.com/7JeVYmj.png" width='313px'  title="source: imgur.com" /></a>
 
 #### Database Schema (click on the images to view larger)
 
 The database was designed to make it easy to find, organize and add new user data systematically. This enables easy create, read, write and update functionally based on user emails.
 
-<a href="https://i.imgur.com/OLoWTm7.png"><img src="https://i.imgur.com/OLoWTm7.png" width='235px'  title="source: imgur.com" /></a>
+<a href="https://i.imgur.com/OLoWTm7.png" target='_blank'
+rel='noopener noreferrer'><img src="https://i.imgur.com/OLoWTm7.png" width='235px'  title="source: imgur.com" /></a>
 
-<a href="https://i.imgur.com/H4JZn8w.png"><img src="https://i.imgur.com/H4JZn8w.png" width='307.33px'  title="source: imgur.com" /></a>
+<a href="https://i.imgur.com/H4JZn8w.png" target='_blank'
+rel='noopener noreferrer'><img src="https://i.imgur.com/H4JZn8w.png" width='307.33px'  title="source: imgur.com" /></a>
 
-<a href="https://i.imgur.com/ptA0jmF.png"><img src="https://i.imgur.com/ptA0jmF.png" width='211px' title="source: imgur.com" /></a>
+<a href="https://i.imgur.com/ptA0jmF.png" target='_blank'
+rel='noopener noreferrer'><img src="https://i.imgur.com/ptA0jmF.png" width='211px' title="source: imgur.com" /></a>
+
+#### Firebase Storage (Image storage)
+
+Images uploaded with a post are saved into a separate folder in firebases fire storage facility, titled with the users email.
+
+<a href="https://i.imgur.com/oFtihl8.png" target='_blank'
+rel='noopener noreferrer'><img src="https://i.imgur.com/oFtihl8.png" width='480px' title="source: imgur.com" /></a>

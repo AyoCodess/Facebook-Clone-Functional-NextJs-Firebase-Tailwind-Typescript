@@ -35,6 +35,7 @@ export const SidebarTwoFriendRequests = () => {
             <img
               src={person.image}
               className='h-20 w-20 mr-auto object-cover rounded-full shadow-lg mt-2'
+              alt='person'
             />
           </div>
           <div className='flex justify-between items-center'>
