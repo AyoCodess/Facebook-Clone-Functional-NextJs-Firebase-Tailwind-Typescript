@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { SetStateAction, useContext } from 'react';
 import { Switch } from '@headlessui/react';
 import { ThemeContext } from '../ThemeContext';
 
@@ -8,20 +8,30 @@ function classNames(...classes: any) {
 
 interface Props {
   className?: string;
+  mobileMenu?: boolean;
+  setOpenMenu?: React.Dispatch<SetStateAction<boolean>>;
+  openMenu?: boolean;
 }
 
-export const ThemeToggle = ({ className }: Props) => {
+export const ThemeToggle = ({
+  className,
+  mobileMenu,
+  openMenu,
+  setOpenMenu,
+}: Props) => {
   const { theme, setTheme } = useContext(ThemeContext);
 
   return (
     <Switch.Group
       as='div'
-      className={`  w-[9rem] flex items-center   ${className}`}>
+      className={`  w-[9rem] flex items-center   ${className}  `}>
       <Switch
         checked={theme}
         onChange={() => {
           localStorage.setItem('theme', !theme ? 'true' : 'false');
+
           setTheme((prev) => !prev);
+          setOpenMenu(false);
         }}
         className={classNames(
           theme ? 'bg-blue-600' : 'bg-gray-200',

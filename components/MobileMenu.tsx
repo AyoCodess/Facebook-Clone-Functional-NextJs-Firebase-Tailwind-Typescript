@@ -70,7 +70,12 @@ export const MobileMenu = ({ openMenu, setOpenMenu }: Props) => {
                     <div className={` flex flex-col gap-2 p-3 my-2  `}>
                       <div className='flex items-center gap-1'>
                         <hr className='mx-auto w-10 border-2' />
-                        <ThemeToggle className='mb-1 ml-auto' />
+                        <ThemeToggle
+                          className='mb-1 ml-auto'
+                          mobileMenu={true}
+                          setOpenMenu={setOpenMenu}
+                          openMenu={openMenu}
+                        />
                       </div>
                       <MobileMenuButton
                         Icon={ViewListIcon}
