@@ -10,6 +10,7 @@ interface Props {
   custom?: string | null | undefined;
   image?: string;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 export const SidebarRow = ({
@@ -18,13 +19,14 @@ export const SidebarRow = ({
   title,
   custom,
   image,
+  disabled,
   onClick,
 }: Props) => {
   const { theme, setTheme } = useContext(ThemeContext);
 
   return (
     <div
-      onClick={onClick}
+      onClick={disabled ? null : onClick}
       className={`flex items-center gap-2 p-3 rounded-xl  cursor-pointer ${
         !theme
           ? ' themeLight hover:bg-gray-100 bg-transparent'

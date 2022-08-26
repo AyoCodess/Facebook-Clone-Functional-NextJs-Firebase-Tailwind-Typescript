@@ -55,6 +55,7 @@ export const Sidebar = () => {
             />
           )}
           <SidebarRow
+            disabled={session ? false : true}
             image={'/images/FacebookIcons/viewall.png'}
             title={`${
               !viewEveryonesPosts ? "View Everyone's Posts" : ' View Your Posts'
