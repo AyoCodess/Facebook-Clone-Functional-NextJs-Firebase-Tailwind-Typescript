@@ -16,8 +16,14 @@ export const SidebarTwoBirthdays = () => {
           layout='fixed'
         />
         <p className='text-lg font-medium'>
-          Ricardo Alanso and <span className='font-bold'>8 others </span>have
-          their birthdays today.
+          <a
+            href='https://twitter.com/BayoAkomolafe'
+            rel='noopener'
+            target='_blank'>
+            Bayo Akomolafe
+          </a>{' '}
+          and <span className='font-bold'>8 others </span>have their birthdays
+          today.
         </p>
       </div>
       <Divider custom={'mt-4 mx-4 mb-2'} />
