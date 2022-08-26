@@ -29,9 +29,11 @@ export const ThemeToggle = ({
         checked={theme}
         onChange={() => {
           localStorage.setItem('theme', !theme ? 'true' : 'false');
-
           setTheme((prev) => !prev);
-          setOpenMenu(false);
+
+          if (openMenu) {
+            setOpenMenu(false);
+          }
         }}
         className={classNames(
           theme ? 'bg-blue-600' : 'bg-gray-200',
