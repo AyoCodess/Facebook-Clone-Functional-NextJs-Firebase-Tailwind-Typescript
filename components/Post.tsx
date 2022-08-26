@@ -55,7 +55,7 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
       }`}>
       <div
         className={`p-5    sm:rounded-t-2xl shadow-sm ${
-          !theme ? 'lightTheme' : 'darkTheme  shadow-blue-900   '
+          !theme ? 'lightTheme' : 'darkTheme    '
         }`}>
         {/*post information */}
 

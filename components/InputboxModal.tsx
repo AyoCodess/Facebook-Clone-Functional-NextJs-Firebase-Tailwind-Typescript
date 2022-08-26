@@ -108,7 +108,10 @@ export const InputboxModal = () => {
       }
       //   handles posts with image attached
       if (photoToPost) {
-        const photoRef = ref(storage, `posts/photo-${Date.now()}.png`);
+        const photoRef = ref(
+          storage,
+          `${session.user.email}/photo-${Date.now().valueOf()}.png`
+        );
         console.log('post with photo');
 
         // upload photo to firebase storage
