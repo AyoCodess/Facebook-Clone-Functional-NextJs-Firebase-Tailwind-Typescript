@@ -105,7 +105,7 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
 
       {/* Post Footer */}
       <div
-        className={`flex justify-between items-center sm:rounded-b-2xl  shadow-md text-gray-400 border-t mt-2 ${
+        className={`flex justify-between items-center sm:rounded-b-2xl  text-3xl shadow-md text-gray-400 border-t mt-2 ${
           !theme
             ? 'lightTheme'
             : 'darkTheme transition-shadow duration-75 border-t-slate-700 shadow-slate-800'

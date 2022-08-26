@@ -10,7 +10,7 @@ export const PostButton = ({ Icon, title }: Props) => {
   const { theme } = useContext(ThemeContext);
   return (
     <div
-      className={`inputIcon p-3 rounded-none rounded-bl-2xl group ${
+      className={`inputIcon p-3 rounded-none group ${
         !theme ? 'lightTheme' : 'darkTheme hover:bg-blue-500 text-white'
       }`}>
       <Icon
