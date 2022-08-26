@@ -20,7 +20,12 @@ import {
   DotsVerticalIcon,
 } from '@heroicons/react/solid';
 
-import { FlagIcon, PlayIcon, ShoppingCartIcon } from '@heroicons/react/outline';
+import {
+  FlagIcon,
+  PlayIcon,
+  ShoppingCartIcon,
+  ViewListIcon,
+} from '@heroicons/react/outline';
 
 import { useSession } from 'next-auth/react';
 
@@ -47,7 +52,7 @@ export const MobileHeaderTop = () => {
           </div>
 
           {!session && <SignInOutButton login='signin' />}
-          {session && <SignInOutButton login='signout' />}
+
           <Search />
         </div>
         {/*Center */}
@@ -97,8 +102,10 @@ export const MobileHeaderTop = () => {
               src={session.user?.image || 'https://i.imgur.com/MsZzedb.jpg'}
               alt=''
             />
-            <DotsVerticalIcon
-              className='xl:hidden icon block'
+            <ViewListIcon
+              className={`xl:hidden h-8 block ${
+                !theme ? 'themeLight text-gray-300' : 'themeDark  text-gray-200'
+              }`}
               onClick={() => setOpenMenu((prev) => !prev)}
             />
           </>

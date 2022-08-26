@@ -1,8 +1,8 @@
-import React, { useContext, useState, useRef, Fragment } from 'react';
+import React, { useContext, useRef, Fragment } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 
-import { ThemeToggle } from '../components';
+import { SignInOutButton, ThemeToggle } from '../components';
 import {
   BellIcon,
   ChatIcon,
@@ -60,7 +60,7 @@ export const MobileMenu = ({ openMenu, setOpenMenu }: Props) => {
               leaveFrom='opacity-100 translate-y-0 sm:scale-100'
               leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'>
               <div
-                className={` absolute top-16 right-0 xl:hidden animate-popUp mr-5  bg-white rounded-lg  transform transition-all h-80 w-60 ${
+                className={` absolute top-16 right-0 xl:hidden animate-popUp mr-5  bg-white rounded-lg  transform transition-all h-96 w-60 ${
                   !theme
                     ? 'lightTheme bg-white  shadow-xl '
                     : 'darkTheme bg-slate-700  shadow-slate-400'
@@ -89,6 +89,13 @@ export const MobileMenu = ({ openMenu, setOpenMenu }: Props) => {
                       <MobileMenuButton Icon={ChatIcon} title='Messenger' />
                       <MobileMenuButton Icon={BellIcon} title='Notifications' />
                     </div>
+                  )}
+                  {session && (
+                    <SignInOutButton
+                      setOpenMenu={setOpenMenu}
+                      openMenu={openMenu}
+                      login='signout'
+                    />
                   )}
                 </div>
               </div>

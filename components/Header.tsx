@@ -18,6 +18,7 @@ import {
   UserGroupIcon,
   ViewGridIcon,
   DotsVerticalIcon,
+  ViewListIcon,
 } from '@heroicons/react/solid';
 
 import { FlagIcon, PlayIcon, ShoppingCartIcon } from '@heroicons/react/outline';
@@ -97,9 +98,9 @@ export const Header = () => {
               src={session.user?.image || 'https://i.imgur.com/MsZzedb.jpg'}
               alt=''
             />
-            <DotsVerticalIcon
-              className={`xl:hidden icon block ${
-                !theme ? 'lightTheme bg-slate-100 ' : 'darkTheme bg-white'
+            <ViewListIcon
+              className={`xl:hidden h-8 block ${
+                !theme ? 'themeLight text-gray-300' : 'themeDark  text-gray-200'
               }`}
               onClick={() => setOpenMenu((prev) => !prev)}
             />
