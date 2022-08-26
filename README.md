@@ -32,8 +32,8 @@ This project was mainly used to keep my CSS skills sharp, get familiar with fire
 
 ### TODOs
 
-1. Search post by user name and email
-2. Allow users to post images to their own story section
+1. Search post by user name and email and possibly keywords.
+2. Allow users to post images to their own story section.
 3. Allow users to like, comment and share posts externally.
 4. Creating other pages in the style of Facebook but repurposing them, if you have any ideas, let me know.
 
