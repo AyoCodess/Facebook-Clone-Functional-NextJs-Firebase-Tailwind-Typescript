@@ -19,7 +19,7 @@ export const Search = () => {
         }  ml-2 bg-transparent outline-none  flex-shrink ${
           !theme ? 'themeLight placeholder-gray-500' : 'themeDark text-black'
         }`}
-        placeholder='Search Metaspace'
+        placeholder='Search...'
       />
     </div>
   );
