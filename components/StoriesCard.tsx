@@ -70,7 +70,7 @@ export const StoriesCard = ({ name, src, profile, active, hide }: Props) => {
             <div className='flex flex-col items-center'>
               <PlusCircleIcon className='rounded-full  bg-blue-600  h-10 text-white' />
               <p className='text-white'>{name}</p>
-              <p className='text-sm flex   text-gray-900  font-bold px-1 '>
+              <p className='text-sm flex   text-gray-900  mt-2 font-bold px-1 '>
                 Create <span className='hidden md:block'>&nbsp;story</span>
               </p>
             </div>
