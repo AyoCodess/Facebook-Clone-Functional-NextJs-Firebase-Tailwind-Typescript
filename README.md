@@ -10,7 +10,7 @@ Next.js (Javascript Framework), Context API (State Management), NextAuth (User A
 
 ### About
 
-This app acts as a pinboard for anyone to use. Make your own text and image posts. You can also view everyone else's posts too. Think of it like a mood board, a Pinterest-type app with a Facebook user interface.
+This app acts as a pinboard for anyone to use. Think of it like a mood board, a Pinterest-type app with a Facebook user interface. You can share your photos and your writing. And browse the posts of others.
 
 ### Motivation
 
@@ -19,7 +19,7 @@ This project was mainly used to keep my CSS skills sharp, get familiar with fire
 ### Features
 
 1. A clear focus on code modularity and code structure for easy modification and expansion
-2. We have different apps for mobile vs larger screens. Please test the app on different screen sizes. Use your browsers inspect` tool.
+2. We have different apps for mobile vs larger screens. Please test the app on different screen sizes. Use your browser’s inspect tool.
 3. Facebook, Google login enabled
 4. Custom login page
 5. Can share a post with or without an image and display it in the User interface in real-time just like Facebook
@@ -27,7 +27,7 @@ This project was mainly used to keep my CSS skills sharp, get familiar with fire
 7. Can view every other user's post with one button click. Be careful what you share as only I can delete the posts from the database.
 8. Light/Dark mode
 9. Mobile first approach
-10. Error messages for API failures i.e if the firebase day quota is exceeded you will get a notification as to why you can't make posts as this app is on the free plan
+10. Error messages for API failures (i.e., if the firebase day quota is exceeded you will get a notification as to why you can't make posts as this app is on the free plan)
 11. My own custom tailwind animations and utility classes using the @layout feature
 
 ### TODOs
