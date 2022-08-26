@@ -95,7 +95,7 @@ export const MobileHeaderTop = () => {
             <img
               className='h-10 rounded-full mx-2'
               src={session.user?.image!}
-              alt='profile'
+              alt=''
             />
             <DotsVerticalIcon
               className='xl:hidden icon block'

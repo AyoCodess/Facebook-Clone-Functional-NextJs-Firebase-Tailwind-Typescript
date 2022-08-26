@@ -95,7 +95,7 @@ export const Header = () => {
             <img
               className='h-10 rounded-full mx-2'
               src={session.user?.image!}
-              alt={`${session.user?.name} - profile image `}
+              alt=''
             />
             <DotsVerticalIcon
               className={`xl:hidden icon block ${

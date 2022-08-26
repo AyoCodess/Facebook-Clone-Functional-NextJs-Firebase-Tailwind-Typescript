@@ -44,7 +44,7 @@ export const DataContext = createContext<DataContextType>({
 
 export const DataProvider = ({ children }: Props) => {
   // view all posts from all users in the database
-  const [viewEveryonesPosts, setViewEveryonesPosts] = useState(false);
+  const [viewEveryonesPosts, setViewEveryonesPosts] = useState(true);
 
   // toast
   const [show, setShow] = useState(false); // used to alter user that the database is not writable yet
