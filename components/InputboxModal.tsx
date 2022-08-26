@@ -127,7 +127,7 @@ export const InputboxModal = () => {
           message: savedMessageRef,
           name: session?.user?.name,
           email: session?.user?.email,
-          image: session?.user?.image,
+          image: session?.user?.image || 'https://i.imgur.com/XWiwM24.jpg',
           imageURL: downloadURL,
           timestamp: Timestamp.now(),
         });
