@@ -4,7 +4,7 @@ import { ThemeContext } from '../ThemeContext';
 
 const stories = [
   {
-    name: 'You',
+    name: '',
     src: 'https://i.imgur.com/ixWtxQw.png',
     profile: 'https://i.imgur.com/NVT7gKL.png',
     active: true,

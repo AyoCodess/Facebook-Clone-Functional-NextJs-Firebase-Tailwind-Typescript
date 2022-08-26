@@ -11,7 +11,7 @@ export const Footer = () => {
       <p className='text-center'>
         <span className='h-10 text-red-600'>♥</span> Made with a lot of
         enthusiasm and drive by
-        <span className='font-bold'>&nbsp;Ayo D adesanya.</span>
+        <span className='font-bold'>&nbsp;Ayo D Adesanya.</span>
         <span className='lg:hidden'>
           &nbsp;View the desktop version for more functionality.
         </span>
