@@ -101,7 +101,7 @@ export const InputboxModal = () => {
           message: savedMessageRef,
           name: session?.user?.name,
           email: session?.user?.email,
-          image: session?.user?.image,
+          image: session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
           timestamp: Timestamp.now(),
         });
         setPhotoToPost(null);
@@ -127,8 +127,8 @@ export const InputboxModal = () => {
           message: savedMessageRef,
           name: session?.user?.name,
           email: session?.user?.email,
-          image: session?.user?.image || 'https://i.imgur.com/XWiwM24.jpg',
-          imageURL: downloadURL,
+          image: session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
+          imageURL: downloadURL || 'https://i.imgur.com/XWiwM24.jpg',
           timestamp: Timestamp.now(),
         });
 
