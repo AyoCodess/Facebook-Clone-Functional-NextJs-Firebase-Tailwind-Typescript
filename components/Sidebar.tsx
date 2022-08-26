@@ -49,7 +49,7 @@ export const Sidebar = () => {
         <div>
           {session && (
             <SidebarRow
-              src={session.user?.image}
+              src={session.user?.image || 'https://i.imgur.com/MsZzedb.jpg'}
               //   Icon={UsersIcon}
               title={session.user?.name}
             />

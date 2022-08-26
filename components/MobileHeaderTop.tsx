@@ -94,7 +94,7 @@ export const MobileHeaderTop = () => {
           <>
             <img
               className='h-10 rounded-full mx-2'
-              src={session.user?.image! || 'https://i.imgur.com/MsZzedb.jpg'}
+              src={session.user?.image || 'https://i.imgur.com/MsZzedb.jpg'}
               alt=''
             />
             <DotsVerticalIcon
