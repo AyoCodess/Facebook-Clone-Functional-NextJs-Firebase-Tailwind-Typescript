@@ -41,8 +41,8 @@ This project was mainly used to keep my CSS skills sharp, get familiar with fire
 
 #### Mobile (Click on the images to view larger)
 
-<a href="https://i.imgur.com/FN6Ygy7.png"><img src="https://i.imgur.com/FN6Ygy7.png" height='509.33px' title="source: imgur.com" /></a>
-<a href="https://i.imgur.com/5b3yXFE.png"><img src="https://i.imgur.com/5b3yXFE.png" height='509.33px' title="source: imgur.com" /></a>
+<a href="https://i.imgur.com/Dv8rpQu.png"><img src="https://i.imgur.com/Dv8rpQu.png" height='509.33px' title="source: imgur.com" /></a>
+<a href="https://i.imgur.com/9qJjbNl.png"><img src="https://i.imgur.com/9qJjbNl.png" height='509.33px' title="source: imgur.com" /></a>
 
 #### Larger Screens (Click on the images to view larger)
 
