@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import generateHash from 'random-hash';
+import cryptoRandomString from 'crypto-random-string';
 import {
   ColorSwatchIcon,
   LocationMarkerIcon,
@@ -95,7 +95,7 @@ export const InputboxModal = () => {
   const sendPost = async () => {
     // initializes users the firebase collection
 
-    let postID = generateHash({ length: 24 });
+    let postID = cryptoRandomString({ length: 24 });
 
     const usersRef = doc(db, 'users', `${session?.user?.email}`);
 
