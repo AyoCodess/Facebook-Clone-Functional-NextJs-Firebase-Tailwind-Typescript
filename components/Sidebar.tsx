@@ -21,24 +21,25 @@ export const Sidebar = () => {
         !theme ? 'themeLight bg-gray-50 shadow ' : 'themeDark bg-slate-800'
       }`}>
       <p
-        onClick={() => setOpenMenu((prev) => !prev)}
         className={`flex items-center gap-2 ${
           openMenu ? 'ml-3' : 'mx-auto'
-        } mb-2 cursor-pointer ${
+        } mb-2  ${
           !theme
             ? 'lightTheme text-gray-300 hover:text-gray-400'
             : 'darkTheme hover:text-white'
         }`}>
         {openMenu && (
           <XIcon
-            className={` h-8 ${
+            onClick={() => setOpenMenu((prev) => !prev)}
+            className={`cursor-pointer h-6 ${
               !theme ? 'lightTheme' : 'darkTheme'
-            }text-gray-300 h-12 ml-2`}
+            }text-gray-300 h-12 ml-auto`}
           />
         )}
         {!openMenu && (
           <ViewListIcon
-            className={` h-8 ${
+            onClick={() => setOpenMenu((prev) => !prev)}
+            className={` cursor-pointer h-8 ${
               !theme ? 'lightTheme' : 'darkTheme'
             }text-gray-400 `}
           />

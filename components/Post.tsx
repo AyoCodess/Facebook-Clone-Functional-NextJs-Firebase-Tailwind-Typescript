@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   ChatAltIcon,
   DotsHorizontalIcon,
@@ -11,7 +11,7 @@ import Image from 'next/image';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 import { useSession } from 'next-auth/react';
-import { PostButton } from '.';
+import { PostButton, PostDropdownMenu } from '.';
 
 interface Props {
   name: string;
@@ -24,6 +24,8 @@ interface Props {
 
 export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
   const { data: session } = useSession();
+
+  const [openDropdownMenu, setOpenDropdownMenu] = useState(false);
   const dateTimestamp = new Timestamp(
     timestamp.seconds,
     timestamp.nanoseconds
@@ -60,7 +62,7 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
         }`}>
         {/*post information */}
 
-        <div className='flex justify-between'>
+        <div className='relative flex justify-between'>
           <div className='flex items-center gap-2  '>
             {' '}
             <img
@@ -84,12 +86,18 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
               )}
             </div>
           </div>
+
           <DotsHorizontalIcon
+            onClick={() => setOpenDropdownMenu(true)}
             className={`p-2 h-10 rounded-full transition duration-200 cursor-pointer ${
               !theme
                 ? 'lightTheme hover:bg-gray-100 text-gray-600'
                 : 'darkTheme hover:bg-blue-500 '
             }`}
+          />
+          <PostDropdownMenu
+            openDropdownMenu={openDropdownMenu}
+            setOpenDropdownMenu={setOpenDropdownMenu}
           />
         </div>
 

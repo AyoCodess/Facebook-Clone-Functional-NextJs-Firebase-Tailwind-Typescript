@@ -1,0 +1,96 @@
+import React, { useContext, useRef, Fragment } from 'react';
+import { ThemeContext } from '../ThemeContext';
+import { DataContext } from '../DataContext';
+
+import { SignInOutButton, ThemeToggle } from '../components';
+import {
+  BellIcon,
+  ChatIcon,
+  FolderRemoveIcon,
+  UploadIcon,
+  ViewGridIcon,
+  ViewListIcon,
+} from '@heroicons/react/solid';
+
+import { useSession } from 'next-auth/react';
+import { Dialog, Transition } from '@headlessui/react';
+import { MobileMenuButton } from './MobileMenuButton';
+
+interface Props {
+  openDropdownMenu: boolean;
+  setOpenDropdownMenu: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const PostDropdownMenu = ({
+  openDropdownMenu,
+  setOpenDropdownMenu,
+}: Props) => {
+  const { theme } = useContext(ThemeContext);
+  const { data: session } = useSession();
+  const getLink = useRef(null);
+  return (
+    <>
+      <Transition.Root show={openDropdownMenu} as={Fragment}>
+        <Dialog
+          style={{ zIndex: '9000' }}
+          as='div'
+          className='fixed z-10 inset-0 overflow-y-auto'
+          initialFocus={getLink}
+          onClose={setOpenDropdownMenu}>
+          <div className='flex relative '>
+            <Transition.Child
+              as={Fragment}
+              enter='ease-out duration-300'
+              enterFrom='opacity-0'
+              enterTo='opacity-100'
+              leave='ease-in duration-200'
+              leaveFrom='opacity-100'
+              leaveTo='opacity-0'>
+              <Dialog.Overlay className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity' />
+            </Transition.Child>
+
+            <Transition.Child
+              as={Fragment}
+              enter='ease-out duration-300'
+              enterFrom='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
+              enterTo='opacity-100 translate-y-0 sm:scale-100'
+              leave='ease-in duration-200'
+              leaveFrom='opacity-100 translate-y-0 sm:scale-100'
+              leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'>
+              <div
+                className={`  absolute top-[25rem]  right-[10rem] animate-popUp mr-5  bg-white rounded-lg  transform transition-all h-40 w-60 ${
+                  !theme
+                    ? 'lightTheme bg-white  shadow-xl '
+                    : 'darkTheme bg-slate-700  shadow-slate-400'
+                }`}>
+                <div>
+                  {session && (
+                    <div className={` flex flex-col gap-2 p-3 my-2  `}>
+                      <div className='flex items-center gap-1'>
+                        <hr className='mx-auto w-10 border-2' />
+                      </div>
+                      <MobileMenuButton
+                        title='Update Post'
+                        Icon={UploadIcon}
+                        onClick={() => {
+                          setOpenDropdownMenu(false);
+                        }}
+                      />
+                      <MobileMenuButton
+                        title='Delete Post'
+                        Icon={FolderRemoveIcon}
+                        onClick={() => {
+                          setOpenDropdownMenu(false);
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </Transition.Child>
+          </div>
+        </Dialog>
+      </Transition.Root>
+    </>
+  );
+};
