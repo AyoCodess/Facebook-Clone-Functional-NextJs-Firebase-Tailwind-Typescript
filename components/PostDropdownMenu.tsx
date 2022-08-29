@@ -1,4 +1,7 @@
-import React, { useContext, useRef, Fragment } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
+import { ChevronDownIcon } from '@heroicons/react/solid';
+
+import React, { useContext } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 import { Menu } from '@headlessui/react';
@@ -29,64 +32,58 @@ export const PostDropdownMenu = ({
 }: Props) => {
   const { theme } = useContext(ThemeContext);
   const { data: session } = useSession();
-  const getLink = useRef(null);
   return (
-    <>
-      <div className='absolute right-[15rem] z-50'>
-        <Menu>
-          {({ open }) => (
-            <>
-              {/* Use the Transition component. */}
-              <Transition
-                show={openDropdownMenu}
-                enter='transition duration-100 ease-out'
-                enterFrom='transform scale-95 opacity-0'
-                enterTo='transform scale-100 opacity-100'
-                leave='transition duration-75 ease-out'
-                leaveFrom='transform scale-100 opacity-100'
-                leaveTo='transform scale-95 opacity-0'>
-                {/* Mark this component as `static` */}
-                <div
-                  className={`  absolute animate-popUp mr-5  bg-white rounded-lg  transform transition-all h-40 w-60 ${
-                    !theme
-                      ? 'lightTheme bg-white  shadow-xl '
-                      : 'darkTheme bg-slate-700  shadow-slate-400'
-                  }`}>
-                  <div>
-                    {session && (
-                      <div className={` flex flex-col gap-2 p-3 my-2  `}>
-                        <div className='flex items-center gap-1'>
-                          <hr className='mx-auto w-10 border-2' />
-                        </div>
-                        <Menu.Items>
-                          <Menu.Item>
-                            <MobileMenuButton
-                              title='Update Post'
-                              Icon={UploadIcon}
-                              onClick={() => {
-                                setOpenDropdownMenu(false);
-                              }}
-                            />
-                          </Menu.Item>
-                          <Menu.Item>
-                            <MobileMenuButton
-                              title='Delete Post'
-                              Icon={FolderRemoveIcon}
-                              onClick={() => {
-                                setOpenDropdownMenu(false);
-                              }}
-                            />
-                          </Menu.Item>
-                        </Menu.Items>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </Transition>
-            </>
-          )}
-        </Menu>
-      </div>
-    </>
+    <div className=''>
+      <Menu as='div' className='relative inline-block text-left z-50'>
+        <div>
+          <Menu.Button>
+            <DotsHorizontalIcon
+              onClick={() => setOpenDropdownMenu(true)}
+              className={`p-2 h-10 rounded-full transition duration-200 cursor-pointer ${
+                !theme
+                  ? 'lightTheme hover:bg-gray-100 text-gray-600'
+                  : 'darkTheme hover:bg-blue-500 '
+              }`}
+            />
+          </Menu.Button>
+        </div>
+        <Transition
+          as={Fragment}
+          enter='transition ease-out duration-100'
+          enterFrom='transform opacity-0 scale-95'
+          enterTo='transform opacity-100 scale-100'
+          leave='transition ease-in duration-75'
+          leaveFrom='transform opacity-100 scale-100'
+          leaveTo='transform opacity-0 scale-95'>
+          <Menu.Items
+            className={`absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
+              !theme
+                ? 'lightTheme bg-white'
+                : 'darkTheme bg-slate-700 shadow shadow-black'
+            }`}>
+            <div className='px-1 py-1 '>
+              <Menu.Item>
+                <MobileMenuButton
+                  title='Update Post'
+                  Icon={UploadIcon}
+                  onClick={() => {
+                    setOpenDropdownMenu(false);
+                  }}
+                />
+              </Menu.Item>
+              <Menu.Item>
+                <MobileMenuButton
+                  title='Delete Post'
+                  Icon={FolderRemoveIcon}
+                  onClick={() => {
+                    setOpenDropdownMenu(false);
+                  }}
+                />
+              </Menu.Item>
+            </div>
+          </Menu.Items>
+        </Transition>
+      </Menu>
+    </div>
   );
 };

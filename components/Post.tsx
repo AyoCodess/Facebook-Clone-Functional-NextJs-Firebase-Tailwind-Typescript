@@ -87,15 +87,6 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
             </div>
           </div>
           <div className='relative'>
-            <DotsHorizontalIcon
-              onClick={() => setOpenDropdownMenu(true)}
-              className={`p-2 h-10 rounded-full transition duration-200 cursor-pointer ${
-                !theme
-                  ? 'lightTheme hover:bg-gray-100 text-gray-600'
-                  : 'darkTheme hover:bg-blue-500 '
-              }`}
-            />
-
             <PostDropdownMenu
               openDropdownMenu={openDropdownMenu}
               setOpenDropdownMenu={setOpenDropdownMenu}

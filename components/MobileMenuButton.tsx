@@ -17,7 +17,7 @@ export const MobileMenuButton = ({
 }: Props) => {
   const { theme } = useContext(ThemeContext);
   return (
-    <div
+    <button
       className={`flex gap-2 h-14 items-center cursor-pointer rounded-xl p-2 ${
         !theme
           ? 'lightTheme hover:bg-gray-100'
@@ -31,6 +31,6 @@ export const MobileMenuButton = ({
         }`}</p>
       )}
       {title && <p className='font-medium'> {title}</p>}
-    </div>
+    </button>
   );
 };
