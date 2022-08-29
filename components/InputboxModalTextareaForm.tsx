@@ -52,7 +52,7 @@ export const InputboxModalTextareaForm = ({
                 ?.slice(0, 1)}`
             : `${postMessageInModal}... `
         }
-        value={updatePostViaModal ? postMessageInModal : ''}
+        defaultValue={updatePostViaModal ? postMessageInModal : ''}
       />
       {photoToPost && (
         <div
