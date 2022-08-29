@@ -18,7 +18,7 @@ export const MobileMenuButton = ({
   const { theme } = useContext(ThemeContext);
   return (
     <button
-      className={`flex gap-2 h-14 items-center cursor-pointer rounded-xl p-2 ${
+      className={`flex gap-2 h-14 items-center cursor-pointer rounded-xl w-full p-2 ${
         !theme
           ? 'lightTheme hover:bg-gray-100'
           : 'darkTheme hover:bg-blue-500 text-white'

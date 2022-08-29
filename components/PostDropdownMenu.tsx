@@ -8,6 +8,7 @@ import {
   getDocs,
   updateDoc,
   getDoc,
+  deleteDoc,
 } from 'firebase/firestore';
 import { db } from '../firebase';
 
@@ -50,27 +51,31 @@ export const PostDropdownMenu = ({
     setPostMessageInModal,
     setUpdatePostViaModal,
     setPostIdRefState,
+    setForceUpdate,
   } = useContext(DataContext);
   const { data: session } = useSession();
 
-  console.log(postIdRef);
-
   const updatePost = async () => {
-    setPostIdRefState(postIdRef);
     console.log(postIdRef);
-    console.log(postEmailRef);
-
+    setPostIdRefState(postIdRef);
     const post = doc(db, 'users', `${session.user.email}`, 'posts', postIdRef);
-
-    console.log(post);
-
     const postDoc = await getDoc(post);
-
     setUpdatePostViaModal(true);
     setPostMessageInModal(postDoc.data().message);
     setModalOpen(true);
   };
-  const deletePost = async () => {};
+  const deletePost = async () => {
+    console.log('id ref', postIdRef);
+    try {
+      await deleteDoc(
+        doc(db, 'users', `${session.user.email}`, 'posts', postIdRef)
+      );
+    } catch (error) {
+      console.log('there was an error', error);
+    } finally {
+      setForceUpdate((prev) => !prev);
+    }
+  };
 
   return (
     <div className=''>

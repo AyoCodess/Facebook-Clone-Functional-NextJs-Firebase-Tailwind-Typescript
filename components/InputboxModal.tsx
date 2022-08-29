@@ -39,16 +39,13 @@ export const InputboxModal = () => {
     setLoading,
     postMessageInModal,
     updatePostViaModal,
+    setUpdatePostViaModal,
   } = useContext(DataContext);
 
   const { data: session } = useSession();
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const photoPickerRef = useRef<HTMLInputElement>(null);
-
-  const [postID, setPostID] = useState<string | null>(
-    generateHash({ length: 24 })
-  );
 
   const [photoToPost, setPhotoToPost] = useState<
     string | ArrayBuffer | null | undefined
@@ -91,18 +88,23 @@ export const InputboxModal = () => {
       );
       return;
     }
+
     sendPost();
   };
 
   const sendPost = async () => {
     // initializes users the firebase collection
+
+    let postID = generateHash({ length: 24 });
+
     const usersRef = doc(db, 'users', `${session?.user?.email}`);
+
+    console.log('postid', postID);
 
     try {
       setLoading(true);
       //   handles posts with no image attached
       if (!photoToPost) {
-        console.log('post with NO photo');
         await setDoc(
           doc(db, 'users', `${session?.user?.email}`, 'posts', postID),
           {
@@ -114,7 +116,8 @@ export const InputboxModal = () => {
             timestamp: Timestamp.now(),
           }
         );
-        setPostID(null);
+
+        // setPostID(null);
         setPhotoToPost(null);
       }
       //   handles posts with image attached
@@ -134,15 +137,18 @@ export const InputboxModal = () => {
 
         // adding the image URL to the object to be posted to the collection
         const postRef = collection(usersRef, 'posts');
-        await addDoc(postRef, {
-          id: postID,
-          message: savedMessageRef,
-          name: session?.user?.name,
-          email: session?.user?.email,
-          image: session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
-          imageURL: downloadURL || 'https://i.imgur.com/XWiwM24.jpg',
-          timestamp: Timestamp.now(),
-        });
+        await setDoc(
+          doc(db, 'users', `${session?.user?.email}`, 'posts', postID),
+          {
+            id: postID,
+            message: savedMessageRef,
+            name: session?.user?.name,
+            email: session?.user?.email,
+            image: session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
+            imageURL: downloadURL || 'https://i.imgur.com/XWiwM24.jpg',
+            timestamp: Timestamp.now(),
+          }
+        );
 
         setPhotoToPost(null);
         setSavedMessageRef(null);
@@ -158,6 +164,10 @@ export const InputboxModal = () => {
       setForceUpdate((prev) => !prev);
     }
   };
+
+  if (!modalOpen) {
+    setUpdatePostViaModal(false);
+  }
 
   const getLink = useRef(null);
   return (

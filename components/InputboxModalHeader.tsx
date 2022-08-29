@@ -21,13 +21,16 @@ export const InputboxModalHeader = ({
     postIdRefState,
     setForceUpdate,
     postMessageInModal,
+    setUpdatePostViaModal,
   } = useContext(DataContext);
   return (
     <div className={`flex justify-between items-center cursor-pointer `}>
       {/*banner */}
       <Icon
         className='h-6 hover:text-gray-500'
-        onClick={() => setModalOpen(false)}
+        onClick={() => {
+          setModalOpen(false);
+        }}
       />
       <p className='text-sm'>Create post</p>
       <button
@@ -51,12 +54,13 @@ export const InputboxModalHeader = ({
               });
 
               console.log('updating...');
-              setForceUpdate(true);
+              setUpdatePostViaModal(false);
+              setForceUpdate((prev) => !prev);
             };
 
             updatingPost();
             setModalOpen(false);
-            setForceUpdate(false);
+            setForceUpdate(true);
           } else {
             preSendPost(e);
             setModalOpen(false);
