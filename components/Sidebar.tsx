@@ -16,6 +16,8 @@ export const Sidebar = () => {
   return (
     <div
       className={` hidden md:block p-2 pt-5 max-w-[600px] ${
+        openMenu ? 'translate-x-full ml-[-25rem] ' : 'translate-x-0'
+      } ease-in-out transition duration-200 ${
         openMenu ? '2xl:min-w-[400px]' : 'w-12 '
       }  ${
         !theme ? 'themeLight bg-gray-50 shadow ' : 'themeDark bg-slate-800'
