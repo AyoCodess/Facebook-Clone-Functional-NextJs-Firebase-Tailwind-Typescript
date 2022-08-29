@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import {
   ChatAltIcon,
   DotsHorizontalIcon,
@@ -22,7 +22,14 @@ interface Props {
   timestamp: Timestamp;
 }
 
-export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
+export const Post = ({
+  name,
+  message,
+  postImage,
+  image,
+  timestamp,
+  email,
+}: Props) => {
   const { data: session } = useSession();
 
   const [openDropdownMenu, setOpenDropdownMenu] = useState(false);
@@ -51,6 +58,10 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
   const { theme } = useContext(ThemeContext);
   const { viewEveryonesPosts } = useContext(DataContext);
 
+  const [currentUsersEmail, setCurrentUsersEmail] = useState(email);
+
+  const postEmailRef = useRef(null);
+
   return (
     <div
       className={`flex flex-col  sm:rounded-lg mt-3 shadow-md ${
@@ -74,6 +85,9 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
             />
             <div>
               <p className='font-medium'>{name}</p>
+              <p ref={postEmailRef} className=' hidden font-medium'>
+                {email}
+              </p>
               {timestamp ? (
                 <p
                   className={`text-xs  ${
@@ -88,6 +102,7 @@ export const Post = ({ name, message, postImage, image, timestamp }: Props) => {
           </div>
           <div className='relative'>
             <PostDropdownMenu
+              postEmailRef={postEmailRef}
               openDropdownMenu={openDropdownMenu}
               setOpenDropdownMenu={setOpenDropdownMenu}
             />

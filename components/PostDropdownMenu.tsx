@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { ChevronDownIcon } from '@heroicons/react/solid';
+import { ChevronDownIcon, XIcon } from '@heroicons/react/solid';
 
 import React, { useContext } from 'react';
 import { ThemeContext } from '../ThemeContext';
@@ -22,11 +22,13 @@ import { Dialog, Transition } from '@headlessui/react';
 import { MobileMenuButton } from './MobileMenuButton';
 
 interface Props {
+  postEmailRef: any;
   openDropdownMenu: boolean;
   setOpenDropdownMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const PostDropdownMenu = ({
+  postEmailRef,
   openDropdownMenu,
   setOpenDropdownMenu,
 }: Props) => {
@@ -62,24 +64,31 @@ export const PostDropdownMenu = ({
                 : 'darkTheme bg-slate-700 shadow shadow-black'
             }`}>
             <div className='px-1 py-1 '>
-              <Menu.Item>
-                <MobileMenuButton
-                  title='Update Post'
-                  Icon={UploadIcon}
-                  onClick={() => {
-                    setOpenDropdownMenu(false);
-                  }}
-                />
-              </Menu.Item>
-              <Menu.Item>
-                <MobileMenuButton
-                  title='Delete Post'
-                  Icon={FolderRemoveIcon}
-                  onClick={() => {
-                    setOpenDropdownMenu(false);
-                  }}
-                />
-              </Menu.Item>
+              {session.user.email === postEmailRef?.current?.innerText && (
+                <Menu.Item>
+                  <MobileMenuButton
+                    title='Update Post'
+                    Icon={UploadIcon}
+                    onClick={() => {
+                      console.log(postEmailRef.current.innerText);
+                    }}
+                  />
+                </Menu.Item>
+              )}
+              {session.user.email === postEmailRef?.current?.innerText && (
+                <Menu.Item>
+                  <MobileMenuButton
+                    title='Delete Post'
+                    Icon={FolderRemoveIcon}
+                    onClick={() => {}}
+                  />
+                </Menu.Item>
+              )}
+              {session.user.email !== postEmailRef?.current?.innerText && (
+                <Menu.Item>
+                  <MobileMenuButton title='Cannot Edit' Icon={XIcon} />
+                </Menu.Item>
+              )}
             </div>
           </Menu.Items>
         </Transition>
