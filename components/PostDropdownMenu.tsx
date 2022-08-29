@@ -1,12 +1,22 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { ChevronDownIcon, XIcon } from '@heroicons/react/solid';
+import {
+  collection,
+  doc,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  getDoc,
+} from 'firebase/firestore';
+import { db } from '../firebase';
 
 import React, { useContext } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 import { Menu } from '@headlessui/react';
 
-import { SignInOutButton, ThemeToggle } from '../components';
+import { InputboxModal, SignInOutButton, ThemeToggle } from '../components';
 import {
   BellIcon,
   ChatIcon,
@@ -23,17 +33,45 @@ import { MobileMenuButton } from './MobileMenuButton';
 
 interface Props {
   postEmailRef: any;
+  postIdRef: any;
   openDropdownMenu: boolean;
   setOpenDropdownMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const PostDropdownMenu = ({
   postEmailRef,
+  postIdRef,
   openDropdownMenu,
   setOpenDropdownMenu,
 }: Props) => {
   const { theme } = useContext(ThemeContext);
+  const {
+    setModalOpen,
+    setPostMessageInModal,
+    setUpdatePostViaModal,
+    setPostIdRefState,
+  } = useContext(DataContext);
   const { data: session } = useSession();
+
+  console.log(postIdRef);
+
+  const updatePost = async () => {
+    setPostIdRefState(postIdRef);
+    console.log(postIdRef);
+    console.log(postEmailRef);
+
+    const post = doc(db, 'users', `${session.user.email}`, 'posts', postIdRef);
+
+    console.log(post);
+
+    const postDoc = await getDoc(post);
+
+    setUpdatePostViaModal(true);
+    setPostMessageInModal(postDoc.data().message);
+    setModalOpen(true);
+  };
+  const deletePost = async () => {};
+
   return (
     <div className=''>
       <Menu as='div' className='relative inline-block text-left z-50'>
@@ -64,27 +102,29 @@ export const PostDropdownMenu = ({
                 : 'darkTheme bg-slate-700 shadow shadow-black'
             }`}>
             <div className='px-1 py-1 '>
-              {session.user.email === postEmailRef?.current?.innerText && (
+              {session.user.email === postEmailRef && (
                 <Menu.Item>
                   <MobileMenuButton
                     title='Update Post'
                     Icon={UploadIcon}
                     onClick={() => {
-                      console.log(postEmailRef.current.innerText);
+                      updatePost();
                     }}
                   />
                 </Menu.Item>
               )}
-              {session.user.email === postEmailRef?.current?.innerText && (
+              {session.user.email === postEmailRef && (
                 <Menu.Item>
                   <MobileMenuButton
                     title='Delete Post'
                     Icon={FolderRemoveIcon}
-                    onClick={() => {}}
+                    onClick={() => {
+                      deletePost();
+                    }}
                   />
                 </Menu.Item>
               )}
-              {session.user.email !== postEmailRef?.current?.innerText && (
+              {session.user.email !== postEmailRef && (
                 <Menu.Item>
                   <MobileMenuButton title='Cannot Edit' Icon={XIcon} />
                 </Menu.Item>

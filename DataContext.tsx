@@ -4,6 +4,7 @@ import React, {
   SetStateAction,
   Dispatch,
   useMemo,
+  useRef,
 } from 'react';
 
 interface Props {
@@ -24,6 +25,12 @@ interface DataContextType {
   setForceUpdate: Dispatch<SetStateAction<boolean>>;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
+  postMessageInModal: string;
+  setPostMessageInModal: Dispatch<SetStateAction<string>>;
+  updatePostViaModal: boolean;
+  setUpdatePostViaModal: Dispatch<SetStateAction<boolean>>;
+  postIdRefState: any;
+  setPostIdRefState: Dispatch<SetStateAction<string>>;
 }
 export const DataContext = createContext<DataContextType>({
   show: false,
@@ -40,11 +47,22 @@ export const DataContext = createContext<DataContextType>({
   setForceUpdate: () => {},
   loading: false,
   setLoading: () => {},
+  postMessageInModal: '',
+  setPostMessageInModal: () => {},
+  updatePostViaModal: false,
+  setUpdatePostViaModal: () => {},
+  postIdRefState: '',
+  setPostIdRefState: () => {},
 });
 
 export const DataProvider = ({ children }: Props) => {
   // view all posts from all users in the database
   const [viewEveryonesPosts, setViewEveryonesPosts] = useState(true);
+
+  // modal open state
+  const [modalOpen, setModalOpen] = useState(false);
+  const [postMessageInModal, setPostMessageInModal] = useState('');
+  const [updatePostViaModal, setUpdatePostViaModal] = useState(false);
 
   // toast
   const [show, setShow] = useState(false); // used to alter user that the database is not writable yet
@@ -53,8 +71,10 @@ export const DataProvider = ({ children }: Props) => {
     'To stop spam I have locked the database'
   );
 
+  // used to set the postIdRef for the update and delete post functions
+  const [postIdRefState, setPostIdRefState] = useState(null);
+
   const [forceUpdate, setForceUpdate] = useState(false); // updates posts when new post is added
-  const [modalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(false); // loading posts
 
   const contextValues = useMemo(
@@ -73,6 +93,12 @@ export const DataProvider = ({ children }: Props) => {
       setForceUpdate,
       loading,
       setLoading,
+      postMessageInModal,
+      setPostMessageInModal,
+      updatePostViaModal,
+      setUpdatePostViaModal,
+      postIdRefState,
+      setPostIdRefState,
     }),
     [
       show,
@@ -89,6 +115,12 @@ export const DataProvider = ({ children }: Props) => {
       setForceUpdate,
       loading,
       setLoading,
+      postMessageInModal,
+      setPostMessageInModal,
+      updatePostViaModal,
+      setUpdatePostViaModal,
+      postIdRefState,
+      setPostIdRefState,
     ]
   );
   return (

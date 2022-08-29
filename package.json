@@ -13,6 +13,7 @@
     "firebase": "^9.9.2",
     "next": "latest",
     "next-auth": "^4.10.3",
+    "random-hash": "^4.0.1",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-firebase-hooks": "^5.0.3",

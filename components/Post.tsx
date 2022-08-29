@@ -20,6 +20,7 @@ interface Props {
   postImage: string;
   image?: string;
   timestamp: Timestamp;
+  id: string;
 }
 
 export const Post = ({
@@ -29,6 +30,7 @@ export const Post = ({
   image,
   timestamp,
   email,
+  id,
 }: Props) => {
   const { data: session } = useSession();
 
@@ -56,11 +58,14 @@ export const Post = ({
   const date_time = `${date} ${time}`;
 
   const { theme } = useContext(ThemeContext);
-  const { viewEveryonesPosts } = useContext(DataContext);
-
-  const [currentUsersEmail, setCurrentUsersEmail] = useState(email);
+  const { viewEveryonesPosts, setPostIdRefState } = useContext(DataContext);
 
   const postEmailRef = useRef(null);
+  const postIdRef = useRef(null);
+
+  //   if (postIdRef?.current?.innerText) {
+  //     setPostIdRefState(postIdRef.current.innerText);
+  //   }
 
   return (
     <div
@@ -88,6 +93,9 @@ export const Post = ({
               <p ref={postEmailRef} className=' hidden font-medium'>
                 {email}
               </p>
+              <p ref={postIdRef} className=' hidden font-medium'>
+                {id}
+              </p>
               {timestamp ? (
                 <p
                   className={`text-xs  ${
@@ -102,7 +110,8 @@ export const Post = ({
           </div>
           <div className='relative'>
             <PostDropdownMenu
-              postEmailRef={postEmailRef}
+              postEmailRef={postEmailRef?.current?.innerText}
+              postIdRef={postIdRef?.current?.innerText}
               openDropdownMenu={openDropdownMenu}
               setOpenDropdownMenu={setOpenDropdownMenu}
             />

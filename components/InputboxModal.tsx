@@ -1,4 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
+import generateHash from 'random-hash';
 import {
   ColorSwatchIcon,
   LocationMarkerIcon,
@@ -13,7 +14,7 @@ import { EmojiHappyIcon } from '@heroicons/react/outline';
 import { CameraIcon } from '@heroicons/react/solid';
 import { useSession } from 'next-auth/react';
 import { db, storage } from '../firebase';
-import { collection, addDoc, Timestamp, doc } from 'firebase/firestore';
+import { collection, addDoc, Timestamp, doc, setDoc } from 'firebase/firestore';
 import { ref, getDownloadURL, uploadString } from 'firebase/storage';
 import {
   InputboxModalButton,
@@ -36,12 +37,18 @@ export const InputboxModal = () => {
     setForceUpdate,
     loading,
     setLoading,
+    postMessageInModal,
+    updatePostViaModal,
   } = useContext(DataContext);
 
   const { data: session } = useSession();
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const photoPickerRef = useRef<HTMLInputElement>(null);
+
+  const [postID, setPostID] = useState<string | null>(
+    generateHash({ length: 24 })
+  );
 
   const [photoToPost, setPhotoToPost] = useState<
     string | ArrayBuffer | null | undefined
@@ -96,14 +103,18 @@ export const InputboxModal = () => {
       //   handles posts with no image attached
       if (!photoToPost) {
         console.log('post with NO photo');
-        const postRef = collection(usersRef, 'posts');
-        await addDoc(postRef, {
-          message: savedMessageRef,
-          name: session?.user?.name,
-          email: session?.user?.email,
-          image: session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
-          timestamp: Timestamp.now(),
-        });
+        await setDoc(
+          doc(db, 'users', `${session?.user?.email}`, 'posts', postID),
+          {
+            id: postID,
+            message: savedMessageRef,
+            name: session?.user?.name,
+            email: session?.user?.email,
+            image: session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
+            timestamp: Timestamp.now(),
+          }
+        );
+        setPostID(null);
         setPhotoToPost(null);
       }
       //   handles posts with image attached
@@ -124,6 +135,7 @@ export const InputboxModal = () => {
         // adding the image URL to the object to be posted to the collection
         const postRef = collection(usersRef, 'posts');
         await addDoc(postRef, {
+          id: postID,
           message: savedMessageRef,
           name: session?.user?.name,
           email: session?.user?.email,

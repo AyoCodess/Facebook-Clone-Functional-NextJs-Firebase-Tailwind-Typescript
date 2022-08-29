@@ -2,6 +2,7 @@
 import React, { SetStateAction, useContext } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { useSession } from 'next-auth/react';
+import { DataContext } from '../DataContext';
 
 interface Props {
   setSavedMessageRef: React.Dispatch<SetStateAction<string | null>>;
@@ -17,23 +18,39 @@ export const InputboxModalTextareaForm = ({
   removePhotoToPost,
 }: Props) => {
   const { theme } = useContext(ThemeContext);
+  const {
+    updatePostViaModal,
+    postMessageInModal,
+    setPostMessageInModal,
+    setForceUpdate,
+  } = useContext(DataContext);
   const { data: session } = useSession();
 
   return (
     <form className='flex flex-col  '>
       <textarea
-        onChange={(e) => setSavedMessageRef(e.target.value)}
+        onChange={(e) => {
+          if (!updatePostViaModal) {
+            setSavedMessageRef(e.target.value);
+          } else {
+            setPostMessageInModal(e.target.value);
+          }
+        }}
         disabled={!session}
         ref={textareaRef}
         className={`  flex-grow mt-4 px-2 focus:outline-none h-212 w-full break-words placeholder-inherit ${
+          updatePostViaModal ? ' placeholder-gray-400' : ''
+        } ${
           !theme ? 'lightTheme bg-white' : 'darkTheme bg-slate-800 text-white'
         }`}
         placeholder={
           !session
             ? `Please sign in to make a post, add photos and leave your mark!`
-            : `Whats on your mind, ${session?.user?.name
+            : !updatePostViaModal
+            ? `Whats on your mind, ${session?.user?.name
                 ?.split(' ')
-                ?.slice(0, 1)}?`
+                ?.slice(0, 1)}`
+            : `${postMessageInModal}... `
         }
       />
       {photoToPost && (

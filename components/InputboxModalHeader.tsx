@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useSession } from 'next-auth/react';
+import { DataContext } from '../DataContext';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 interface Props {
   Icon: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -13,6 +16,12 @@ export const InputboxModalHeader = ({
   preSendPost,
 }: Props) => {
   const { data: session } = useSession();
+  const {
+    updatePostViaModal,
+    postIdRefState,
+    setForceUpdate,
+    postMessageInModal,
+  } = useContext(DataContext);
   return (
     <div className={`flex justify-between items-center cursor-pointer `}>
       {/*banner */}
@@ -24,8 +33,34 @@ export const InputboxModalHeader = ({
       <button
         disabled={!session}
         onClick={(e) => {
-          preSendPost(e);
-          setModalOpen(false);
+          if (updatePostViaModal) {
+            const updatingPost = async () => {
+              const post = doc(
+                db,
+                'users',
+                `${session.user.email}`,
+                'posts',
+                postIdRefState
+              );
+
+              console.log('state', postIdRefState);
+              const postDoc = await getDoc(post);
+
+              await updateDoc(post, {
+                message: postMessageInModal,
+              });
+
+              console.log('updating...');
+              setForceUpdate(true);
+            };
+
+            updatingPost();
+            setModalOpen(false);
+            setForceUpdate(false);
+          } else {
+            preSendPost(e);
+            setModalOpen(false);
+          }
         }}
         className='px-2 py-1 bg-blue-500 font-medium hover:bg-blue-400 text-white text-sm rounded-md'>
         Post

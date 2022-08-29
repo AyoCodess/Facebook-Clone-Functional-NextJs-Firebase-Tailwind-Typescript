@@ -131,6 +131,7 @@ export const Posts = () => {
               <Post
                 key={i}
                 name={post.name}
+                id={post.id}
                 message={post.message}
                 email={post.email}
                 timestamp={post.timestamp}
