@@ -14,13 +14,15 @@ export const Sidebar = () => {
   const [openMenu, setOpenMenu] = useState(true);
 
   return (
-    <div
-      className={` hidden md:block p-2 pt-5 max-w-[600px]  ease-in-out transition duration-200  ${
-        openMenu ? '2xl:min-w-[400px]' : 'w-12'
+    <aside
+      className={` hidden md:block p-2 pt-5 max-w-[600px] ease-out transition duration-200 mr-14  ${
+        openMenu
+          ? '2xl:min-w-[400px] translate-x-10 sm:ml-[-3rem]'
+          : 'w-12 sm: translate-x-0 '
       }  ${
         !theme ? 'themeLight bg-gray-50 shadow ' : 'themeDark bg-slate-800'
       }`}>
-      <p
+      <div
         className={`flex items-center gap-2 ${
           openMenu ? 'ml-3' : 'mx-auto'
         } mb-2  ${
@@ -29,25 +31,29 @@ export const Sidebar = () => {
             : 'darkTheme hover:text-white'
         }`}>
         {openMenu && (
-          <XIcon
-            onClick={() => setOpenMenu((prev) => !prev)}
-            className={`cursor-pointer h-6 ${
-              !theme ? 'lightTheme' : 'darkTheme'
-            }text-gray-300 h-12 ml-auto`}
-          />
+          <button className='ml-auto'>
+            <XIcon
+              onClick={() => setOpenMenu((prev) => !prev)}
+              className={`cursor-pointer h-6 ${
+                !theme ? 'lightTheme' : 'darkTheme'
+              }text-gray-300 h-12 `}
+            />
+          </button>
         )}
         {!openMenu && (
-          <ViewListIcon
-            onClick={() => setOpenMenu((prev) => !prev)}
-            className={` cursor-pointer h-8 ${
-              !theme ? 'lightTheme' : 'darkTheme'
-            }text-gray-400 `}
-          />
+          <button>
+            <ViewListIcon
+              onClick={() => setOpenMenu((prev) => !prev)}
+              className={` cursor-pointer h-8 ${
+                !theme ? 'lightTheme' : 'darkTheme'
+              }text-gray-400 `}
+            />
+          </button>
         )}
-      </p>
+      </div>
 
       {openMenu && (
-        <div>
+        <div className=''>
           {session && (
             <SidebarRow
               src={session.user?.image || 'https://i.imgur.com/MsZzedb.jpg'}
@@ -89,6 +95,6 @@ export const Sidebar = () => {
           <SidebarYourShortcuts />
         </div>
       )}
-    </div>
+    </aside>
   );
 };
