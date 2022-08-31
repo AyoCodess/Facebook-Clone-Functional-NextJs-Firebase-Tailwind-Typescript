@@ -11,7 +11,7 @@ export const PostCommentBoxInputbox = () => {
 
   return (
     <div
-      className={`  sm:hidden text-gray-500 font-medium  ${
+      className={` text-gray-500 font-medium  ${
         !theme
           ? 'themeLight'
           : 'themeDark  bg-slate-800 shadow-slate-600 shadow-sm '

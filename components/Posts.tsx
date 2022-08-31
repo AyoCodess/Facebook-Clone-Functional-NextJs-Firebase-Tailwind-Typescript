@@ -51,6 +51,10 @@ export const Posts = () => {
     forceUpdate,
     loading,
     setLoading,
+    emailRefState,
+    postIdRefState,
+    openCommentBox,
+    commentBoxClicked,
   } = useContext(DataContext);
 
   useEffect(() => {
@@ -121,6 +125,38 @@ export const Posts = () => {
     }
   };
 
+  const loadPostComments = async () => {
+    console.log('getting user comments');
+    const userQuery = query(
+      collection(
+        db,
+        'users',
+        emailRefState,
+        'posts',
+        postIdRefState,
+        'comments'
+      )
+    );
+    const snapshot = await getDocs(userQuery);
+    const commentData = snapshot.docs.map((posts: any) => posts.data());
+    console.log('commentData', commentData);
+
+    // getting posts
+
+    const postQuery = query(collection(db, 'users', emailRefState, 'posts'));
+
+    const postSnapshot = await getDocs(postQuery);
+    const postData = postSnapshot.docs.map((posts: any) => posts.data());
+
+    console.log('postData', postData);
+  };
+
+  useEffect(() => {
+    if (openCommentBox) {
+      loadPostComments();
+    }
+  }, [commentBoxClicked]);
+
   return (
     <div>
       <>
@@ -137,6 +173,7 @@ export const Posts = () => {
                 timestamp={post.timestamp}
                 image={post.image}
                 postImage={post.imageURL}
+                userComments={post.userComments}
               />
             );
           })}

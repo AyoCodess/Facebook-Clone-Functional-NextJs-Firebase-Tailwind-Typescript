@@ -14,7 +14,14 @@ import { EmojiHappyIcon } from '@heroicons/react/outline';
 import { CameraIcon } from '@heroicons/react/solid';
 import { useSession } from 'next-auth/react';
 import { db, storage } from '../firebase';
-import { collection, addDoc, Timestamp, doc, setDoc } from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  Timestamp,
+  doc,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import { ref, getDownloadURL, uploadString } from 'firebase/storage';
 import {
   InputboxModalButton,
@@ -24,24 +31,25 @@ import {
 } from '.';
 
 export const InputboxModal = () => {
-  const { setModalOpen, modalOpen, viewEveryonesPosts } =
-    useContext(DataContext);
-
-  const [savedMessageRef, setSavedMessageRef] = useState<string | null>(null);
-
-  const { theme } = useContext(ThemeContext);
   const {
+    setModalOpen,
+    modalOpen,
+    savedMessageRef,
+    setSavedMessageRef,
     setShow,
     setTitle,
     setDescription,
     setForceUpdate,
-    loading,
+    emailRefState,
+    postIdRefState,
+    loadCommentBox,
     setLoading,
-    postMessageInModal,
-    updatePostViaModal,
     setUpdatePostViaModal,
+    setLoadCommentBox,
+    setCommentForceUpdate,
   } = useContext(DataContext);
 
+  const { theme } = useContext(ThemeContext);
   const { data: session } = useSession();
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -55,6 +63,17 @@ export const InputboxModal = () => {
     setPhotoToPost(null);
   };
 
+  const toggleCommentBoxLoading = () => {
+    console.log('toggleLoading');
+
+    setTimeout(() => {
+      setLoadCommentBox(false);
+    }, 100);
+
+    setCommentForceUpdate((prev) => !prev);
+
+    console.log('loading comment box END', loadCommentBox);
+  };
   const addPhotoToPost = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
 
@@ -75,7 +94,10 @@ export const InputboxModal = () => {
     photoPickerRef.current!.value = '';
   };
 
-  const preSendPost = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const preSendPost = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    comment?: boolean
+  ) => {
     e.preventDefault();
     // if there is no comment to post, do nothing
     if (!textareaRef.current!.value) {
@@ -89,85 +111,165 @@ export const InputboxModal = () => {
       return;
     }
 
-    sendPost();
+    sendPost(comment);
   };
 
-  const sendPost = async () => {
-    // initializes users the firebase collection
+  const sendPost = async (comment?: boolean) => {
+    // comment posts
 
-    let postID = cryptoRandomString({ length: 24 });
+    console.log('state', loadCommentBox);
 
-    const usersRef = doc(db, 'users', `${session?.user?.email}`);
+    if (comment) {
+      console.log('in send comment post', comment);
+      let commentID = cryptoRandomString({ length: 24 });
 
-    console.log('postid', postID);
+      try {
+        setLoadCommentBox(true);
+        if (!photoToPost) {
+          console.log('in comment');
+          await updateDoc(
+            doc(db, 'users', emailRefState, 'posts', postIdRefState),
+            {
+              comments: [
+                {
+                  id: commentID,
+                  message: savedMessageRef,
+                  name: session?.user?.name,
+                  email: session?.user?.email,
+                  image:
+                    session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
+                  timestamp: Timestamp.now(),
+                },
+              ],
+            }
+          );
+          setPhotoToPost(null);
+        }
 
-    try {
-      setLoading(true);
-      //   handles posts with no image attached
-      if (!photoToPost) {
-        await setDoc(
-          doc(db, 'users', `${session?.user?.email}`, 'posts', postID),
-          {
-            id: postID,
-            message: savedMessageRef,
-            name: session?.user?.name,
-            email: session?.user?.email,
-            image: session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
-            timestamp: Timestamp.now(),
-          }
-        );
+        if (photoToPost) {
+          //   handles posts with image attached
+          const photoRef = ref(
+            storage,
+            `${session.user.email}/photo-${Date.now().valueOf()}.png`
+          );
+          console.log('post with photo');
 
-        // setPostID(null);
-        setPhotoToPost(null);
+          // upload photo to firebase storage
+          await uploadString(photoRef, photoToPost as string, 'data_url').catch(
+            (err) =>
+              console.error('there was an error uploading the photo', err)
+          );
+
+          const downloadURL = await getDownloadURL(photoRef);
+
+          await setDoc(
+            doc(
+              db,
+              'users',
+              emailRefState,
+              'posts',
+              postIdRefState,
+              'comments',
+              commentID
+            ),
+            {
+              id: commentID,
+              message: savedMessageRef,
+              name: session?.user?.name,
+              email: session?.user?.email,
+              image: session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
+              imageURL: downloadURL || 'https://i.imgur.com/XWiwM24.jpg',
+              timestamp: Timestamp.now(),
+              comments: [],
+            }
+          );
+          // setPostID(null);
+          setPhotoToPost(null);
+        }
+      } catch (err) {
+        console.error('comment post', err);
       }
-      //   handles posts with image attached
-      if (photoToPost) {
-        const photoRef = ref(
-          storage,
-          `${session.user.email}/photo-${Date.now().valueOf()}.png`
-        );
-        console.log('post with photo');
-
-        // upload photo to firebase storage
-        await uploadString(photoRef, photoToPost as string, 'data_url').catch(
-          (err) => console.error('there was an error uploading the photo', err)
-        );
-
-        const downloadURL = await getDownloadURL(photoRef);
-
-        // adding the image URL to the object to be posted to the collection
-        const postRef = collection(usersRef, 'posts');
-        await setDoc(
-          doc(db, 'users', `${session?.user?.email}`, 'posts', postID),
-          {
-            id: postID,
-            message: savedMessageRef,
-            name: session?.user?.name,
-            email: session?.user?.email,
-            image: session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
-            imageURL: downloadURL || 'https://i.imgur.com/XWiwM24.jpg',
-            timestamp: Timestamp.now(),
-          }
-        );
-
-        setPhotoToPost(null);
-        setSavedMessageRef(null);
-      }
-    } catch (error) {
-      console.error('INPUT BOX ERROR', error);
-      setShow(true);
-      setTitle('Error');
-      setDescription(`${error}`);
-    } finally {
-      setLoading(false);
-      //   console.log('running forced update');
-      setForceUpdate((prev) => !prev);
     }
+    // initializes users the firebase collection and posts the message
+    if (!comment) {
+      let postID = cryptoRandomString({ length: 24 });
+
+      const usersRef = doc(db, 'users', `${session?.user?.email}`);
+
+      console.log('postid', postID);
+
+      try {
+        setLoading(true);
+        //   handles posts with no image attached
+        if (!photoToPost) {
+          await setDoc(
+            doc(db, 'users', `${session?.user?.email}`, 'posts', postID),
+            {
+              id: postID,
+              message: savedMessageRef,
+              name: session?.user?.name,
+              email: session?.user?.email,
+              image: session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
+              timestamp: Timestamp.now(),
+              comments: [],
+            }
+          );
+
+          // setPostID(null);
+          setPhotoToPost(null);
+        }
+        //   handles posts with image attached
+        if (photoToPost) {
+          const photoRef = ref(
+            storage,
+            `${session.user.email}/photo-${Date.now().valueOf()}.png`
+          );
+          console.log('post with photo');
+
+          // upload photo to firebase storage
+          await uploadString(photoRef, photoToPost as string, 'data_url').catch(
+            (err) =>
+              console.error('there was an error uploading the photo', err)
+          );
+
+          const downloadURL = await getDownloadURL(photoRef);
+
+          // adding the image URL to the object to be posted to the collection
+          const postRef = collection(usersRef, 'posts');
+          await setDoc(
+            doc(db, 'users', `${session?.user?.email}`, 'posts', postID),
+            {
+              id: postID,
+              message: savedMessageRef,
+              name: session?.user?.name,
+              email: session?.user?.email,
+              image: session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
+              imageURL: downloadURL || 'https://i.imgur.com/XWiwM24.jpg',
+              timestamp: Timestamp.now(),
+              comments: [],
+            }
+          );
+
+          setPhotoToPost(null);
+          setSavedMessageRef(null);
+        }
+      } catch (error) {
+        console.error('INPUT BOX ERROR', error);
+        setShow(true);
+        setTitle('Error');
+        setDescription(`${error}`);
+      } finally {
+        setLoading(false);
+        //   console.log('running forced update');
+        setForceUpdate((prev) => !prev);
+      }
+    }
+    toggleCommentBoxLoading();
   };
 
-  if (!modalOpen) {
-    setUpdatePostViaModal(false);
-  }
+  //   if (!modalOpen) {
+  //     setUpdatePostViaModal(false);
+  //   }
 
   const getLink = useRef(null);
   return (
