@@ -21,6 +21,7 @@ import {
   doc,
   setDoc,
   updateDoc,
+  arrayUnion,
 } from 'firebase/firestore';
 import { ref, getDownloadURL, uploadString } from 'firebase/storage';
 import {
@@ -127,20 +128,19 @@ export const InputboxModal = () => {
         setLoadCommentBox(true);
         if (!photoToPost) {
           console.log('in comment');
+
           await updateDoc(
             doc(db, 'users', emailRefState, 'posts', postIdRefState),
             {
-              comments: [
-                {
-                  id: commentID,
-                  message: savedMessageRef,
-                  name: session?.user?.name,
-                  email: session?.user?.email,
-                  image:
-                    session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
-                  timestamp: Timestamp.now(),
-                },
-              ],
+              comments: arrayUnion({
+                id: commentID,
+                message: savedMessageRef,
+                name: session?.user?.name,
+                email: session?.user?.email,
+                image:
+                  session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
+                timestamp: Timestamp.now(),
+              }),
             }
           );
           setPhotoToPost(null);
@@ -162,27 +162,23 @@ export const InputboxModal = () => {
 
           const downloadURL = await getDownloadURL(photoRef);
 
-          await setDoc(
-            doc(
-              db,
-              'users',
-              emailRefState,
-              'posts',
-              postIdRefState,
-              'comments',
-              commentID
-            ),
+          await updateDoc(
+            doc(db, 'users', emailRefState, 'posts', postIdRefState),
             {
-              id: commentID,
-              message: savedMessageRef,
-              name: session?.user?.name,
-              email: session?.user?.email,
-              image: session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
-              imageURL: downloadURL || 'https://i.imgur.com/XWiwM24.jpg',
-              timestamp: Timestamp.now(),
-              comments: [],
+              comments: arrayUnion({
+                id: commentID,
+                message: savedMessageRef,
+                name: session?.user?.name,
+                email: session?.user?.email,
+                image:
+                  session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
+                imageURL: downloadURL || 'https://i.imgur.com/XWiwM24.jpg',
+                timestamp: Timestamp.now(),
+                comments: [],
+              }),
             }
           );
+
           // setPostID(null);
           setPhotoToPost(null);
         }

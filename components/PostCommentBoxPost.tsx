@@ -22,8 +22,8 @@ export const PostCommentBoxPost = ({ userComments, id }: Props) => {
   return (
     <>
       <div>hey</div>
-      {/* {userComments &&
-
+      {userComments &&
+        userComments
           .sort((a, b) => b.timestamp.seconds - a.timestamp.seconds)
           .map((comment) => {
             console.log('in map', comment);
@@ -60,7 +60,7 @@ export const PostCommentBoxPost = ({ userComments, id }: Props) => {
                 </div>
               </div>
             );
-          })} */}
+          })}
     </>
   );
 };
