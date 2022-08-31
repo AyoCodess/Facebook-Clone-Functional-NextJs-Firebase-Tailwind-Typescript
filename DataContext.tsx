@@ -31,6 +31,18 @@ interface DataContextType {
   setUpdatePostViaModal: Dispatch<SetStateAction<boolean>>;
   postIdRefState: any;
   setPostIdRefState: Dispatch<SetStateAction<string>>;
+  emailRefState: any;
+  setEmailRefState: Dispatch<SetStateAction<string>>;
+  openCommentBox: boolean;
+  setOpenCommentBox: Dispatch<SetStateAction<boolean>>;
+  loadCommentBox: boolean;
+  setLoadCommentBox: Dispatch<SetStateAction<boolean>>;
+  savedMessageRef: string;
+  setSavedMessageRef: Dispatch<SetStateAction<string | null>>;
+  commentForceUpdate: boolean;
+  setCommentForceUpdate: Dispatch<SetStateAction<boolean>>;
+  commentBoxClicked: boolean;
+  setCommentBoxClicked: Dispatch<SetStateAction<boolean>>;
 }
 export const DataContext = createContext<DataContextType>({
   show: false,
@@ -53,6 +65,18 @@ export const DataContext = createContext<DataContextType>({
   setUpdatePostViaModal: () => {},
   postIdRefState: '',
   setPostIdRefState: () => {},
+  openCommentBox: false,
+  setOpenCommentBox: () => {},
+  loadCommentBox: false,
+  setLoadCommentBox: () => {},
+  emailRefState: '',
+  setEmailRefState: () => {},
+  savedMessageRef: '',
+  setSavedMessageRef: () => {},
+  commentForceUpdate: false,
+  setCommentForceUpdate: () => {},
+  commentBoxClicked: false,
+  setCommentBoxClicked: () => {},
 });
 
 export const DataProvider = ({ children }: Props) => {
@@ -73,6 +97,16 @@ export const DataProvider = ({ children }: Props) => {
 
   // used to set the postIdRef for the update and delete post functions
   const [postIdRefState, setPostIdRefState] = useState(null);
+  // used to get original posters email address so we can link comments to that post
+  const [emailRefState, setEmailRefState] = useState(null);
+
+  // user post written content saved via the inputbox modal
+  const [savedMessageRef, setSavedMessageRef] = useState<string | null>(null);
+
+  const [openCommentBox, setOpenCommentBox] = useState(false);
+  const [loadCommentBox, setLoadCommentBox] = useState(false);
+  const [commentForceUpdate, setCommentForceUpdate] = useState(false);
+  const [commentBoxClicked, setCommentBoxClicked] = useState(false);
 
   const [forceUpdate, setForceUpdate] = useState(false); // updates posts when new post is added
   const [loading, setLoading] = useState(false); // loading posts
@@ -99,6 +133,18 @@ export const DataProvider = ({ children }: Props) => {
       setUpdatePostViaModal,
       postIdRefState,
       setPostIdRefState,
+      openCommentBox,
+      setOpenCommentBox,
+      loadCommentBox,
+      setLoadCommentBox,
+      emailRefState,
+      setEmailRefState,
+      savedMessageRef,
+      setSavedMessageRef,
+      commentForceUpdate,
+      setCommentForceUpdate,
+      commentBoxClicked,
+      setCommentBoxClicked,
     }),
     [
       show,
@@ -121,6 +167,18 @@ export const DataProvider = ({ children }: Props) => {
       setUpdatePostViaModal,
       postIdRefState,
       setPostIdRefState,
+      openCommentBox,
+      setOpenCommentBox,
+      loadCommentBox,
+      setLoadCommentBox,
+      emailRefState,
+      setEmailRefState,
+      savedMessageRef,
+      setSavedMessageRef,
+      commentForceUpdate,
+      setCommentForceUpdate,
+      commentBoxClicked,
+      setCommentBoxClicked,
     ]
   );
   return (
