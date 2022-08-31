@@ -11,7 +11,7 @@ import Image from 'next/image';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 import { useSession } from 'next-auth/react';
-import { PostButton, PostDropdownMenu } from '.';
+import { PostButton, PostCommentBox, PostDropdownMenu } from '.';
 
 interface Props {
   name: string;
@@ -21,6 +21,7 @@ interface Props {
   image?: string;
   timestamp: Timestamp;
   id: string;
+  userComments: any[];
 }
 
 export const Post = ({
@@ -31,6 +32,7 @@ export const Post = ({
   timestamp,
   email,
   id,
+  userComments,
 }: Props) => {
   const { data: session } = useSession();
 
@@ -58,7 +60,15 @@ export const Post = ({
   const date_time = `${date} ${time}`;
 
   const { theme } = useContext(ThemeContext);
-  const { viewEveryonesPosts, setPostIdRefState } = useContext(DataContext);
+  const {
+    viewEveryonesPosts,
+    setPostIdRefState,
+    openCommentBox,
+    setOpenCommentBox,
+    setEmailRefState,
+    commentBoxClicked,
+    setCommentBoxClicked,
+  } = useContext(DataContext);
 
   const postEmailRef = useRef(null);
   const postIdRef = useRef(null);
@@ -66,6 +76,10 @@ export const Post = ({
   //   if (postIdRef?.current?.innerText) {
   //     setPostIdRefState(postIdRef.current.innerText);
   //   }
+
+  const [selectedPostForComment, setSelectedPostForComment] = useState<
+    null | boolean
+  >(null);
 
   return (
     <div
@@ -144,9 +158,28 @@ export const Post = ({
             : 'darkTheme transition-shadow duration-75 border-t-slate-700 shadow-slate-800'
         }`}>
         <PostButton Icon={ThumbUpIcon} title='Like' />
-        <PostButton Icon={ChatAltIcon} title='Comment' />
+        <PostButton
+          Icon={ChatAltIcon}
+          title='Comment'
+          onClick={() => {
+            setSelectedPostForComment(postIdRef.current.innerText);
+            // set for linking comments to posts
+            setEmailRefState(postEmailRef.current.innerText);
+            setOpenCommentBox(true);
+            setCommentBoxClicked((prev) => !prev);
+            setPostIdRefState(postIdRef.current.innerText);
+
+            if (selectedPostForComment) {
+              setSelectedPostForComment(null);
+              setOpenCommentBox(false);
+            }
+          }}
+        />
         <PostButton Icon={ShareIcon} title='Share' />
       </div>
+      {selectedPostForComment && (
+        <PostCommentBox id={id} userComments={userComments} />
+      )}
     </div>
   );
 };

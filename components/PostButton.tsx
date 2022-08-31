@@ -4,12 +4,14 @@ import { ThemeContext } from '../ThemeContext';
 interface Props {
   Icon: React.FC<React.SVGProps<SVGSVGElement>>;
   title: string;
+  onClick?: () => void;
 }
 
-export const PostButton = ({ Icon, title }: Props) => {
+export const PostButton = ({ Icon, title, onClick }: Props) => {
   const { theme } = useContext(ThemeContext);
   return (
     <div
+      onClick={onClick}
       className={`inputIcon p-3 rounded-none group ${
         !theme ? 'lightTheme' : 'darkTheme hover:bg-blue-500 text-white'
       }`}>
