@@ -41,7 +41,6 @@ import { DataContext } from '../DataContext';
 
 export const Posts = () => {
   const { data: session } = useSession();
-  const [realTimePosts, setRealTimePosts] = useState<any[] | null>(null);
   const { theme } = useContext(ThemeContext);
   const {
     setShow,
@@ -51,26 +50,49 @@ export const Posts = () => {
     forceUpdate,
     loading,
     setLoading,
+    commentForceUpdate,
     emailRefState,
     postIdRefState,
-    openCommentBox,
-    commentBoxClicked,
   } = useContext(DataContext);
 
   useEffect(() => {
     getUserSession();
   }, [forceUpdate, viewEveryonesPosts]);
 
-  const getUserSession = async () => {
+  const [realTimePosts, setRealTimePosts] = useState<any[] | null>(null);
+  // - updates individual post comment every time a new post comment is added to the database
+  const [updatedComments, setUpdatedComments] = useState<any[] | null>(null);
+  const [userCommentsList, setUserCommentsList] = useState<any[] | null>(null);
+
+  async function getUserSession() {
     const theSession = await getSession();
     if (theSession) {
       initiateGetUserPostsFromFirebase();
     }
-  };
+  }
 
-  const getUserPostsFromFirebase = async (
-    isQuery: 'individual' | 'everyone'
-  ) => {
+  async function initiateGetUserPostsFromFirebase() {
+    setRealTimePosts(null);
+
+    try {
+      if (session?.user?.email && !viewEveryonesPosts) {
+        getUserPostsFromFirebase('individual');
+      }
+
+      if (viewEveryonesPosts) {
+        getUserPostsFromFirebase('everyone');
+      }
+      //   setRealTimePosts(testData); // for testing purposes
+    } catch (error) {
+      console.error(error);
+      setShow(true);
+      setTitle('There was an error');
+      setDescription(`
+      Cannot get posts due to "${error}". Please try again tomorrow`);
+    }
+  }
+
+  async function getUserPostsFromFirebase(isQuery: 'individual' | 'everyone') {
     setLoading(true);
 
     let userPosts: Array<any> = [];
@@ -102,35 +124,44 @@ export const Posts = () => {
 
     setRealTimePosts(sorted);
     setLoading(false);
-  };
+  }
+  let loaded;
 
-  const initiateGetUserPostsFromFirebase = async () => {
-    setRealTimePosts(null);
-
+  async function updatePostComments() {
+    console.log('running updatePostComments');
+    console.log(emailRefState, postIdRefState);
     try {
-      if (session?.user?.email && !viewEveryonesPosts) {
-        getUserPostsFromFirebase('individual');
-      }
+      const userQuery = query(collection(db, 'users', emailRefState, 'posts'));
 
-      if (viewEveryonesPosts) {
-        getUserPostsFromFirebase('everyone');
-      }
-      //   setRealTimePosts(testData); // for testing purposes
-    } catch (error) {
-      console.error(error);
-      setShow(true);
-      setTitle('There was an error');
-      setDescription(`
-      Cannot get posts due to "${error}". Please try again tomorrow`);
+      const snapshot = await getDocs(userQuery);
+
+      setUpdatedComments(snapshot.docs.map((posts: any) => posts.data()));
+    } catch (err) {
+      console.error('UPDATE POSTS ERROR', err);
+    } finally {
+      console.log('updating Post Comments is complete', updatedComments);
     }
-  };
+  }
 
+  useEffect(() => {
+    if (commentForceUpdate) {
+      updatePostComments();
+    }
+  }, [commentForceUpdate]);
+
+  console.log('realTimePosts', realTimePosts);
   return (
     <div>
       <>
         {loading && <LoadingSpinner />}
         {realTimePosts &&
           realTimePosts.map((post, i) => {
+            console.log('post ID', post.id);
+
+            updatedComments?.map((updatedPost, i) => {
+              console.log('updated post ID', updatedPost.id);
+            });
+
             return (
               <Post
                 key={i}
@@ -142,6 +173,8 @@ export const Posts = () => {
                 image={post.image}
                 postImage={post.imageURL}
                 userComments={post.comments}
+                updatedComments={updatedComments?.comments}
+                setUpdatedComments={setUpdatedComments}
               />
             );
           })}

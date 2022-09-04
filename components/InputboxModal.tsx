@@ -60,45 +60,11 @@ export const InputboxModal = () => {
     string | ArrayBuffer | null | undefined
   >(null);
 
-  const removePhotoToPost = () => {
-    setPhotoToPost(null);
-  };
-
-  const toggleCommentBoxLoading = () => {
-    console.log('toggleLoading');
-
-    setTimeout(() => {
-      setLoadCommentBox(false);
-    }, 100);
-
-    setCommentForceUpdate((prev) => !prev);
-
-    console.log('loading comment box END', loadCommentBox);
-  };
-  const addPhotoToPost = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const reader = new FileReader();
-
-    // selecting and uploading a photo
-    if (e.target.files?.[0]) {
-      reader.readAsDataURL(e.target.files[0]);
-
-      if (e.target.files[0].type.includes('image')) {
-        reader.onload = (readerEvent) => {
-          setPhotoToPost(readerEvent?.target?.result); //base64 string
-        };
-      } else {
-        setShow(true);
-        setTitle('Please select an image');
-        setDescription(`other file types are not supported`);
-      }
-    }
-    photoPickerRef.current!.value = '';
-  };
-
-  const preSendPost = async (
+  //- MAIN FUNCTIONS
+  async function preSendPost(
     e: React.MouseEvent<HTMLButtonElement>,
-    comment?: boolean
-  ) => {
+    doCommentsExist?: boolean
+  ) {
     e.preventDefault();
     // if there is no comment to post, do nothing
     if (!textareaRef.current!.value) {
@@ -111,17 +77,12 @@ export const InputboxModal = () => {
       );
       return;
     }
+    sendPost(doCommentsExist);
+  }
 
-    sendPost(comment);
-  };
-
-  const sendPost = async (comment?: boolean) => {
-    // comment posts
-
-    console.log('state', loadCommentBox);
-
-    if (comment) {
-      console.log('in send comment post', comment);
+  async function sendPost(doCommentsExist?: boolean) {
+    if (doCommentsExist) {
+      console.log('in send comment post', doCommentsExist);
       let commentID = cryptoRandomString({ length: 24 });
 
       try {
@@ -161,7 +122,6 @@ export const InputboxModal = () => {
           );
 
           const downloadURL = await getDownloadURL(photoRef);
-
           await updateDoc(
             doc(db, 'users', emailRefState, 'posts', postIdRefState),
             {
@@ -186,8 +146,8 @@ export const InputboxModal = () => {
         console.error('comment post', err);
       }
     }
-    // initializes users the firebase collection and posts the message
-    if (!comment) {
+
+    if (!doCommentsExist) {
       let postID = cryptoRandomString({ length: 24 });
 
       const usersRef = doc(db, 'users', `${session?.user?.email}`);
@@ -261,11 +221,44 @@ export const InputboxModal = () => {
       }
     }
     toggleCommentBoxLoading();
-  };
+  }
 
-  //   if (!modalOpen) {
-  //     setUpdatePostViaModal(false);
-  //   }
+  //- HELPER FUNCTIONS
+  function removePhotoToPost() {
+    setPhotoToPost(null);
+  }
+
+  function toggleCommentBoxLoading() {
+    console.log('toggleLoading');
+
+    setTimeout(() => {
+      setLoadCommentBox(false);
+    }, 1000);
+
+    setCommentForceUpdate((prev) => !prev);
+
+    console.log('loading comment box END', loadCommentBox);
+  }
+
+  function addPhotoToPost(e: React.ChangeEvent<HTMLInputElement>) {
+    const reader = new FileReader();
+
+    // selecting and uploading a photo
+    if (e.target.files?.[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+
+      if (e.target.files[0].type.includes('image')) {
+        reader.onload = (readerEvent) => {
+          setPhotoToPost(readerEvent?.target?.result); //base64 string
+        };
+      } else {
+        setShow(true);
+        setTitle('Please select an image');
+        setDescription(`other file types are not supported`);
+      }
+    }
+    photoPickerRef.current!.value = '';
+  }
 
   const getLink = useRef(null);
   return (

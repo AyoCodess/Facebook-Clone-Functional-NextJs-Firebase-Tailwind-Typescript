@@ -1,18 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import {
   ChatAltIcon,
   DotsHorizontalIcon,
   ShareIcon,
   ThumbUpIcon,
 } from '@heroicons/react/solid';
-import { Timestamp } from 'firebase/firestore';
+import { getDocs, query, Timestamp, collection } from 'firebase/firestore';
 import Image from 'next/image';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 import { useSession } from 'next-auth/react';
 import { PostButton, PostCommentBox, PostDropdownMenu } from '.';
 
+import { db } from '../firebase';
 interface Props {
   name: string;
   message: string;
@@ -22,6 +23,8 @@ interface Props {
   timestamp: Timestamp;
   id: string;
   userComments: any[];
+  updatedComments: any[];
+  setUpdatedComments: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 export const Post = ({
@@ -33,10 +36,36 @@ export const Post = ({
   email,
   id,
   userComments,
+  updatedComments,
+  setUpdatedComments,
 }: Props) => {
   const { data: session } = useSession();
+  const { theme } = useContext(ThemeContext);
+  const {
+    viewEveryonesPosts,
+    setPostIdRefState,
+    openCommentBox,
+    setOpenCommentBox,
+    setEmailRefState,
+    commentBoxClicked,
+    setCommentBoxClicked,
+    emailRefState,
+    postIdRefState,
+    commentForceUpdate,
+    loadCommentBox,
+  } = useContext(DataContext);
 
+  //   if (postIdRef?.current?.innerText) {
+  //     setPostIdRefState(postIdRef.current.innerText);
+  //   }
+
+  const postEmailRef = useRef(null);
+  const postIdRef = useRef(null);
+  const [selectedPostForComment, setSelectedPostForComment] = useState<
+    null | boolean
+  >(null);
   const [openDropdownMenu, setOpenDropdownMenu] = useState(false);
+
   const dateTimestamp = new Timestamp(
     timestamp.seconds,
     timestamp.nanoseconds
@@ -58,28 +87,6 @@ export const Post = ({
     .join(':');
 
   const date_time = `${date} ${time}`;
-
-  const { theme } = useContext(ThemeContext);
-  const {
-    viewEveryonesPosts,
-    setPostIdRefState,
-    openCommentBox,
-    setOpenCommentBox,
-    setEmailRefState,
-    commentBoxClicked,
-    setCommentBoxClicked,
-  } = useContext(DataContext);
-
-  const postEmailRef = useRef(null);
-  const postIdRef = useRef(null);
-
-  //   if (postIdRef?.current?.innerText) {
-  //     setPostIdRefState(postIdRef.current.innerText);
-  //   }
-
-  const [selectedPostForComment, setSelectedPostForComment] = useState<
-    null | boolean
-  >(null);
 
   return (
     <div
@@ -178,7 +185,12 @@ export const Post = ({
         <PostButton Icon={ShareIcon} title='Share' />
       </div>
       {selectedPostForComment && (
-        <PostCommentBox id={id} userComments={userComments} />
+        <PostCommentBox
+          id={id}
+          userComments={userComments}
+          setUpdatedComments={setUpdatedComments}
+          updatedComments={updatedComments}
+        />
       )}
     </div>
   );

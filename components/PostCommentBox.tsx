@@ -8,9 +8,17 @@ import { db } from '../firebase';
 interface Props {
   id: string;
   userComments: any[];
+  setUpdatedComments: React.Dispatch<React.SetStateAction<any[]>>;
+  updatedComments: any[];
 }
-export const PostCommentBox = ({ id, userComments }: Props) => {
-  const { loadCommentBox } = React.useContext(DataContext);
+export const PostCommentBox = ({
+  id,
+  userComments,
+  setUpdatedComments,
+  updatedComments,
+}: Props) => {
+  const { loadCommentBox, emailRefState, postIdRefState, commentForceUpdate } =
+    React.useContext(DataContext);
 
   return (
     <section className='pt-2 '>
@@ -21,7 +29,11 @@ export const PostCommentBox = ({ id, userComments }: Props) => {
       <PostCommentBoxInputbox />
       {loadCommentBox && <LoadingSpinner />}
       {!loadCommentBox && (
-        <PostCommentBoxPost userComments={userComments} id={id} />
+        <PostCommentBoxPost
+          userComments={userComments}
+          updatedComments={updatedComments}
+          id={id}
+        />
       )}
     </section>
   );
