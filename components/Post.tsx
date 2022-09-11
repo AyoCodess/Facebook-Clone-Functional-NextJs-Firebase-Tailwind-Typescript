@@ -25,7 +25,6 @@ interface Props {
   userComments: any[];
   updatedComments: any[];
   setUpdatedComments: React.Dispatch<React.SetStateAction<any[]>>;
-  isUpdated: any[];
   onClick?: () => void;
 }
 
@@ -39,7 +38,7 @@ export const Post = ({
   id,
   userComments,
   updatedComments,
-  isUpdated,
+
   setUpdatedComments,
   onClick,
 }: Props) => {
@@ -57,6 +56,9 @@ export const Post = ({
     postIdRefState,
     commentForceUpdate,
     loadCommentBox,
+    setAddingNewComment,
+    setNewPostBtnClicked,
+    setUpdatePostViaModal,
   } = useContext(DataContext);
 
   //   if (postIdRef?.current?.innerText) {
@@ -178,7 +180,10 @@ export const Post = ({
             // set for linking comments to posts
             setEmailRefState(postEmailRef.current.innerText);
             setOpenCommentBox(true);
+            setAddingNewComment(true);
+            setNewPostBtnClicked(false);
             setCommentBoxClicked((prev) => !prev);
+            setUpdatePostViaModal(false);
             setPostIdRefState(postIdRef.current.innerText);
 
             if (selectedPostForComment) {
@@ -195,7 +200,6 @@ export const Post = ({
           userComments={userComments}
           setUpdatedComments={setUpdatedComments}
           updatedComments={updatedComments}
-          isUpdated={isUpdated}
         />
       )}
     </div>

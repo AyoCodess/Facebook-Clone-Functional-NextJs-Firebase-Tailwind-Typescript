@@ -6,7 +6,12 @@ import { useSession } from 'next-auth/react';
 
 export const PostCommentBoxInputbox = () => {
   const { theme } = useContext(ThemeContext);
-  const { setModalOpen } = useContext(DataContext);
+  const {
+    setModalOpen,
+    setAddingNewComment,
+    setUpdatePostViaModal,
+    setNewPostBtnClicked,
+  } = useContext(DataContext);
   const { data: session } = useSession();
 
   return (
@@ -28,7 +33,12 @@ export const PostCommentBoxInputbox = () => {
           />
         )}
         <div
-          onClick={() => setModalOpen(true)}
+          onClick={() => {
+            setAddingNewComment(true);
+            setUpdatePostViaModal(false);
+            setNewPostBtnClicked(false);
+            setModalOpen(true);
+          }}
           className={`rounded-full h-12 flex-grow px-5 ${
             !theme
               ? 'lightTheme bg-gray-100 '

@@ -10,7 +10,12 @@ import { InputboxModalButton } from './InputboxModalButton';
 
 export const InputBox = () => {
   const { theme } = useContext(ThemeContext);
-  const { setModalOpen } = useContext(DataContext);
+  const {
+    setModalOpen,
+    setAddingNewComment,
+    setUpdatePostViaModal,
+    setNewPostBtnClicked,
+  } = useContext(DataContext);
   const { data: session } = useSession();
 
   return (
@@ -32,7 +37,12 @@ export const InputBox = () => {
           />
         )}
         <div
-          onClick={() => setModalOpen(true)}
+          onClick={() => {
+            setAddingNewComment(false);
+            setUpdatePostViaModal(false);
+            setNewPostBtnClicked(true);
+            setModalOpen(true);
+          }}
           className='rounded-full h-12 bg-gray-100 flex-grow px-5'>
           <p className='mt-3'>
             {!session

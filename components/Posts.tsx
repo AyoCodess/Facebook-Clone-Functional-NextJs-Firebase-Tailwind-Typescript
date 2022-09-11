@@ -55,8 +55,6 @@ export const Posts = () => {
     commentForceUpdate,
     emailRefState,
     postIdRefState,
-    selectedPost,
-    setSelectedPost,
     setCommentForceUpdate,
     setPostIdRefState,
   } = useContext(DataContext);
@@ -185,7 +183,6 @@ export const Posts = () => {
                 userComments={
                   updatedPost ? updatedPost.comments : post.comments
                 }
-                isUpdated={[]}
                 updatedComments={updatedPost ? updatedPost.comments : null}
                 setUpdatedComments={setUpdatedComments}
               />

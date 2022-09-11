@@ -4,6 +4,11 @@ import { DataContext } from '../DataContext';
 import { doc, getDoc, setDoc, Timestamp, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import cryptoRandomString from 'crypto-random-string';
+import {
+  InputboxModalHeaderCreatePost,
+  InputboxModalHeaderAddComment,
+  InputboxModalHeaderUpdatePost,
+} from '.';
 
 interface Props {
   Icon: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -29,6 +34,8 @@ export const InputboxModalHeader = ({
     openCommentBox,
     setLoadCommentBox,
     setCommentForceUpdate,
+    newPostBtnClicked,
+    addingNewComment,
   } = useContext(DataContext);
   return (
     <div className={`flex justify-between items-center cursor-pointer `}>
@@ -39,53 +46,27 @@ export const InputboxModalHeader = ({
           setModalOpen(false);
         }}
       />
-      <p className='text-sm'>Create post</p>
-      <button
-        disabled={!session}
-        onClick={(e) => {
-          // creating a brand new post
-          if (!updatePostViaModal && !openCommentBox) {
-            preSendPost(e);
-            setModalOpen(false);
-          }
-          // adding a comment to an existing post
-          if (!updatePostViaModal && openCommentBox) {
-            preSendPost(e, true);
-            setModalOpen(false);
-            setCommentForceUpdate((prev) => !prev);
-          }
-
-          // updating a current post
-          if (updatePostViaModal && !openCommentBox) {
-            const updatingPost = async () => {
-              const post = doc(
-                db,
-                'users',
-                `${session.user.email}`,
-                'posts',
-                postIdRefState
-              );
-
-              console.log('state', postIdRefState);
-              const postDoc = await getDoc(post);
-
-              await updateDoc(post, {
-                message: postMessageInModal,
-              });
-
-              console.log('updating...');
-              setUpdatePostViaModal(false);
-              setForceUpdate((prev) => !prev);
-            };
-
-            updatingPost();
-            setModalOpen(false);
-            setForceUpdate(true);
-          }
-        }}
-        className='px-2 py-1 bg-blue-500 font-medium hover:bg-blue-400 text-white text-sm rounded-md'>
-        Post
-      </button>
+      {newPostBtnClicked && !updatePostViaModal && !addingNewComment && (
+        <InputboxModalHeaderCreatePost
+          setModalOpen={setModalOpen}
+          preSendPost={(e) => preSendPost(e)}
+        />
+      )}
+      {!newPostBtnClicked && updatePostViaModal && !addingNewComment && (
+        <InputboxModalHeaderUpdatePost
+          setModalOpen={setModalOpen}
+          preSendPost={preSendPost}
+        />
+      )}
+      {!newPostBtnClicked &&
+        !updatePostViaModal &&
+        openCommentBox &&
+        addingNewComment && (
+          <InputboxModalHeaderAddComment
+            setModalOpen={setModalOpen}
+            preSendPost={(e) => preSendPost(e, true)}
+          />
+        )}
     </div>
   );
 };

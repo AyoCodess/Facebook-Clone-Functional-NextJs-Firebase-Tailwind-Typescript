@@ -12,7 +12,7 @@ interface Props {
   onClick: () => void;
 }
 
-export const InputboxModalTextareaForm = ({
+export const InputboxModalTextareaFormCreatePost = ({
   setSavedMessageRef,
   textareaRef,
   photoToPost,

@@ -10,22 +10,19 @@ import { db } from '../firebase';
 interface Props {
   userComments: any[];
   updatedComments: any[];
-  isUpdated: any[];
+
   setUpdatedComments: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 export const PostCommentBoxPost = ({
   userComments,
   updatedComments,
-  isUpdated,
+
   setUpdatedComments,
 }: Props) => {
   const { theme } = useContext(ThemeContext);
   const { setModalOpen, emailRefState, postIdRefState, commentForceUpdate } =
     useContext(DataContext);
-
-
-
 
   return (
     <>
@@ -78,7 +75,6 @@ export const PostCommentBoxPost = ({
           })}
 
       {updatedComments &&
-        isUpdated &&
         updatedComments
           .sort((a, b) => b.timestamp.seconds - a.timestamp.seconds)
           .map((comment) => {

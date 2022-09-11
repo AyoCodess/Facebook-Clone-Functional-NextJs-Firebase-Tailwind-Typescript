@@ -5,6 +5,7 @@ import React, {
   Dispatch,
   useMemo,
   useRef,
+  useEffect,
 } from 'react';
 
 interface Props {
@@ -43,8 +44,10 @@ interface DataContextType {
   setCommentForceUpdate: Dispatch<SetStateAction<boolean>>;
   commentBoxClicked: boolean;
   setCommentBoxClicked: Dispatch<SetStateAction<boolean>>;
-  selectedPost: string;
-  setSelectedPost: Dispatch<SetStateAction<string>>;
+  newPostBtnClicked: boolean;
+  setNewPostBtnClicked: Dispatch<SetStateAction<boolean>>;
+  addingNewComment: boolean;
+  setAddingNewComment: Dispatch<SetStateAction<boolean>>;
 }
 export const DataContext = createContext<DataContextType>({
   show: false,
@@ -79,8 +82,10 @@ export const DataContext = createContext<DataContextType>({
   setCommentForceUpdate: () => {},
   commentBoxClicked: false,
   setCommentBoxClicked: () => {},
-  selectedPost: '',
-  setSelectedPost: () => {},
+  newPostBtnClicked: true,
+  setNewPostBtnClicked: () => {},
+  addingNewComment: false,
+  setAddingNewComment: () => {},
 });
 
 export const DataProvider = ({ children }: Props) => {
@@ -112,10 +117,27 @@ export const DataProvider = ({ children }: Props) => {
   const [commentForceUpdate, setCommentForceUpdate] = useState(false);
   const [commentBoxClicked, setCommentBoxClicked] = useState(false);
   // controls post comment realtime updates
-  const [selectedPost, setSelectedPost] = useState('');
+  const [newPostBtnClicked, setNewPostBtnClicked] = useState(true);
+  const [addingNewComment, setAddingNewComment] = useState(false);
 
   const [forceUpdate, setForceUpdate] = useState(false); // updates posts when new post is added
   const [loading, setLoading] = useState(false); // loading posts
+
+  useEffect(() => {
+    if (newPostBtnClicked) {
+      setAddingNewComment(false);
+      setUpdatePostViaModal(false);
+    }
+
+    if (updatePostViaModal) {
+      setAddingNewComment(false);
+      setNewPostBtnClicked(false);
+    }
+    if (addingNewComment) {
+      setNewPostBtnClicked(false);
+      setUpdatePostViaModal(false);
+    }
+  }, [newPostBtnClicked, updatePostViaModal, addingNewComment]);
 
   const contextValues = useMemo(
     () => ({
@@ -151,8 +173,10 @@ export const DataProvider = ({ children }: Props) => {
       setCommentForceUpdate,
       commentBoxClicked,
       setCommentBoxClicked,
-      selectedPost,
-      setSelectedPost,
+      newPostBtnClicked,
+      setNewPostBtnClicked,
+      addingNewComment,
+      setAddingNewComment,
     }),
     [
       show,
@@ -187,8 +211,10 @@ export const DataProvider = ({ children }: Props) => {
       setCommentForceUpdate,
       commentBoxClicked,
       setCommentBoxClicked,
-      selectedPost,
-      setSelectedPost,
+      newPostBtnClicked,
+      setNewPostBtnClicked,
+      addingNewComment,
+      setAddingNewComment,
     ]
   );
   return (

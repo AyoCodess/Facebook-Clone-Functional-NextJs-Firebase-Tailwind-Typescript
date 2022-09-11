@@ -49,9 +49,13 @@ export const PostDropdownMenu = ({
   const {
     setModalOpen,
     setPostMessageInModal,
-    setUpdatePostViaModal,
+
     setPostIdRefState,
     setForceUpdate,
+
+    setAddingNewComment,
+    setNewPostBtnClicked,
+    setUpdatePostViaModal,
   } = useContext(DataContext);
   const { data: session } = useSession();
 
@@ -61,6 +65,7 @@ export const PostDropdownMenu = ({
     const post = doc(db, 'users', `${session.user.email}`, 'posts', postIdRef);
     const postDoc = await getDoc(post);
     setUpdatePostViaModal(true);
+    setNewPostBtnClicked(false);
     setPostMessageInModal(postDoc.data().message);
     setModalOpen(true);
   };
@@ -114,6 +119,9 @@ export const PostDropdownMenu = ({
                     Icon={UploadIcon}
                     onClick={() => {
                       updatePost();
+                      setAddingNewComment(false);
+                      setNewPostBtnClicked(false);
+                      setUpdatePostViaModal(true);
                     }}
                   />
                 </Menu.Item>

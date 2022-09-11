@@ -10,14 +10,12 @@ interface Props {
   userComments: any[];
   setUpdatedComments: React.Dispatch<React.SetStateAction<any[]>>;
   updatedComments: any[];
-  isUpdated: any[];
 }
 export const PostCommentBox = ({
   id,
   userComments,
   setUpdatedComments,
   updatedComments,
-  isUpdated,
 }: Props) => {
   const { loadCommentBox, emailRefState, postIdRefState, commentForceUpdate } =
     React.useContext(DataContext);
@@ -34,8 +32,6 @@ export const PostCommentBox = ({
         <PostCommentBoxPost
           userComments={userComments}
           updatedComments={updatedComments}
-          id={id}
-          isUpdated={isUpdated}
           setUpdatedComments={setUpdatedComments}
         />
       )}

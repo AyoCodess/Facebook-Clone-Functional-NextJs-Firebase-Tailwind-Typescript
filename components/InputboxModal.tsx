@@ -27,7 +27,9 @@ import { ref, getDownloadURL, uploadString } from 'firebase/storage';
 import {
   InputboxModalButton,
   InputboxModalHeader,
-  InputboxModalTextareaForm,
+  InputboxModalTextareaFormCreatePost,
+  InputboxModalTextareaFormAddComment,
+  InputboxModalTextareaFormUpdatePost,
   InputboxModalUserInfo,
 } from '.';
 
@@ -45,9 +47,16 @@ export const InputboxModal = () => {
     postIdRefState,
     loadCommentBox,
     setLoading,
-    setUpdatePostViaModal,
+
     setLoadCommentBox,
     setCommentForceUpdate,
+    openCommentBox,
+    setOpenCommentBox,
+    setAddingNewComment,
+    setUpdatePostViaModal,
+    newPostBtnClicked,
+    updatePostViaModal,
+    addingNewComment,
   } = useContext(DataContext);
 
   const { theme } = useContext(ThemeContext);
@@ -314,13 +323,49 @@ export const InputboxModal = () => {
                       <hr className='border mt-2 w-[100vw] ml-[-2rem]' />
                       <div className='mt-2'>
                         <InputboxModalUserInfo />
-                        <InputboxModalTextareaForm
-                          onClick={() => setCommentForceUpdate((prev) => !prev)}
-                          setSavedMessageRef={setSavedMessageRef}
-                          removePhotoToPost={removePhotoToPost}
-                          photoToPost={photoToPost}
-                          textareaRef={textareaRef}
-                        />
+                        {newPostBtnClicked &&
+                          !updatePostViaModal &&
+                          !addingNewComment && (
+                            <InputboxModalTextareaFormCreatePost
+                              onClick={() => {
+                                setAddingNewComment(false);
+                                setUpdatePostViaModal(false);
+                                setCommentForceUpdate((prev) => !prev);
+                              }}
+                              setSavedMessageRef={setSavedMessageRef}
+                              removePhotoToPost={removePhotoToPost}
+                              photoToPost={photoToPost}
+                              textareaRef={textareaRef}
+                            />
+                          )}
+                        {!newPostBtnClicked &&
+                          updatePostViaModal &&
+                          !addingNewComment && (
+                            <InputboxModalTextareaFormUpdatePost
+                              onClick={() => {
+                                setCommentForceUpdate((prev) => !prev);
+                              }}
+                              setSavedMessageRef={setSavedMessageRef}
+                              removePhotoToPost={removePhotoToPost}
+                              photoToPost={photoToPost}
+                              textareaRef={textareaRef}
+                            />
+                          )}
+                        {!newPostBtnClicked &&
+                          !updatePostViaModal &&
+                          openCommentBox &&
+                          addingNewComment && (
+                            <InputboxModalTextareaFormAddComment
+                              onClick={() => {
+                                setUpdatePostViaModal(false);
+                                setCommentForceUpdate((prev) => !prev);
+                              }}
+                              setSavedMessageRef={setSavedMessageRef}
+                              removePhotoToPost={removePhotoToPost}
+                              photoToPost={photoToPost}
+                              textareaRef={textareaRef}
+                            />
+                          )}
                       </div>
                     </div>
                   </div>
