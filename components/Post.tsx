@@ -25,6 +25,8 @@ interface Props {
   userComments: any[];
   updatedComments: any[];
   setUpdatedComments: React.Dispatch<React.SetStateAction<any[]>>;
+  isUpdated: any[];
+  onClick?: () => void;
 }
 
 export const Post = ({
@@ -37,7 +39,9 @@ export const Post = ({
   id,
   userComments,
   updatedComments,
+  isUpdated,
   setUpdatedComments,
+  onClick,
 }: Props) => {
   const { data: session } = useSession();
   const { theme } = useContext(ThemeContext);
@@ -90,6 +94,7 @@ export const Post = ({
 
   return (
     <div
+      onClick={onClick}
       className={`flex flex-col  sm:rounded-lg mt-3 shadow-md ${
         !theme ? 'themeLight bg-white' : 'themeDark bg-slate-800'
       }`}>
@@ -190,6 +195,7 @@ export const Post = ({
           userComments={userComments}
           setUpdatedComments={setUpdatedComments}
           updatedComments={updatedComments}
+          isUpdated={isUpdated}
         />
       )}
     </div>

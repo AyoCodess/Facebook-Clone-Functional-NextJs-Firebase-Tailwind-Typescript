@@ -4,6 +4,8 @@ import {
   getDocs,
   query,
   collectionGroup,
+  getDoc,
+  doc,
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { LoadingSpinner, Post } from '../components';
@@ -53,6 +55,10 @@ export const Posts = () => {
     commentForceUpdate,
     emailRefState,
     postIdRefState,
+    selectedPost,
+    setSelectedPost,
+    setCommentForceUpdate,
+    setPostIdRefState,
   } = useContext(DataContext);
 
   useEffect(() => {
@@ -125,46 +131,50 @@ export const Posts = () => {
     setRealTimePosts(sorted);
     setLoading(false);
   }
-  let loaded;
-
-  async function updatePostComments() {
-    console.log('running updatePostComments');
-    console.log(emailRefState, postIdRefState);
-    try {
-      const userQuery = query(collection(db, 'users', emailRefState, 'posts'));
-
-      const snapshot = await getDocs(userQuery);
-
-      setUpdatedComments(snapshot.docs.map((posts: any) => posts.data()));
-    } catch (err) {
-      console.error('UPDATE POSTS ERROR', err);
-    } finally {
-      console.log('updating Post Comments is complete', updatedComments);
-    }
-  }
 
   useEffect(() => {
-    if (commentForceUpdate) {
-      updatePostComments();
-    }
-  }, [commentForceUpdate]);
+    async function updatePostComments() {
+      try {
+        const userQuery = query(
+          collection(db, 'users', emailRefState, 'posts')
+        );
 
-  console.log('realTimePosts', realTimePosts);
+        doc(db, 'users', emailRefState, 'posts', postIdRefState);
+
+        const snapshot = await getDocs(userQuery);
+
+        setUpdatedComments(snapshot.docs.map((posts: any) => posts.data()));
+      } catch (err) {
+        console.error('UPDATE POSTS ERROR', err);
+      } finally {
+      }
+    }
+    updatePostComments();
+  }, [commentForceUpdate, emailRefState, postIdRefState]);
+
   return (
     <div>
       <>
         {loading && <LoadingSpinner />}
         {realTimePosts &&
+          !loading &&
           realTimePosts.map((post, i) => {
-            console.log('post ID', post.id);
+            let updatedPost;
 
-            updatedComments?.map((updatedPost, i) => {
-              console.log('updated post ID', updatedPost.id);
-            });
-
+            if (updatedComments) {
+              //   setPostIdRefState(post.id);
+              updatedPost = updatedComments.find(
+                (updatedPost: any) => updatedPost.id === post.id
+              );
+              console.log('updatedPost', updatedPost);
+            }
             return (
               <Post
                 key={i}
+                onClick={() => {
+                  setPostIdRefState(post.id);
+                  //   setCommentForceUpdate((prev) => !prev);
+                }}
                 name={post.name}
                 id={post.id}
                 message={post.message}
@@ -172,8 +182,11 @@ export const Posts = () => {
                 timestamp={post.timestamp}
                 image={post.image}
                 postImage={post.imageURL}
-                userComments={post.comments}
-                updatedComments={updatedComments?.comments}
+                userComments={
+                  updatedPost ? updatedPost.comments : post.comments
+                }
+                isUpdated={[]}
+                updatedComments={updatedPost ? updatedPost.comments : null}
                 setUpdatedComments={setUpdatedComments}
               />
             );

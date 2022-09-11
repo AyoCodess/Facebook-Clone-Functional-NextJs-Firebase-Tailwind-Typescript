@@ -28,6 +28,7 @@ export const InputboxModalHeader = ({
     setUpdatePostViaModal,
     openCommentBox,
     setLoadCommentBox,
+    setCommentForceUpdate,
   } = useContext(DataContext);
   return (
     <div className={`flex justify-between items-center cursor-pointer `}>
@@ -51,6 +52,7 @@ export const InputboxModalHeader = ({
           if (!updatePostViaModal && openCommentBox) {
             preSendPost(e, true);
             setModalOpen(false);
+            setCommentForceUpdate((prev) => !prev);
           }
 
           // updating a current post

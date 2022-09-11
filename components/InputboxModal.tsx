@@ -315,6 +315,7 @@ export const InputboxModal = () => {
                       <div className='mt-2'>
                         <InputboxModalUserInfo />
                         <InputboxModalTextareaForm
+                          onClick={() => setCommentForceUpdate((prev) => !prev)}
                           setSavedMessageRef={setSavedMessageRef}
                           removePhotoToPost={removePhotoToPost}
                           photoToPost={photoToPost}

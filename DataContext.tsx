@@ -43,6 +43,8 @@ interface DataContextType {
   setCommentForceUpdate: Dispatch<SetStateAction<boolean>>;
   commentBoxClicked: boolean;
   setCommentBoxClicked: Dispatch<SetStateAction<boolean>>;
+  selectedPost: string;
+  setSelectedPost: Dispatch<SetStateAction<string>>;
 }
 export const DataContext = createContext<DataContextType>({
   show: false,
@@ -77,6 +79,8 @@ export const DataContext = createContext<DataContextType>({
   setCommentForceUpdate: () => {},
   commentBoxClicked: false,
   setCommentBoxClicked: () => {},
+  selectedPost: '',
+  setSelectedPost: () => {},
 });
 
 export const DataProvider = ({ children }: Props) => {
@@ -107,6 +111,8 @@ export const DataProvider = ({ children }: Props) => {
   const [loadCommentBox, setLoadCommentBox] = useState(false);
   const [commentForceUpdate, setCommentForceUpdate] = useState(false);
   const [commentBoxClicked, setCommentBoxClicked] = useState(false);
+  // controls post comment realtime updates
+  const [selectedPost, setSelectedPost] = useState('');
 
   const [forceUpdate, setForceUpdate] = useState(false); // updates posts when new post is added
   const [loading, setLoading] = useState(false); // loading posts
@@ -145,6 +151,8 @@ export const DataProvider = ({ children }: Props) => {
       setCommentForceUpdate,
       commentBoxClicked,
       setCommentBoxClicked,
+      selectedPost,
+      setSelectedPost,
     }),
     [
       show,
@@ -179,6 +187,8 @@ export const DataProvider = ({ children }: Props) => {
       setCommentForceUpdate,
       commentBoxClicked,
       setCommentBoxClicked,
+      selectedPost,
+      setSelectedPost,
     ]
   );
   return (

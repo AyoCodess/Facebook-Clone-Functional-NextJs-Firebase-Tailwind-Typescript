@@ -4,28 +4,28 @@ import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { query, collection, getDocs } from 'firebase/firestore';
+import { query, collection, getDocs, getDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 interface Props {
   userComments: any[];
-  id?: string;
   updatedComments: any[];
+  isUpdated: any[];
+  setUpdatedComments: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 export const PostCommentBoxPost = ({
   userComments,
   updatedComments,
-  id,
+  isUpdated,
+  setUpdatedComments,
 }: Props) => {
   const { theme } = useContext(ThemeContext);
-  const { setModalOpen } = useContext(DataContext);
+  const { setModalOpen, emailRefState, postIdRefState, commentForceUpdate } =
+    useContext(DataContext);
 
-  //   if (userComments) {
-  //     console.log('final', userComments);
-  //   }
 
-  console.log('stateful comments', updatedComments);
+
 
   return (
     <>
@@ -63,11 +63,13 @@ export const PostCommentBoxPost = ({
                       <p className='text-sm font-bold'>{comment.name}</p>
                       <p className='mt-1 text-sm'>{comment.message}</p>
 
-                      <img
-                        className='mt-2 rounded shadow  '
-                        src={comment.imageURL}
-                        alt='message image'
-                      />
+                      {comment.imageURL && (
+                        <img
+                          className='mt-2 rounded shadow  '
+                          src={comment.imageURL}
+                          alt='message image'
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -76,13 +78,14 @@ export const PostCommentBoxPost = ({
           })}
 
       {updatedComments &&
+        isUpdated &&
         updatedComments
           .sort((a, b) => b.timestamp.seconds - a.timestamp.seconds)
           .map((comment) => {
             return (
               <div
                 key={comment.id}
-                className={`text-gray-500 font-medium  ${
+                className={`text-gray-500 font-medium z-[1000]  ${
                   !theme
                     ? 'themeLight'
                     : 'themeDark  bg-slate-800 shadow-slate-600 shadow-sm '
@@ -108,11 +111,13 @@ export const PostCommentBoxPost = ({
                       <p className='text-sm font-bold'>{comment.name}</p>
                       <p className='mt-1 text-sm'>{comment.message}</p>
 
-                      <img
-                        className='mt-2 rounded shadow  '
-                        src={comment.imageURL}
-                        alt='message image'
-                      />
+                      {comment.imageURL && (
+                        <img
+                          className='mt-2 rounded shadow  '
+                          src={comment.imageURL}
+                          alt='message image'
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
