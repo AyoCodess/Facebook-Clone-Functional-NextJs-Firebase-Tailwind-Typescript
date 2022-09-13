@@ -1,22 +1,14 @@
 import React, { useContext } from 'react';
 import { useSession } from 'next-auth/react';
 import { DataContext } from '../DataContext';
-import { doc, getDoc, setDoc, Timestamp, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import cryptoRandomString from 'crypto-random-string';
 
 interface Props {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  preSendPost: (
-    e: React.MouseEvent<HTMLButtonElement>,
-    comment?: boolean
-  ) => Promise<void>;
 }
 
-export function InputboxModalHeaderUpdatePost({
-  setModalOpen,
-  preSendPost,
-}: Props) {
+export function InputboxModalHeaderUpdatePost({ setModalOpen }: Props) {
   const { data: session } = useSession();
   const {
     updatePostViaModal,
@@ -25,8 +17,6 @@ export function InputboxModalHeaderUpdatePost({
     postMessageInModal,
     setUpdatePostViaModal,
     openCommentBox,
-    setLoadCommentBox,
-    setCommentForceUpdate,
   } = useContext(DataContext);
   return (
     <>

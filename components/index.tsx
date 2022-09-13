@@ -27,6 +27,7 @@ export * from './PostCommentBoxInputbox';
 export * from './PostCommentBoxPost';
 export * from './PostButton';
 export * from './PostDropdownMenu';
+export * from './PostDropdownMenuComments';
 export * from './Toast';
 export * from './Divider ';
 export * from './MobileInputboxx';

@@ -16,7 +16,6 @@ import { useSession } from 'next-auth/react';
 import { db, storage } from '../firebase';
 import {
   collection,
-  addDoc,
   Timestamp,
   doc,
   setDoc,
@@ -47,16 +46,14 @@ export const InputboxModal = () => {
     postIdRefState,
     loadCommentBox,
     setLoading,
-
     setLoadCommentBox,
     setCommentForceUpdate,
     openCommentBox,
-    setOpenCommentBox,
-    setAddingNewComment,
     setUpdatePostViaModal,
     newPostBtnClicked,
     updatePostViaModal,
     addingNewComment,
+    setAddingNewComment,
   } = useContext(DataContext);
 
   const { theme } = useContext(ThemeContext);
@@ -242,7 +239,7 @@ export const InputboxModal = () => {
 
     setTimeout(() => {
       setLoadCommentBox(false);
-    }, 1000);
+    }, 1500);
 
     setCommentForceUpdate((prev) => !prev);
 

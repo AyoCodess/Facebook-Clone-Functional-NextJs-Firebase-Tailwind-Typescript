@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext, SetStateAction } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   collection,
   getDocs,
   query,
   collectionGroup,
-  getDoc,
   doc,
 } from 'firebase/firestore';
 import { db } from '../firebase';
@@ -55,7 +54,6 @@ export const Posts = () => {
     commentForceUpdate,
     emailRefState,
     postIdRefState,
-    setCommentForceUpdate,
     setPostIdRefState,
   } = useContext(DataContext);
 
@@ -164,7 +162,6 @@ export const Posts = () => {
               updatedPost = updatedComments.find(
                 (updatedPost: any) => updatedPost.id === post.id
               );
-              console.log('updatedPost', updatedPost);
             }
             return (
               <Post

@@ -4,8 +4,6 @@ import React, {
   SetStateAction,
   Dispatch,
   useMemo,
-  useRef,
-  useEffect,
 } from 'react';
 
 interface Props {
@@ -122,22 +120,6 @@ export const DataProvider = ({ children }: Props) => {
 
   const [forceUpdate, setForceUpdate] = useState(false); // updates posts when new post is added
   const [loading, setLoading] = useState(false); // loading posts
-
-  useEffect(() => {
-    if (newPostBtnClicked) {
-      setAddingNewComment(false);
-      setUpdatePostViaModal(false);
-    }
-
-    if (updatePostViaModal) {
-      setAddingNewComment(false);
-      setNewPostBtnClicked(false);
-    }
-    if (addingNewComment) {
-      setNewPostBtnClicked(false);
-      setUpdatePostViaModal(false);
-    }
-  }, [newPostBtnClicked, updatePostViaModal, addingNewComment]);
 
   const contextValues = useMemo(
     () => ({

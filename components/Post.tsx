@@ -47,23 +47,13 @@ export const Post = ({
   const {
     viewEveryonesPosts,
     setPostIdRefState,
-    openCommentBox,
     setOpenCommentBox,
     setEmailRefState,
-    commentBoxClicked,
     setCommentBoxClicked,
-    emailRefState,
-    postIdRefState,
-    commentForceUpdate,
-    loadCommentBox,
     setAddingNewComment,
     setNewPostBtnClicked,
     setUpdatePostViaModal,
   } = useContext(DataContext);
-
-  //   if (postIdRef?.current?.innerText) {
-  //     setPostIdRefState(postIdRef.current.innerText);
-  //   }
 
   const postEmailRef = useRef(null);
   const postIdRef = useRef(null);
@@ -197,8 +187,9 @@ export const Post = ({
       {selectedPostForComment && (
         <PostCommentBox
           id={id}
+          emailRef={postEmailRef.current.innerText}
+          postIdRef={postIdRef.current.innerText}
           userComments={userComments}
-          setUpdatedComments={setUpdatedComments}
           updatedComments={updatedComments}
         />
       )}

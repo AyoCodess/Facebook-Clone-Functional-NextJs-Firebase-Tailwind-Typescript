@@ -1,9 +1,6 @@
 import React, { useContext } from 'react';
 import { useSession } from 'next-auth/react';
 import { DataContext } from '../DataContext';
-import { doc, getDoc, setDoc, Timestamp, updateDoc } from 'firebase/firestore';
-import { db } from '../firebase';
-import cryptoRandomString from 'crypto-random-string';
 import {
   InputboxModalHeaderCreatePost,
   InputboxModalHeaderAddComment,
@@ -27,13 +24,7 @@ export const InputboxModalHeader = ({
   const { data: session } = useSession();
   const {
     updatePostViaModal,
-    postIdRefState,
-    setForceUpdate,
-    postMessageInModal,
-    setUpdatePostViaModal,
     openCommentBox,
-    setLoadCommentBox,
-    setCommentForceUpdate,
     newPostBtnClicked,
     addingNewComment,
   } = useContext(DataContext);
@@ -53,10 +44,7 @@ export const InputboxModalHeader = ({
         />
       )}
       {!newPostBtnClicked && updatePostViaModal && !addingNewComment && (
-        <InputboxModalHeaderUpdatePost
-          setModalOpen={setModalOpen}
-          preSendPost={preSendPost}
-        />
+        <InputboxModalHeaderUpdatePost setModalOpen={setModalOpen} />
       )}
       {!newPostBtnClicked &&
         !updatePostViaModal &&

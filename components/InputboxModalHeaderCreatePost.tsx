@@ -1,9 +1,6 @@
 import React, { useContext } from 'react';
 import { useSession } from 'next-auth/react';
 import { DataContext } from '../DataContext';
-import { doc, getDoc, setDoc, Timestamp, updateDoc } from 'firebase/firestore';
-import { db } from '../firebase';
-import cryptoRandomString from 'crypto-random-string';
 
 interface Props {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,16 +15,7 @@ export function InputboxModalHeaderCreatePost({
   preSendPost,
 }: Props) {
   const { data: session } = useSession();
-  const {
-    updatePostViaModal,
-    postIdRefState,
-    setForceUpdate,
-    postMessageInModal,
-    setUpdatePostViaModal,
-    openCommentBox,
-    setLoadCommentBox,
-    setCommentForceUpdate,
-  } = useContext(DataContext);
+  const { updatePostViaModal } = useContext(DataContext);
   return (
     <>
       <p className='text-sm'>Create Post</p>

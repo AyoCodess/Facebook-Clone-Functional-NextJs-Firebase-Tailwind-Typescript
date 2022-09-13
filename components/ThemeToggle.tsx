@@ -13,12 +13,7 @@ interface Props {
   openMenu?: boolean;
 }
 
-export const ThemeToggle = ({
-  className,
-  mobileMenu,
-  openMenu,
-  setOpenMenu,
-}: Props) => {
+export const ThemeToggle = ({ className, openMenu, setOpenMenu }: Props) => {
   const { theme, setTheme } = useContext(ThemeContext);
 
   return (

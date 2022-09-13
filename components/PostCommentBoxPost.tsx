@@ -1,28 +1,29 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { query, collection, getDocs, getDoc, doc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { PostDropdownMenu, PostDropdownMenuComments } from '.';
 
 interface Props {
   userComments: any[];
   updatedComments: any[];
-
-  setUpdatedComments: React.Dispatch<React.SetStateAction<any[]>>;
+  emailRef: string;
+  postIdRef: string;
 }
 
 export const PostCommentBoxPost = ({
   userComments,
   updatedComments,
-
-  setUpdatedComments,
+  emailRef,
+  postIdRef,
 }: Props) => {
   const { theme } = useContext(ThemeContext);
   const { setModalOpen, emailRefState, postIdRefState, commentForceUpdate } =
     useContext(DataContext);
+
+  const [openDropdownMenuComments, setOpenDropdownMenuComments] =
+    useState(false);
 
   return (
     <>
@@ -50,7 +51,10 @@ export const PostCommentBoxPost = ({
                   />
 
                   <div
-                    onClick={() => setModalOpen(true)}
+                    onClick={(e) => {
+                      setModalOpen(true);
+                      console.log('in here');
+                    }}
                     className={`rounded-md  flex-grow px-5 py-2 ${
                       !theme
                         ? 'lightTheme bg-gray-100 '
@@ -69,6 +73,17 @@ export const PostCommentBoxPost = ({
                       )}
                     </div>
                   </div>
+                  <PostDropdownMenuComments
+                    userComments={userComments}
+                    updatedComments={updatedComments}
+                    postEmailRef={emailRef}
+                    postIdRef={postIdRef}
+                    commentMessage={comment.message}
+                    commentTimestamp={comment.timestamp}
+                    commentID={comment.id}
+                    openDropdownMenuComments={openDropdownMenuComments}
+                    setOpenDropdownMenuComments={setOpenDropdownMenuComments}
+                  />
                 </div>
               </div>
             );
@@ -80,6 +95,7 @@ export const PostCommentBoxPost = ({
           .map((comment) => {
             return (
               <div
+                onClick={() => console.log(comment.id)}
                 key={comment.id}
                 className={`text-gray-500 font-medium z-[1000]  ${
                   !theme
@@ -116,6 +132,17 @@ export const PostCommentBoxPost = ({
                       )}
                     </div>
                   </div>
+                  <PostDropdownMenuComments
+                    userComments={userComments}
+                    updatedComments={updatedComments}
+                    postEmailRef={emailRef}
+                    postIdRef={postIdRef}
+                    commentMessage={comment.message}
+                    commentTimestamp={comment.timestamp}
+                    commentID={comment.id}
+                    openDropdownMenuComments={openDropdownMenuComments}
+                    setOpenDropdownMenuComments={setOpenDropdownMenuComments}
+                  />
                 </div>
               </div>
             );

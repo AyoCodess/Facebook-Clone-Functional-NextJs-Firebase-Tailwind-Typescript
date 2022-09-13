@@ -20,12 +20,8 @@ export const InputboxModalTextareaFormAddComment = ({
   onClick,
 }: Props) => {
   const { theme } = useContext(ThemeContext);
-  const {
-    updatePostViaModal,
-    postMessageInModal,
-    setPostMessageInModal,
-    setForceUpdate,
-  } = useContext(DataContext);
+  const { updatePostViaModal, postMessageInModal, setPostMessageInModal } =
+    useContext(DataContext);
   const { data: session } = useSession();
 
   return (
@@ -75,10 +71,6 @@ export const InputboxModalTextareaFormAddComment = ({
           </p>
         </div>
       )}
-      {/* <button hidden type='submit' onClick={sendPost}>
-                            Submit
-                          </button> */}{' '}
-      {/*only works with input field */}
     </form>
   );
 };

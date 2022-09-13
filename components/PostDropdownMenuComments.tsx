@@ -1,6 +1,13 @@
 import { Fragment } from 'react';
 import { XIcon } from '@heroicons/react/solid';
-import { doc, getDoc, deleteDoc } from 'firebase/firestore';
+import {
+  doc,
+  getDoc,
+  deleteDoc,
+  updateDoc,
+  deleteField,
+  arrayRemove,
+} from 'firebase/firestore';
 import { db } from '../firebase';
 
 import React, { useContext } from 'react';
@@ -21,31 +28,39 @@ import { MobileMenuButton } from './MobileMenuButton';
 interface Props {
   postEmailRef: any;
   postIdRef: any;
-  openDropdownMenu: boolean;
-  setOpenDropdownMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  openDropdownMenuComments: boolean;
+  setOpenDropdownMenuComments: React.Dispatch<React.SetStateAction<boolean>>;
+  userComments: any[];
+  updatedComments: any[];
+  commentID: string;
+  commentMessage: string;
+  commentTimestamp: string;
 }
 
-export const PostDropdownMenu = ({
+export const PostDropdownMenuComments = ({
   postEmailRef,
   postIdRef,
-  openDropdownMenu,
-  setOpenDropdownMenu,
+  userComments,
+  updatedComments,
+  openDropdownMenuComments,
+  commentID,
+  commentMessage,
+  commentTimestamp,
+  setOpenDropdownMenuComments,
 }: Props) => {
   const { theme } = useContext(ThemeContext);
   const {
     setModalOpen,
     setPostMessageInModal,
-
     setPostIdRefState,
     setForceUpdate,
-
     setAddingNewComment,
     setNewPostBtnClicked,
     setUpdatePostViaModal,
   } = useContext(DataContext);
   const { data: session } = useSession();
 
-  const updatePost = async () => {
+  const updateComment = async () => {
     console.log(postIdRef);
     setPostIdRefState(postIdRef);
     const post = doc(db, 'users', `${session.user.email}`, 'posts', postIdRef);
@@ -55,26 +70,46 @@ export const PostDropdownMenu = ({
     setPostMessageInModal(postDoc.data().message);
     setModalOpen(true);
   };
-  const deletePost = async () => {
+  const deleteComment = async () => {
+    console.log(userComments);
     console.log('id ref', postIdRef);
+
+    const ref = doc(db, 'users', `${session.user.email}`, 'posts', postIdRef);
+
+    console.log('comment id', commentID);
     try {
-      await deleteDoc(
-        doc(db, 'users', `${session.user.email}`, 'posts', postIdRef)
-      );
+      await updateDoc(ref, {
+        comments: arrayRemove({
+          email: `${session.user.email}`,
+          id: commentID,
+          image: `${session.user.image}`,
+          message: commentMessage,
+          name: `${session.user.name}`,
+          timestamp: commentTimestamp,
+        }),
+      });
     } catch (error) {
-      console.log('there was an error', error);
+      console.error('there was an error', error);
     } finally {
       setForceUpdate((prev) => !prev);
     }
   };
 
+  console.log('selected comment', {
+    email: `${session.user.email}`,
+    id: commentID,
+    image: `${session.user.image}`,
+    message: commentMessage,
+    name: `${session.user.name}`,
+    timestamp: commentTimestamp,
+  });
   return (
-    <div className=''>
-      <Menu as='div' className='relative inline-block text-left z-50'>
+    <div className='relative'>
+      <Menu as='div' className='relative inline-block text-left  '>
         <div>
           <Menu.Button>
             <DotsHorizontalIcon
-              onClick={() => setOpenDropdownMenu(true)}
+              onClick={() => setOpenDropdownMenuComments(true)}
               className={`p-2 h-10 rounded-full transition duration-200 cursor-pointer ${
                 !theme
                   ? 'lightTheme hover:bg-gray-100 text-gray-600'
@@ -92,19 +127,19 @@ export const PostDropdownMenu = ({
           leaveFrom='transform opacity-100 scale-100'
           leaveTo='transform opacity-0 scale-95'>
           <Menu.Items
-            className={`absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
+            className={`z-50 absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
               !theme
                 ? 'lightTheme bg-white'
                 : 'darkTheme bg-slate-700 shadow shadow-black'
             }`}>
-            <div className='px-1 py-1 '>
+            <div className='px-1 py-1  '>
               {session.user.email === postEmailRef && (
                 <Menu.Item>
                   <MobileMenuButton
-                    title='Update Post'
+                    title='Update'
                     Icon={UploadIcon}
                     onClick={() => {
-                      updatePost();
+                      updateComment();
                       setAddingNewComment(false);
                       setNewPostBtnClicked(false);
                       setUpdatePostViaModal(true);
@@ -115,10 +150,10 @@ export const PostDropdownMenu = ({
               {session.user.email === postEmailRef && (
                 <Menu.Item>
                   <MobileMenuButton
-                    title='Delete Post'
+                    title='Delete '
                     Icon={FolderRemoveIcon}
                     onClick={() => {
-                      deletePost();
+                      deleteComment();
                     }}
                   />
                 </Menu.Item>

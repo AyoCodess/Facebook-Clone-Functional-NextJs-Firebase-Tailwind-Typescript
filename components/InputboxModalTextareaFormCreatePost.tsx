@@ -75,10 +75,6 @@ export const InputboxModalTextareaFormCreatePost = ({
           </p>
         </div>
       )}
-      {/* <button hidden type='submit' onClick={sendPost}>
-                            Submit
-                          </button> */}{' '}
-      {/*only works with input field */}
     </form>
   );
 };

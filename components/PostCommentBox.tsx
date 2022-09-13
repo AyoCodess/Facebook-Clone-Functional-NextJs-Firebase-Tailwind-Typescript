@@ -1,21 +1,21 @@
 import { ArrowDownIcon } from '@heroicons/react/solid';
-import { query, collection, getDocs } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { LoadingSpinner, PostCommentBoxInputbox, PostCommentBoxPost } from '.';
 import { DataContext } from '../DataContext';
-import { db } from '../firebase';
 
 interface Props {
   id: string;
   userComments: any[];
-  setUpdatedComments: React.Dispatch<React.SetStateAction<any[]>>;
   updatedComments: any[];
+  emailRef: string;
+  postIdRef: string;
 }
 export const PostCommentBox = ({
   id,
   userComments,
-  setUpdatedComments,
   updatedComments,
+  emailRef,
+  postIdRef,
 }: Props) => {
   const { loadCommentBox, emailRefState, postIdRefState, commentForceUpdate } =
     React.useContext(DataContext);
@@ -27,12 +27,13 @@ export const PostCommentBox = ({
         <ArrowDownIcon className='h-3 font-black pr-5' />
       </div>
       <PostCommentBoxInputbox />
-      {loadCommentBox && <LoadingSpinner />}
+      {loadCommentBox && id === postIdRefState && <LoadingSpinner />}
       {!loadCommentBox && (
         <PostCommentBoxPost
+          emailRef={emailRef}
+          postIdRef={postIdRef}
           userComments={userComments}
           updatedComments={updatedComments}
-          setUpdatedComments={setUpdatedComments}
         />
       )}
     </section>
