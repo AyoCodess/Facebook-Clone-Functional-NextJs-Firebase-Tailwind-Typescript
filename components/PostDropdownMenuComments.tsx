@@ -35,6 +35,9 @@ interface Props {
   commentID: string;
   commentMessage: string;
   commentTimestamp: string;
+  commentEmail: string;
+  commentImage: string;
+  commentName: string;
 }
 
 export const PostDropdownMenuComments = ({
@@ -46,6 +49,9 @@ export const PostDropdownMenuComments = ({
   commentID,
   commentMessage,
   commentTimestamp,
+  commentEmail,
+  commentImage,
+  commentName,
   setOpenDropdownMenuComments,
 }: Props) => {
   const { theme } = useContext(ThemeContext);
@@ -57,6 +63,7 @@ export const PostDropdownMenuComments = ({
     setAddingNewComment,
     setNewPostBtnClicked,
     setUpdatePostViaModal,
+    setCommentForceUpdate,
   } = useContext(DataContext);
   const { data: session } = useSession();
 
@@ -74,27 +81,53 @@ export const PostDropdownMenuComments = ({
     console.log(userComments);
     console.log('id ref', postIdRef);
 
-    const ref = doc(db, 'users', `${session.user.email}`, 'posts', postIdRef);
+    // original poster can delete there comments
+    if (postEmailRef === session.user.email) {
+      const ref = doc(db, 'users', `${session.user.email}`, 'posts', postIdRef);
 
-    console.log('comment id', commentID);
-    try {
-      await updateDoc(ref, {
-        comments: arrayRemove({
-          email: `${session.user.email}`,
-          id: commentID,
-          image: `${session.user.image}`,
-          message: commentMessage,
-          name: `${session.user.name}`,
-          timestamp: commentTimestamp,
-        }),
-      });
-    } catch (error) {
-      console.error('there was an error', error);
-    } finally {
-      setForceUpdate((prev) => !prev);
+      console.log('comment id', commentID);
+      try {
+        await updateDoc(ref, {
+          comments: arrayRemove({
+            email: `${session.user.email}`,
+            id: commentID,
+            image: `${session.user.image}`,
+            message: commentMessage,
+            name: `${session.user.name}`,
+            timestamp: commentTimestamp,
+          }),
+        });
+      } catch (error) {
+        console.error('there was an error', error);
+      } finally {
+        setCommentForceUpdate((prev) => !prev);
+      }
+    }
+    // other users can delete their own comments
+    if (postEmailRef !== session.user.email) {
+      console.log('different user logged in');
+
+      const ref = doc(db, 'users', postEmailRef, 'posts', postIdRef);
+
+      console.log('comment id', commentID);
+      try {
+        await updateDoc(ref, {
+          comments: arrayRemove({
+            email: commentEmail,
+            id: commentID,
+            image: commentImage,
+            message: commentMessage,
+            name: commentName,
+            timestamp: commentTimestamp,
+          }),
+        });
+      } catch (error) {
+        console.error('there was an error', error);
+      } finally {
+        setCommentForceUpdate((prev) => !prev);
+      }
     }
   };
-
   console.log('selected comment', {
     email: `${session.user.email}`,
     id: commentID,
@@ -133,7 +166,7 @@ export const PostDropdownMenuComments = ({
                 : 'darkTheme bg-slate-700 shadow shadow-black'
             }`}>
             <div className='px-1 py-1  '>
-              {session.user.email === postEmailRef && (
+              {session.user.email === commentEmail && (
                 <Menu.Item>
                   <MobileMenuButton
                     title='Update'
@@ -147,7 +180,7 @@ export const PostDropdownMenuComments = ({
                   />
                 </Menu.Item>
               )}
-              {session.user.email === postEmailRef && (
+              {session.user.email === commentEmail && (
                 <Menu.Item>
                   <MobileMenuButton
                     title='Delete '
@@ -158,7 +191,7 @@ export const PostDropdownMenuComments = ({
                   />
                 </Menu.Item>
               )}
-              {session.user.email !== postEmailRef && (
+              {session.user.email !== commentEmail && (
                 <Menu.Item>
                   <MobileMenuButton title='Cannot Edit' Icon={XIcon} />
                 </Menu.Item>

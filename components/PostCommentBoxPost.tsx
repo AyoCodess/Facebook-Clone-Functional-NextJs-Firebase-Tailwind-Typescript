@@ -74,6 +74,9 @@ export const PostCommentBoxPost = ({
                     </div>
                   </div>
                   <PostDropdownMenuComments
+                    commentName={comment.name}
+                    commentImage={comment.image}
+                    commentEmail={comment.email}
                     userComments={userComments}
                     updatedComments={updatedComments}
                     postEmailRef={emailRef}
@@ -133,6 +136,9 @@ export const PostCommentBoxPost = ({
                     </div>
                   </div>
                   <PostDropdownMenuComments
+                    commentName={comment.name}
+                    commentImage={comment.image}
+                    commentEmail={comment.email}
                     userComments={userComments}
                     updatedComments={updatedComments}
                     postEmailRef={emailRef}
