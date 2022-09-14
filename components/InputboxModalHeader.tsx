@@ -5,6 +5,7 @@ import {
   InputboxModalHeaderCreatePost,
   InputboxModalHeaderAddComment,
   InputboxModalHeaderUpdatePost,
+  InputboxModalHeaderUpdateComment,
 } from '.';
 
 interface Props {
@@ -27,6 +28,7 @@ export const InputboxModalHeader = ({
     openCommentBox,
     newPostBtnClicked,
     addingNewComment,
+    updatingComment,
   } = useContext(DataContext);
   return (
     <div className={`flex justify-between items-center cursor-pointer `}>
@@ -37,19 +39,32 @@ export const InputboxModalHeader = ({
           setModalOpen(false);
         }}
       />
-      {newPostBtnClicked && !updatePostViaModal && !addingNewComment && (
-        <InputboxModalHeaderCreatePost
-          setModalOpen={setModalOpen}
-          preSendPost={(e) => preSendPost(e)}
-        />
-      )}
-      {!newPostBtnClicked && updatePostViaModal && !addingNewComment && (
-        <InputboxModalHeaderUpdatePost setModalOpen={setModalOpen} />
-      )}
+      {newPostBtnClicked &&
+        !updatePostViaModal &&
+        !addingNewComment &&
+        !updatingComment && (
+          <InputboxModalHeaderCreatePost
+            setModalOpen={setModalOpen}
+            preSendPost={(e) => preSendPost(e)}
+          />
+        )}
+      {!newPostBtnClicked &&
+        updatePostViaModal &&
+        !addingNewComment &&
+        !updatingComment && (
+          <InputboxModalHeaderUpdatePost setModalOpen={setModalOpen} />
+        )}
+      {!newPostBtnClicked &&
+        updatePostViaModal &&
+        !addingNewComment &&
+        updatingComment && (
+          <InputboxModalHeaderUpdateComment setModalOpen={setModalOpen} />
+        )}
       {!newPostBtnClicked &&
         !updatePostViaModal &&
         openCommentBox &&
-        addingNewComment && (
+        addingNewComment &&
+        !updatingComment && (
           <InputboxModalHeaderAddComment
             setModalOpen={setModalOpen}
             preSendPost={(e) => preSendPost(e, true)}

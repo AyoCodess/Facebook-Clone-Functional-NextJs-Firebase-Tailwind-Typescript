@@ -51,10 +51,6 @@ export const PostCommentBoxPost = ({
                   />
 
                   <div
-                    onClick={(e) => {
-                      setModalOpen(true);
-                      console.log('in here');
-                    }}
                     className={`rounded-md  flex-grow px-5 py-2 ${
                       !theme
                         ? 'lightTheme bg-gray-100 '
@@ -76,6 +72,7 @@ export const PostCommentBoxPost = ({
                   <PostDropdownMenuComments
                     commentName={comment.name}
                     commentImage={comment.image}
+                    commentImageURL={comment.imageURL}
                     commentEmail={comment.email}
                     userComments={userComments}
                     updatedComments={updatedComments}
@@ -98,7 +95,6 @@ export const PostCommentBoxPost = ({
           .map((comment) => {
             return (
               <div
-                onClick={() => console.log(comment.id)}
                 key={comment.id}
                 className={`text-gray-500 font-medium z-[1000]  ${
                   !theme
@@ -116,7 +112,6 @@ export const PostCommentBoxPost = ({
                   />
 
                   <div
-                    onClick={() => setModalOpen(true)}
                     className={`rounded-md  flex-grow px-5 py-2 ${
                       !theme
                         ? 'lightTheme bg-gray-100 '
@@ -137,6 +132,7 @@ export const PostCommentBoxPost = ({
                   </div>
                   <PostDropdownMenuComments
                     commentName={comment.name}
+                    commentImageURL={comment.imageURL}
                     commentImage={comment.image}
                     commentEmail={comment.email}
                     userComments={userComments}

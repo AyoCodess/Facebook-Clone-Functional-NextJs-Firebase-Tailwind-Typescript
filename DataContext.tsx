@@ -46,6 +46,12 @@ interface DataContextType {
   setNewPostBtnClicked: Dispatch<SetStateAction<boolean>>;
   addingNewComment: boolean;
   setAddingNewComment: Dispatch<SetStateAction<boolean>>;
+  updatingComment: boolean;
+  setUpdatingComment: Dispatch<SetStateAction<boolean>>;
+  userCommentObject: any;
+  setUserCommentObject: Dispatch<SetStateAction<any>>;
+  photoToPost: any;
+  setPhotoToPost: Dispatch<SetStateAction<any>>;
 }
 export const DataContext = createContext<DataContextType>({
   show: false,
@@ -84,6 +90,12 @@ export const DataContext = createContext<DataContextType>({
   setNewPostBtnClicked: () => {},
   addingNewComment: false,
   setAddingNewComment: () => {},
+  updatingComment: false,
+  setUpdatingComment: () => {},
+  userCommentObject: null,
+  setUserCommentObject: () => {},
+  photoToPost: null,
+  setPhotoToPost: () => {},
 });
 
 export const DataProvider = ({ children }: Props) => {
@@ -118,8 +130,18 @@ export const DataProvider = ({ children }: Props) => {
   const [newPostBtnClicked, setNewPostBtnClicked] = useState(true);
   const [addingNewComment, setAddingNewComment] = useState(false);
 
+  // users can update there own comment on an post
+  const [updatingComment, setUpdatingComment] = useState(false);
+  // sends object to firebase for updating
+  const [userCommentObject, setUserCommentObject] = useState(null);
+
   const [forceUpdate, setForceUpdate] = useState(false); // updates posts when new post is added
   const [loading, setLoading] = useState(false); // loading posts
+
+  // add photo to post
+  const [photoToPost, setPhotoToPost] = useState<
+    string | ArrayBuffer | null | undefined
+  >(null);
 
   const contextValues = useMemo(
     () => ({
@@ -159,6 +181,12 @@ export const DataProvider = ({ children }: Props) => {
       setNewPostBtnClicked,
       addingNewComment,
       setAddingNewComment,
+      updatingComment,
+      setUpdatingComment,
+      userCommentObject,
+      setUserCommentObject,
+      photoToPost,
+      setPhotoToPost,
     }),
     [
       show,
@@ -197,6 +225,12 @@ export const DataProvider = ({ children }: Props) => {
       setNewPostBtnClicked,
       addingNewComment,
       setAddingNewComment,
+      updatingComment,
+      setUpdatingComment,
+      userCommentObject,
+      setUserCommentObject,
+      photoToPost,
+      setPhotoToPost,
     ]
   );
   return (

@@ -130,19 +130,21 @@ export const Posts = () => {
 
   useEffect(() => {
     async function updatePostComments() {
-      try {
-        const userQuery = query(
-          collection(db, 'users', emailRefState, 'posts')
-        );
+      if (updatedComments || realTimePosts) {
+        try {
+          const userQuery = query(
+            collection(db, 'users', emailRefState, 'posts')
+          );
 
-        doc(db, 'users', emailRefState, 'posts', postIdRefState);
+          doc(db, 'users', emailRefState, 'posts', postIdRefState);
 
-        const snapshot = await getDocs(userQuery);
+          const snapshot = await getDocs(userQuery);
 
-        setUpdatedComments(snapshot.docs.map((posts: any) => posts.data()));
-      } catch (err) {
-        console.error('UPDATE POSTS ERROR', err);
-      } finally {
+          setUpdatedComments(snapshot.docs.map((posts: any) => posts.data()));
+        } catch (err) {
+          console.error('UPDATE POSTS ERROR', err);
+        } finally {
+        }
       }
     }
     updatePostComments();

@@ -37,6 +37,7 @@ export * from './InputboxModal';
 export * from './InputboxModalHeader';
 export * from './InputboxModalHeaderCreatePost';
 export * from './InputboxModalHeaderUpdatePost';
+export * from './InputboxModalHeaderUpdateComment';
 export * from './InputboxModalHeaderAddComment';
 export * from './InputboxModalUserInfo';
 export * from './InputboxModalTextareaFormCreatePost';

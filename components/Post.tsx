@@ -53,6 +53,7 @@ export const Post = ({
     setAddingNewComment,
     setNewPostBtnClicked,
     setUpdatePostViaModal,
+    setUpdatingComment,
   } = useContext(DataContext);
 
   const postEmailRef = useRef(null);
@@ -171,6 +172,7 @@ export const Post = ({
             setEmailRefState(postEmailRef.current.innerText);
             setOpenCommentBox(true);
             setAddingNewComment(true);
+            setUpdatingComment(false);
             setNewPostBtnClicked(false);
             setCommentBoxClicked((prev) => !prev);
             setUpdatePostViaModal(false);

@@ -54,6 +54,8 @@ export const InputboxModal = () => {
     updatePostViaModal,
     addingNewComment,
     setAddingNewComment,
+    photoToPost,
+    setPhotoToPost,
   } = useContext(DataContext);
 
   const { theme } = useContext(ThemeContext);
@@ -61,10 +63,6 @@ export const InputboxModal = () => {
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const photoPickerRef = useRef<HTMLInputElement>(null);
-
-  const [photoToPost, setPhotoToPost] = useState<
-    string | ArrayBuffer | null | undefined
-  >(null);
 
   //- MAIN FUNCTIONS
   async function preSendPost(
@@ -161,7 +159,6 @@ export const InputboxModal = () => {
       console.log('postid', postID);
 
       try {
-        setLoading(true);
         //   handles posts with no image attached
         if (!photoToPost) {
           await setDoc(

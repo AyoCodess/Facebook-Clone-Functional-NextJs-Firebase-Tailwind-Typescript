@@ -7,6 +7,7 @@ import {
   updateDoc,
   deleteField,
   arrayRemove,
+  arrayUnion,
 } from 'firebase/firestore';
 import { db } from '../firebase';
 
@@ -38,6 +39,7 @@ interface Props {
   commentEmail: string;
   commentImage: string;
   commentName: string;
+  commentImageURL: string;
 }
 
 export const PostDropdownMenuComments = ({
@@ -52,6 +54,7 @@ export const PostDropdownMenuComments = ({
   commentEmail,
   commentImage,
   commentName,
+  commentImageURL,
   setOpenDropdownMenuComments,
 }: Props) => {
   const { theme } = useContext(ThemeContext);
@@ -64,78 +67,114 @@ export const PostDropdownMenuComments = ({
     setNewPostBtnClicked,
     setUpdatePostViaModal,
     setCommentForceUpdate,
+    setUpdatingComment,
+    setUserCommentObject,
+    userCommentObject,
+    postIdRefState,
   } = useContext(DataContext);
   const { data: session } = useSession();
 
   const updateComment = async () => {
-    console.log(postIdRef);
-    setPostIdRefState(postIdRef);
-    const post = doc(db, 'users', `${session.user.email}`, 'posts', postIdRef);
-    const postDoc = await getDoc(post);
-    setUpdatePostViaModal(true);
-    setNewPostBtnClicked(false);
-    setPostMessageInModal(postDoc.data().message);
-    setModalOpen(true);
-  };
-  const deleteComment = async () => {
-    console.log(userComments);
-    console.log('id ref', postIdRef);
+    try {
+      setUserCommentObject({
+        email: `${session.user.email}`,
+        id: commentID,
+        image: `${session.user.image}`,
+        message: commentMessage,
+        name: `${session.user.name}`,
+        timestamp: commentTimestamp,
+        imageURL: commentImageURL,
+      });
 
+      setNewPostBtnClicked(false);
+      setAddingNewComment(false);
+      setUpdatingComment(true);
+      setPostMessageInModal(commentMessage);
+      setUpdatePostViaModal(true);
+
+      setModalOpen(true);
+    } catch (err) {
+      console.log('UPDATE COMMENT ERROR', err);
+    }
+  };
+
+  const deleteComment = async (commentObject: any) => {
     // original poster can delete there comments
+
     if (postEmailRef === session.user.email) {
+      console.log('OWN POST');
       const ref = doc(db, 'users', `${session.user.email}`, 'posts', postIdRef);
 
-      console.log('comment id', commentID);
-      try {
-        await updateDoc(ref, {
-          comments: arrayRemove({
-            email: `${session.user.email}`,
-            id: commentID,
-            image: `${session.user.image}`,
-            message: commentMessage,
-            name: `${session.user.name}`,
-            timestamp: commentTimestamp,
-          }),
-        });
-      } catch (error) {
-        console.error('there was an error', error);
-      } finally {
-        setCommentForceUpdate((prev) => !prev);
+      // if post has no image
+      if (!commentObject?.imageURL) {
+        console.log('NO IMAGE');
+        try {
+          await updateDoc(ref, {
+            comments: arrayRemove(commentObject),
+          });
+        } catch (error) {
+          console.error('there was an error', error);
+        } finally {
+          setCommentForceUpdate((prev) => !prev);
+        }
+      }
+
+      // if post has an image
+      if (commentObject?.imageURL) {
+        console.log(' HAS A IMAGE');
+        try {
+          await updateDoc(ref, {
+            comments: arrayRemove(commentObject),
+          });
+        } catch (error) {
+          console.error('there was an error', error);
+        } finally {
+          setCommentForceUpdate((prev) => !prev);
+        }
       }
     }
     // other users can delete their own comments
     if (postEmailRef !== session.user.email) {
       console.log('different user logged in');
 
+      console.log(commentObject);
+
       const ref = doc(db, 'users', postEmailRef, 'posts', postIdRef);
 
-      console.log('comment id', commentID);
-      try {
-        await updateDoc(ref, {
-          comments: arrayRemove({
-            email: commentEmail,
-            id: commentID,
-            image: commentImage,
-            message: commentMessage,
-            name: commentName,
-            timestamp: commentTimestamp,
-          }),
-        });
-      } catch (error) {
-        console.error('there was an error', error);
-      } finally {
-        setCommentForceUpdate((prev) => !prev);
+      // if post has no image
+      if (!commentObject?.imageURL) {
+        console.log('NO IMAGE');
+        try {
+          await updateDoc(ref, {
+            comments: arrayRemove(commentObject),
+          });
+        } catch (error) {
+          console.error('there was an error', error);
+        } finally {
+          setCommentForceUpdate((prev) => !prev);
+        }
+      }
+
+      // if post has an image
+      if (commentObject?.imageURL) {
+        console.log(' HAS A IMAGE');
+        try {
+          await updateDoc(ref, {
+            comments: arrayRemove(commentObject),
+          });
+        } catch (error) {
+          console.error('there was an error', error);
+        } finally {
+          setCommentForceUpdate((prev) => !prev);
+        }
       }
     }
+
+    setTimeout(() => {
+      setCommentForceUpdate((prev) => !prev);
+    }, 1000);
   };
-  console.log('selected comment', {
-    email: `${session.user.email}`,
-    id: commentID,
-    image: `${session.user.image}`,
-    message: commentMessage,
-    name: `${session.user.name}`,
-    timestamp: commentTimestamp,
-  });
+
   return (
     <div className='relative'>
       <Menu as='div' className='relative inline-block text-left  '>
@@ -186,7 +225,48 @@ export const PostDropdownMenuComments = ({
                     title='Delete '
                     Icon={FolderRemoveIcon}
                     onClick={() => {
-                      deleteComment();
+                      async function getObject() {
+                        let commentObject;
+                        try {
+                          const ref = doc(
+                            db,
+                            'users',
+                            postEmailRef,
+                            'posts',
+                            postIdRefState
+                          );
+
+                          const docSnap = await getDoc(ref);
+
+                          if (docSnap.exists()) {
+                            console.log(
+                              'Document data:',
+                              docSnap
+                                .data()
+                                .comments.find(
+                                  (comment: any) => commentID === comment.id
+                                )
+                            );
+
+                            commentObject = docSnap
+                              .data()
+                              .comments.find(
+                                (comment: any) => commentID === comment.id
+                              );
+
+                            setUserCommentObject(commentObject);
+                          } else {
+                            // doc.data() will be undefined in this case
+                            console.log('No such document!');
+                          }
+                        } catch (err) {
+                          console.log('getting object', err);
+                        } finally {
+                          setCommentForceUpdate((prev) => !prev);
+                          deleteComment(commentObject);
+                        }
+                      }
+                      getObject();
                     }}
                   />
                 </Menu.Item>

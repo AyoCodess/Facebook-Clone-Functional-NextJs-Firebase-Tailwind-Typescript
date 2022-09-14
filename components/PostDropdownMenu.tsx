@@ -38,23 +38,24 @@ export const PostDropdownMenu = ({
 
     setPostIdRefState,
     setForceUpdate,
-
+    setPhotoToPost,
     setAddingNewComment,
     setNewPostBtnClicked,
     setUpdatePostViaModal,
+    setUpdatingComment,
   } = useContext(DataContext);
   const { data: session } = useSession();
 
   const updatePost = async () => {
-    console.log(postIdRef);
-    setPostIdRefState(postIdRef);
     const post = doc(db, 'users', `${session.user.email}`, 'posts', postIdRef);
     const postDoc = await getDoc(post);
     setUpdatePostViaModal(true);
     setNewPostBtnClicked(false);
+    setUpdatingComment(false);
     setPostMessageInModal(postDoc.data().message);
     setModalOpen(true);
   };
+
   const deletePost = async () => {
     console.log('id ref', postIdRef);
     try {
@@ -66,11 +67,14 @@ export const PostDropdownMenu = ({
     } finally {
       setForceUpdate((prev) => !prev);
     }
+
+    setPostMessageInModal('');
+    setPhotoToPost(null);
   };
 
   return (
     <div className=''>
-      <Menu as='div' className='relative inline-block text-left z-50'>
+      <Menu as='div' className='relative inline-block text-left z-10 '>
         <div>
           <Menu.Button>
             <DotsHorizontalIcon
@@ -105,6 +109,7 @@ export const PostDropdownMenu = ({
                     Icon={UploadIcon}
                     onClick={() => {
                       updatePost();
+                      setUpdatingComment(false);
                       setAddingNewComment(false);
                       setNewPostBtnClicked(false);
                       setUpdatePostViaModal(true);

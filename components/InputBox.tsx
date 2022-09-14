@@ -15,6 +15,7 @@ export const InputBox = () => {
     setAddingNewComment,
     setUpdatePostViaModal,
     setNewPostBtnClicked,
+    setUpdatingComment,
   } = useContext(DataContext);
   const { data: session } = useSession();
 
@@ -40,6 +41,7 @@ export const InputBox = () => {
           onClick={() => {
             setAddingNewComment(false);
             setUpdatePostViaModal(false);
+            setUpdatingComment(false);
             setNewPostBtnClicked(true);
             setModalOpen(true);
           }}
