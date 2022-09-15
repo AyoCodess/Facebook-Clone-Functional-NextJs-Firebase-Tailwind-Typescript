@@ -20,8 +20,13 @@ export const InputboxModalTextareaFormUpdatePost = ({
   onClick,
 }: Props) => {
   const { theme } = useContext(ThemeContext);
-  const { updatePostViaModal, postMessageInModal, setPostMessageInModal } =
-    useContext(DataContext);
+  const {
+    updatePostViaModal,
+    postMessageInModal,
+    setPostMessageInModal,
+    firebaseImageURL,
+    userCommentObject,
+  } = useContext(DataContext);
   const { data: session } = useSession();
 
   return (
@@ -52,12 +57,12 @@ export const InputboxModalTextareaFormUpdatePost = ({
         }
         defaultValue={updatePostViaModal ? postMessageInModal : ''}
       />
-      {photoToPost && (
+      {firebaseImageURL && firebaseImageURL.imageURL && (
         <div
           onClick={removePhotoToPost}
           className='flex flex-col filter mt-4 hover:brightness-110  hover:scale-105 transition duration-150 cursor-pointer '>
           <img
-            src={photoToPost as string}
+            src={firebaseImageURL.imageURL as string}
             className='object-contain max-h-60'
             alt='image post'
           />
@@ -67,7 +72,7 @@ export const InputboxModalTextareaFormUpdatePost = ({
                 ? 'lightTheme text-blue-500 bg-gray-100'
                 : 'darkTheme  text-white bg-blue-500'
             }`}>
-            Remove Photo
+            Cannot Remove Photo
           </p>
         </div>
       )}
