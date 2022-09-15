@@ -16,7 +16,6 @@ export function InputboxModalHeaderUpdatePost({ setModalOpen }: Props) {
     setForceUpdate,
     postMessageInModal,
     setUpdatePostViaModal,
-    openCommentBox,
   } = useContext(DataContext);
   return (
     <>

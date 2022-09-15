@@ -1,14 +1,6 @@
 import { Fragment } from 'react';
 import { XIcon } from '@heroicons/react/solid';
-import {
-  doc,
-  getDoc,
-  deleteDoc,
-  updateDoc,
-  deleteField,
-  arrayRemove,
-  arrayUnion,
-} from 'firebase/firestore';
+import { doc, getDoc, updateDoc, arrayRemove } from 'firebase/firestore';
 import { db } from '../firebase';
 
 import React, { useContext } from 'react';
@@ -45,9 +37,6 @@ interface Props {
 export const PostDropdownMenuComments = ({
   postEmailRef,
   postIdRef,
-  userComments,
-  updatedComments,
-  openDropdownMenuComments,
   commentID,
   commentMessage,
   commentTimestamp,
@@ -62,18 +51,13 @@ export const PostDropdownMenuComments = ({
   const {
     setModalOpen,
     setPostMessageInModal,
-    setPostIdRefState,
-    setForceUpdate,
     setAddingNewComment,
     setNewPostBtnClicked,
     setUpdatePostViaModal,
     setCommentForceUpdate,
     setUpdatingComment,
     setUserCommentObject,
-    userCommentObject,
     postIdRefState,
-    postMessageInModal,
-    firebaseImageURL,
     setFirebaseImageURL,
   } = useContext(DataContext);
   const { data: session } = useSession();

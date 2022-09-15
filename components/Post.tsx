@@ -6,7 +6,7 @@ import {
   ShareIcon,
   ThumbUpIcon,
 } from '@heroicons/react/solid';
-import { getDocs, query, Timestamp, collection } from 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
@@ -38,8 +38,6 @@ export const Post = ({
   id,
   userComments,
   updatedComments,
-
-  setUpdatedComments,
   onClick,
 }: Props) => {
   const { data: session } = useSession();
@@ -162,7 +160,7 @@ export const Post = ({
             ? 'lightTheme'
             : 'darkTheme transition-shadow duration-75 border-t-slate-700 shadow-slate-800'
         }`}>
-        <PostButton Icon={ThumbUpIcon} title='Like' />
+        <PostButton Icon={ThumbUpIcon} title='Like' disable={true} />
         <PostButton
           Icon={ChatAltIcon}
           title='Comment'
@@ -184,7 +182,7 @@ export const Post = ({
             }
           }}
         />
-        <PostButton Icon={ShareIcon} title='Share' />
+        <PostButton Icon={ShareIcon} title='Share' disable={true} />
       </div>
       {selectedPostForComment && (
         <PostCommentBox

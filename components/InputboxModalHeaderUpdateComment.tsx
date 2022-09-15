@@ -1,15 +1,7 @@
 import React, { useContext } from 'react';
 import { useSession } from 'next-auth/react';
 import { DataContext } from '../DataContext';
-import {
-  doc,
-  getDoc,
-  deleteDoc,
-  updateDoc,
-  deleteField,
-  arrayRemove,
-  arrayUnion,
-} from 'firebase/firestore';
+import { doc, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
 import { db } from '../firebase';
 
 interface Props {
@@ -19,20 +11,12 @@ interface Props {
 export function InputboxModalHeaderUpdateComment({ setModalOpen }: Props) {
   const { data: session } = useSession();
   const {
-    updatePostViaModal,
     postIdRefState,
-    setForceUpdate,
     postMessageInModal,
-    openCommentBox,
     userCommentObject,
     setCommentForceUpdate,
     emailRefState,
     firebaseImageURL,
-    setNewPostBtnClicked,
-    setAddingNewComment,
-    setUpdatingComment,
-    setPostMessageInModal,
-    setUpdatePostViaModal,
   } = useContext(DataContext);
 
   return (
