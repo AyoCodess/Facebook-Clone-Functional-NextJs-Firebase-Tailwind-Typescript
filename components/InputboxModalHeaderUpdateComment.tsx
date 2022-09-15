@@ -40,12 +40,7 @@ export function InputboxModalHeaderUpdateComment({ setModalOpen }: Props) {
 
                 // if post has no image
                 if (!userCommentObject?.imageURL) {
-                  console.log('NO IMAGE');
-
-                  console.log(
-                    "the object that's being updated",
-                    userCommentObject
-                  );
+                  //   console.log('NO IMAGE');
 
                   try {
                     await updateDoc(ref, {
@@ -67,7 +62,7 @@ export function InputboxModalHeaderUpdateComment({ setModalOpen }: Props) {
 
                 //if post has an image
                 if (userCommentObject?.imageURL) {
-                  console.log(' HAS A IMAGE');
+                  //   console.log(' HAS A IMAGE');
                   try {
                     await updateDoc(ref, {
                       comments: arrayRemove(userCommentObject),
@@ -104,7 +99,7 @@ export function InputboxModalHeaderUpdateComment({ setModalOpen }: Props) {
 
                 // if post has no image
                 if (!userCommentObject?.imageURL) {
-                  console.log('NO IMAGE');
+                  //   console.log('NO IMAGE');
                   try {
                     await updateDoc(ref, {
                       comments: arrayRemove(userCommentObject),

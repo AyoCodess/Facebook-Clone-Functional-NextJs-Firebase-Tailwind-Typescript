@@ -61,13 +61,12 @@ export const PostDropdownMenu = ({
   };
 
   const deletePost = async () => {
-    console.log('id ref', postIdRef);
     try {
       await deleteDoc(
         doc(db, 'users', `${session.user.email}`, 'posts', postIdRef)
       );
     } catch (error) {
-      console.log('there was an error', error);
+      console.error('there was an error', error);
     } finally {
       setForceUpdate((prev) => !prev);
     }

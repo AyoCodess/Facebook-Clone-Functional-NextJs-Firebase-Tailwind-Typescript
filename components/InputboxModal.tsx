@@ -89,14 +89,11 @@ export const InputboxModal = () => {
 
   async function sendPost(doCommentsExist?: boolean) {
     if (doCommentsExist) {
-      console.log('in send comment post', doCommentsExist);
       let commentID = cryptoRandomString({ length: 24 });
 
       try {
         setLoadCommentBox(true);
         if (!photoToPost) {
-          console.log('in comment');
-
           await updateDoc(
             doc(db, 'users', emailRefState, 'posts', postIdRefState),
             {
@@ -120,7 +117,7 @@ export const InputboxModal = () => {
             storage,
             `${session.user.email}/photo-${Date.now().valueOf()}.png`
           );
-          console.log('post with photo');
+          //   console.log('post with photo');
 
           // upload photo to firebase storage
           await uploadString(photoRef, photoToPost as string, 'data_url').catch(
@@ -157,13 +154,10 @@ export const InputboxModal = () => {
       let postID = cryptoRandomString({ length: 24 });
 
       const usersRef = doc(db, 'users', `${session?.user?.email}`);
-
-      console.log('postid', postID);
-
+      
       try {
         //   handles posts with no image attached
         if (!photoToPost) {
-          console.log('magical');
           await setDoc(
             doc(db, 'users', `${session?.user?.email}`, 'posts', postID),
             {
@@ -186,7 +180,7 @@ export const InputboxModal = () => {
             storage,
             `${session.user.email}/photo-${Date.now().valueOf()}.png`
           );
-          console.log('post with photo');
+          //   console.log('post with photo');
 
           // upload photo to firebase storage
           await uploadString(photoRef, photoToPost as string, 'data_url').catch(

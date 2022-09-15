@@ -67,7 +67,7 @@ export const PostDropdownMenuComments = ({
     let commentObject;
 
     if (rawObject.imageURL === undefined) {
-      console.log('incudes undefined', rawObject);
+      //   console.log('incudes undefined', rawObject);
       commentObject = {
         id: commentID,
         name: commentName,
@@ -79,14 +79,14 @@ export const PostDropdownMenuComments = ({
     }
 
     if (rawObject.imageURL !== undefined) {
-      console.log('DOES NOT include undefined', rawObject);
+      //   console.log('DOES NOT include undefined', rawObject);
       commentObject = rawObject;
 
       // When post with image is being updated these sets the image in the modal
       setFirebaseImageURL({ id: commentID, imageURL: commentImageURL });
     }
 
-    console.log('newly created object', commentObject);
+    // console.log('newly created object', commentObject);
     setUserCommentObject(commentObject);
     setModalOpen(true);
     setNewPostBtnClicked(false);
@@ -100,12 +100,12 @@ export const PostDropdownMenuComments = ({
     // original poster can delete there comments
 
     if (postEmailRef === session.user.email) {
-      console.log('OWN POST');
+      //   console.log('OWN POST');
       const ref = doc(db, 'users', `${session.user.email}`, 'posts', postIdRef);
 
       // if post has no image
       if (!commentObject?.imageURL) {
-        console.log('NO IMAGE');
+        // console.log('NO IMAGE');
         try {
           await updateDoc(ref, {
             comments: arrayRemove(commentObject),
@@ -133,7 +133,7 @@ export const PostDropdownMenuComments = ({
     }
     // other users can delete their own comments
     if (postEmailRef !== session.user.email) {
-      console.log('different user logged in');
+      //   console.log('different user logged in');
 
       console.log(commentObject);
 
@@ -141,7 +141,7 @@ export const PostDropdownMenuComments = ({
 
       // if post has no image
       if (!commentObject?.imageURL) {
-        console.log('NO IMAGE');
+        // console.log('NO IMAGE');
         try {
           await updateDoc(ref, {
             comments: arrayRemove(commentObject),
@@ -155,7 +155,7 @@ export const PostDropdownMenuComments = ({
 
       // if post has an image
       if (commentObject?.imageURL) {
-        console.log(' HAS A IMAGE');
+        // console.log(' HAS A IMAGE');
         try {
           await updateDoc(ref, {
             comments: arrayRemove(commentObject),
@@ -263,10 +263,10 @@ export const PostDropdownMenuComments = ({
                             setUserCommentObject(commentObject);
                           } else {
                             // doc.data() will be undefined in this case
-                            console.log('No such document!');
+                            // console.log('No such document!');
                           }
                         } catch (err) {
-                          console.log('getting object', err);
+                          console.error('getting object', err);
                         } finally {
                           setCommentForceUpdate((prev) => !prev);
                           deleteComment(commentObject);

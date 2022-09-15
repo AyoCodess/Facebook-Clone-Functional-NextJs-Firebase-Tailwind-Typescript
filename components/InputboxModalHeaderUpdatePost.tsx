@@ -34,14 +34,12 @@ export function InputboxModalHeaderUpdatePost({ setModalOpen }: Props) {
                 postIdRefState
               );
 
-              console.log('state', postIdRefState);
               const postDoc = await getDoc(post);
 
               await updateDoc(post, {
                 message: postMessageInModal,
               });
 
-              console.log('updating...');
               setUpdatePostViaModal(false);
               setForceUpdate((prev) => !prev);
             };
