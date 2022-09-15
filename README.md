@@ -4,6 +4,14 @@
 
 https://leaveyourmark.vercel.app/
 
+### Latest Update: 15/09/2022
+
+1. Users can now comment on their own and other users posts. They can also edit and delete these comments. The database scheme as been updated to accommodate this new feature.
+
+#### Next feature implementation
+
+1. Post and comment 'like' functionally.
+
 ### Teach stack
 
 Next.js (Javascript Framework), Context API (State Management), NextAuth (User Authentication), Firebase Firestore (Database), FileReader API (Image upload) & Tailwind CSS (Styling)
@@ -29,12 +37,13 @@ This project was mainly used to keep my CSS skills sharp, get familiar with fire
 9. Mobile first approach
 10. Error messages for API failures (i.e., if the firebase day quota is exceeded you will get a notification as to why you can't make posts as this app is on the free plan)
 11. My own custom tailwind animations and utility classes using the @layout feature
+12. User comments.
 
 ### TODOs
 
 1. Search post by user name and email and possibly keywords.
 2. Allow users to post images to their own story section.
-3. Allow users to like, comment and share posts externally.
+3. Allow users to like and share posts externally.
 4. Creating other pages in the style of Facebook but repurposing them, if you have any ideas, let me know.
 
 ### App Images

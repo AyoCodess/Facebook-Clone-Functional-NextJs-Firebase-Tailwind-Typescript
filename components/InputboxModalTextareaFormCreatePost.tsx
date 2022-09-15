@@ -47,7 +47,7 @@ export const InputboxModalTextareaFormCreatePost = ({
             : !updatePostViaModal
             ? `Whats on your mind, ${session?.user?.name
                 ?.split(' ')
-                ?.slice(0, 1)}`
+                ?.slice(0, 1)}...`
             : `${postMessageInModal}... `
         }
         defaultValue={updatePostViaModal ? postMessageInModal : ''}

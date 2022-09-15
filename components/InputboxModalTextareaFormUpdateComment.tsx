@@ -51,7 +51,7 @@ export const InputboxModalTextareaFormUpdateComment = ({
           !session
             ? `Please sign in to make a post, add photos and leave your mark!`
             : !updatePostViaModal
-            ? `Whats on your mind, ${session?.user?.name
+            ? `Share your comment, ${session?.user?.name
                 ?.split(' ')
                 ?.slice(0, 1)}`
             : `${postMessageInModal}... `
