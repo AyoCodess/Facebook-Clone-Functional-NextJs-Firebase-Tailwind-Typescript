@@ -28,21 +28,19 @@ interface Props {
 export const PostDropdownMenu = ({
   postEmailRef,
   postIdRef,
-  openDropdownMenu,
   setOpenDropdownMenu,
 }: Props) => {
   const { theme } = useContext(ThemeContext);
   const {
     setModalOpen,
     setPostMessageInModal,
-
-    setPostIdRefState,
     setForceUpdate,
     setPhotoToPost,
     setAddingNewComment,
     setNewPostBtnClicked,
     setUpdatePostViaModal,
     setUpdatingComment,
+    setFirebaseImageURL,
   } = useContext(DataContext);
   const { data: session } = useSession();
 
@@ -54,6 +52,12 @@ export const PostDropdownMenu = ({
     setUpdatingComment(false);
     setPostMessageInModal(postDoc.data().message);
     setModalOpen(true);
+    setFirebaseImageURL({
+      id: postIdRef,
+      imageURL: postDoc.data().imageURL,
+    });
+
+    console.log('postsdata', postDoc.data());
   };
 
   const deletePost = async () => {

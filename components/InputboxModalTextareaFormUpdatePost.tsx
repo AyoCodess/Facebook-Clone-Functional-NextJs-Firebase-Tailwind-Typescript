@@ -20,8 +20,13 @@ export const InputboxModalTextareaFormUpdatePost = ({
   onClick,
 }: Props) => {
   const { theme } = useContext(ThemeContext);
-  const { updatePostViaModal, postMessageInModal, setPostMessageInModal } =
-    useContext(DataContext);
+  const {
+    updatePostViaModal,
+    postMessageInModal,
+    setPostMessageInModal,
+    firebaseImageURL,
+    userCommentObject,
+  } = useContext(DataContext);
   const { data: session } = useSession();
 
   return (
@@ -52,22 +57,22 @@ export const InputboxModalTextareaFormUpdatePost = ({
         }
         defaultValue={updatePostViaModal ? postMessageInModal : ''}
       />
-      {photoToPost && (
+      {firebaseImageURL && firebaseImageURL.imageURL && (
         <div
           onClick={removePhotoToPost}
           className='flex flex-col filter mt-4 hover:brightness-110  hover:scale-105 transition duration-150 cursor-pointer '>
           <img
-            src={photoToPost as string}
+            src={firebaseImageURL.imageURL as string}
             className='object-contain max-h-60'
             alt='image post'
           />
           <p
-            className={`text-xl  mt-6 text-center p-2  rounded-xl w-40 mx-auto ${
+            className={`text-xl  mt-6 text-center p-2  rounded-xl max-w-60 mx-auto ${
               !theme
                 ? 'lightTheme text-blue-500 bg-gray-100'
                 : 'darkTheme  text-white bg-blue-500'
             }`}>
-            Remove Photo
+            Cannot update photo yet only text
           </p>
         </div>
       )}

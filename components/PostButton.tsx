@@ -11,7 +11,6 @@ interface Props {
 export const PostButton = ({ Icon, title, onClick, disable }: Props) => {
   const { theme } = useContext(ThemeContext);
 
-  console.log(disable);
   return (
     <button
       onClick={onClick}
