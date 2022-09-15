@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import {
   ChatAltIcon,
   DotsHorizontalIcon,
@@ -11,8 +11,9 @@ import Image from 'next/image';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 import { useSession } from 'next-auth/react';
-import { PostButton, PostDropdownMenu } from '.';
+import { PostButton, PostCommentBox, PostDropdownMenu } from '.';
 
+import { db } from '../firebase';
 interface Props {
   name: string;
   message: string;
@@ -21,6 +22,10 @@ interface Props {
   image?: string;
   timestamp: Timestamp;
   id: string;
+  userComments: any[];
+  updatedComments: any[];
+  setUpdatedComments: React.Dispatch<React.SetStateAction<any[]>>;
+  onClick?: () => void;
 }
 
 export const Post = ({
@@ -31,10 +36,31 @@ export const Post = ({
   timestamp,
   email,
   id,
+  userComments,
+  updatedComments,
+  onClick,
 }: Props) => {
   const { data: session } = useSession();
+  const { theme } = useContext(ThemeContext);
+  const {
+    viewEveryonesPosts,
+    setPostIdRefState,
+    setOpenCommentBox,
+    setEmailRefState,
+    setCommentBoxClicked,
+    setAddingNewComment,
+    setNewPostBtnClicked,
+    setUpdatePostViaModal,
+    setUpdatingComment,
+  } = useContext(DataContext);
 
+  const postEmailRef = useRef(null);
+  const postIdRef = useRef(null);
+  const [selectedPostForComment, setSelectedPostForComment] = useState<
+    null | boolean
+  >(null);
   const [openDropdownMenu, setOpenDropdownMenu] = useState(false);
+
   const dateTimestamp = new Timestamp(
     timestamp.seconds,
     timestamp.nanoseconds
@@ -57,18 +83,9 @@ export const Post = ({
 
   const date_time = `${date} ${time}`;
 
-  const { theme } = useContext(ThemeContext);
-  const { viewEveryonesPosts, setPostIdRefState } = useContext(DataContext);
-
-  const postEmailRef = useRef(null);
-  const postIdRef = useRef(null);
-
-  //   if (postIdRef?.current?.innerText) {
-  //     setPostIdRefState(postIdRef.current.innerText);
-  //   }
-
   return (
     <div
+      onClick={onClick}
       className={`flex flex-col  sm:rounded-lg mt-3 shadow-md ${
         !theme ? 'themeLight bg-white' : 'themeDark bg-slate-800'
       }`}>
@@ -143,10 +160,39 @@ export const Post = ({
             ? 'lightTheme'
             : 'darkTheme transition-shadow duration-75 border-t-slate-700 shadow-slate-800'
         }`}>
-        <PostButton Icon={ThumbUpIcon} title='Like' />
-        <PostButton Icon={ChatAltIcon} title='Comment' />
-        <PostButton Icon={ShareIcon} title='Share' />
+        <PostButton Icon={ThumbUpIcon} title='Like' disable={true} />
+        <PostButton
+          Icon={ChatAltIcon}
+          title='Comment'
+          onClick={() => {
+            setSelectedPostForComment(postIdRef.current.innerText);
+            // set for linking comments to posts
+            setEmailRefState(postEmailRef.current.innerText);
+            setOpenCommentBox(true);
+            setAddingNewComment(true);
+            setUpdatingComment(false);
+            setNewPostBtnClicked(false);
+            setCommentBoxClicked((prev) => !prev);
+            setUpdatePostViaModal(false);
+            setPostIdRefState(postIdRef.current.innerText);
+
+            if (selectedPostForComment) {
+              setSelectedPostForComment(null);
+              setOpenCommentBox(false);
+            }
+          }}
+        />
+        <PostButton Icon={ShareIcon} title='Share' disable={true} />
       </div>
+      {selectedPostForComment && (
+        <PostCommentBox
+          id={id}
+          emailRef={postEmailRef.current.innerText}
+          postIdRef={postIdRef.current.innerText}
+          userComments={userComments}
+          updatedComments={updatedComments}
+        />
+      )}
     </div>
   );
 };

@@ -9,25 +9,23 @@ interface Props {
   textareaRef: React.LegacyRef<HTMLTextAreaElement>;
   photoToPost: string | ArrayBuffer | null | undefined;
   removePhotoToPost: () => void;
+  onClick: () => void;
 }
 
-export const InputboxModalTextareaForm = ({
+export const InputboxModalTextareaFormCreatePost = ({
   setSavedMessageRef,
   textareaRef,
   photoToPost,
   removePhotoToPost,
+  onClick,
 }: Props) => {
   const { theme } = useContext(ThemeContext);
-  const {
-    updatePostViaModal,
-    postMessageInModal,
-    setPostMessageInModal,
-    setForceUpdate,
-  } = useContext(DataContext);
+  const { updatePostViaModal, postMessageInModal, setPostMessageInModal } =
+    useContext(DataContext);
   const { data: session } = useSession();
 
   return (
-    <form className='flex flex-col  '>
+    <form onClick={onClick} className='flex flex-col   '>
       <textarea
         onChange={(e) => {
           if (!updatePostViaModal) {
@@ -73,10 +71,6 @@ export const InputboxModalTextareaForm = ({
           </p>
         </div>
       )}
-      {/* <button hidden type='submit' onClick={sendPost}>
-                            Submit
-                          </button> */}{' '}
-      {/*only works with input field */}
     </form>
   );
 };

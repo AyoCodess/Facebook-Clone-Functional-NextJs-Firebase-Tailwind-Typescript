@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useContext, SetStateAction } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect, useContext } from 'react';
 import {
   collection,
   getDocs,
   query,
   collectionGroup,
+  doc,
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { LoadingSpinner, Post } from '../components';
@@ -41,7 +43,6 @@ import { DataContext } from '../DataContext';
 
 export const Posts = () => {
   const { data: session } = useSession();
-  const [realTimePosts, setRealTimePosts] = useState<any[] | null>(null);
   const { theme } = useContext(ThemeContext);
   const {
     setShow,
@@ -51,22 +52,50 @@ export const Posts = () => {
     forceUpdate,
     loading,
     setLoading,
+    commentForceUpdate,
+    emailRefState,
+    postIdRefState,
+    setPostIdRefState,
   } = useContext(DataContext);
 
   useEffect(() => {
     getUserSession();
   }, [forceUpdate, viewEveryonesPosts]);
 
-  const getUserSession = async () => {
+  const [realTimePosts, setRealTimePosts] = useState<any[] | null>(null);
+  // - updates individual post comment every time a new post comment is added to the database
+  const [updatedComments, setUpdatedComments] = useState<any[] | null>(null);
+  const [userCommentsList, setUserCommentsList] = useState<any[] | null>(null);
+
+  async function getUserSession() {
     const theSession = await getSession();
     if (theSession) {
       initiateGetUserPostsFromFirebase();
     }
-  };
+  }
 
-  const getUserPostsFromFirebase = async (
-    isQuery: 'individual' | 'everyone'
-  ) => {
+  async function initiateGetUserPostsFromFirebase() {
+    setRealTimePosts(null);
+
+    try {
+      if (session?.user?.email && !viewEveryonesPosts) {
+        getUserPostsFromFirebase('individual');
+      }
+
+      if (viewEveryonesPosts) {
+        getUserPostsFromFirebase('everyone');
+      }
+      //   setRealTimePosts(testData); // for testing purposes
+    } catch (error) {
+      console.error(error);
+      setShow(true);
+      setTitle('There was an error');
+      setDescription(`
+      Cannot get posts due to "${error}". Please try again tomorrow`);
+    }
+  }
+
+  async function getUserPostsFromFirebase(isQuery: 'individual' | 'everyone') {
     setLoading(true);
 
     let userPosts: Array<any> = [];
@@ -98,38 +127,52 @@ export const Posts = () => {
 
     setRealTimePosts(sorted);
     setLoading(false);
-  };
+  }
 
-  const initiateGetUserPostsFromFirebase = async () => {
-    setRealTimePosts(null);
+  useEffect(() => {
+    async function updatePostComments() {
+      if (updatedComments || realTimePosts) {
+        try {
+          const userQuery = query(
+            collection(db, 'users', emailRefState, 'posts')
+          );
 
-    try {
-      if (session?.user?.email && !viewEveryonesPosts) {
-        getUserPostsFromFirebase('individual');
+          doc(db, 'users', emailRefState, 'posts', postIdRefState);
+
+          const snapshot = await getDocs(userQuery);
+
+          setUpdatedComments(snapshot.docs.map((posts: any) => posts.data()));
+        } catch (err) {
+          console.error('UPDATE POSTS ERROR', err);
+        } finally {
+        }
       }
-
-      if (viewEveryonesPosts) {
-        getUserPostsFromFirebase('everyone');
-      }
-      //   setRealTimePosts(testData); // for testing purposes
-    } catch (error) {
-      console.error(error);
-      setShow(true);
-      setTitle('There was an error');
-      setDescription(`
-      Cannot get posts due to "${error}". Please try again tomorrow`);
     }
-  };
+    updatePostComments();
+  }, [commentForceUpdate, emailRefState, postIdRefState]);
 
   return (
     <div>
       <>
         {loading && <LoadingSpinner />}
         {realTimePosts &&
+          !loading &&
           realTimePosts.map((post, i) => {
+            let updatedPost;
+
+            if (updatedComments) {
+              //   setPostIdRefState(post.id);
+              updatedPost = updatedComments.find(
+                (updatedPost: any) => updatedPost.id === post.id
+              );
+            }
             return (
               <Post
                 key={i}
+                onClick={() => {
+                  setPostIdRefState(post.id);
+                  //   setCommentForceUpdate((prev) => !prev);
+                }}
                 name={post.name}
                 id={post.id}
                 message={post.message}
@@ -137,6 +180,11 @@ export const Posts = () => {
                 timestamp={post.timestamp}
                 image={post.image}
                 postImage={post.imageURL}
+                userComments={
+                  updatedPost ? updatedPost.comments : post.comments
+                }
+                updatedComments={updatedPost ? updatedPost.comments : null}
+                setUpdatedComments={setUpdatedComments}
               />
             );
           })}

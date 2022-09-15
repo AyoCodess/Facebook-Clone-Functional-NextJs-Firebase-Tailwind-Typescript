@@ -1,15 +1,6 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
-import { ChevronDownIcon, XIcon } from '@heroicons/react/solid';
-import {
-  collection,
-  doc,
-  query,
-  where,
-  getDocs,
-  updateDoc,
-  getDoc,
-  deleteDoc,
-} from 'firebase/firestore';
+import { Fragment } from 'react';
+import { XIcon } from '@heroicons/react/solid';
+import { doc, getDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 import React, { useContext } from 'react';
@@ -17,19 +8,14 @@ import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 import { Menu } from '@headlessui/react';
 
-import { InputboxModal, SignInOutButton, ThemeToggle } from '../components';
 import {
-  BellIcon,
-  ChatIcon,
   DotsHorizontalIcon,
   FolderRemoveIcon,
   UploadIcon,
-  ViewGridIcon,
-  ViewListIcon,
 } from '@heroicons/react/solid';
 
 import { useSession } from 'next-auth/react';
-import { Dialog, Transition } from '@headlessui/react';
+import { Transition } from '@headlessui/react';
 import { MobileMenuButton } from './MobileMenuButton';
 
 interface Props {
@@ -49,21 +35,27 @@ export const PostDropdownMenu = ({
   const {
     setModalOpen,
     setPostMessageInModal,
-    setUpdatePostViaModal,
+
     setPostIdRefState,
     setForceUpdate,
+    setPhotoToPost,
+    setAddingNewComment,
+    setNewPostBtnClicked,
+    setUpdatePostViaModal,
+    setUpdatingComment,
   } = useContext(DataContext);
   const { data: session } = useSession();
 
   const updatePost = async () => {
-    console.log(postIdRef);
-    setPostIdRefState(postIdRef);
     const post = doc(db, 'users', `${session.user.email}`, 'posts', postIdRef);
     const postDoc = await getDoc(post);
     setUpdatePostViaModal(true);
+    setNewPostBtnClicked(false);
+    setUpdatingComment(false);
     setPostMessageInModal(postDoc.data().message);
     setModalOpen(true);
   };
+
   const deletePost = async () => {
     console.log('id ref', postIdRef);
     try {
@@ -75,11 +67,14 @@ export const PostDropdownMenu = ({
     } finally {
       setForceUpdate((prev) => !prev);
     }
+
+    setPostMessageInModal('');
+    setPhotoToPost(null);
   };
 
   return (
     <div className=''>
-      <Menu as='div' className='relative inline-block text-left z-50'>
+      <Menu as='div' className='relative inline-block text-left z-10 '>
         <div>
           <Menu.Button>
             <DotsHorizontalIcon
@@ -114,6 +109,10 @@ export const PostDropdownMenu = ({
                     Icon={UploadIcon}
                     onClick={() => {
                       updatePost();
+                      setUpdatingComment(false);
+                      setAddingNewComment(false);
+                      setNewPostBtnClicked(false);
+                      setUpdatePostViaModal(true);
                     }}
                   />
                 </Menu.Item>

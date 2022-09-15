@@ -4,7 +4,6 @@ import React, {
   SetStateAction,
   Dispatch,
   useMemo,
-  useRef,
 } from 'react';
 
 interface Props {
@@ -43,6 +42,18 @@ interface DataContextType {
   setCommentForceUpdate: Dispatch<SetStateAction<boolean>>;
   commentBoxClicked: boolean;
   setCommentBoxClicked: Dispatch<SetStateAction<boolean>>;
+  newPostBtnClicked: boolean;
+  setNewPostBtnClicked: Dispatch<SetStateAction<boolean>>;
+  addingNewComment: boolean;
+  setAddingNewComment: Dispatch<SetStateAction<boolean>>;
+  updatingComment: boolean;
+  setUpdatingComment: Dispatch<SetStateAction<boolean>>;
+  userCommentObject: any;
+  setUserCommentObject: Dispatch<SetStateAction<any>>;
+  photoToPost: any;
+  setPhotoToPost: Dispatch<SetStateAction<any>>;
+  firebaseImageURL: any;
+  setFirebaseImageURL: Dispatch<SetStateAction<any>>;
 }
 export const DataContext = createContext<DataContextType>({
   show: false,
@@ -77,6 +88,18 @@ export const DataContext = createContext<DataContextType>({
   setCommentForceUpdate: () => {},
   commentBoxClicked: false,
   setCommentBoxClicked: () => {},
+  newPostBtnClicked: true,
+  setNewPostBtnClicked: () => {},
+  addingNewComment: false,
+  setAddingNewComment: () => {},
+  updatingComment: false,
+  setUpdatingComment: () => {},
+  userCommentObject: null,
+  setUserCommentObject: () => {},
+  photoToPost: null,
+  setPhotoToPost: () => {},
+  firebaseImageURL: '',
+  setFirebaseImageURL: () => {},
 });
 
 export const DataProvider = ({ children }: Props) => {
@@ -107,9 +130,25 @@ export const DataProvider = ({ children }: Props) => {
   const [loadCommentBox, setLoadCommentBox] = useState(false);
   const [commentForceUpdate, setCommentForceUpdate] = useState(false);
   const [commentBoxClicked, setCommentBoxClicked] = useState(false);
+  // controls post comment realtime updates
+  const [newPostBtnClicked, setNewPostBtnClicked] = useState(true);
+  const [addingNewComment, setAddingNewComment] = useState(false);
+
+  // users can update there own comment on an post
+  const [updatingComment, setUpdatingComment] = useState(false);
+  // sends object to firebase for updating
+  const [userCommentObject, setUserCommentObject] = useState(null);
 
   const [forceUpdate, setForceUpdate] = useState(false); // updates posts when new post is added
   const [loading, setLoading] = useState(false); // loading posts
+
+  // add photo to post
+  const [photoToPost, setPhotoToPost] = useState<
+    string | ArrayBuffer | null | undefined
+  >(null);
+
+  // used for updating posts with  new images
+  const [firebaseImageURL, setFirebaseImageURL] = useState(null);
 
   const contextValues = useMemo(
     () => ({
@@ -145,6 +184,18 @@ export const DataProvider = ({ children }: Props) => {
       setCommentForceUpdate,
       commentBoxClicked,
       setCommentBoxClicked,
+      newPostBtnClicked,
+      setNewPostBtnClicked,
+      addingNewComment,
+      setAddingNewComment,
+      updatingComment,
+      setUpdatingComment,
+      userCommentObject,
+      setUserCommentObject,
+      photoToPost,
+      setPhotoToPost,
+      firebaseImageURL,
+      setFirebaseImageURL,
     }),
     [
       show,
@@ -179,6 +230,18 @@ export const DataProvider = ({ children }: Props) => {
       setCommentForceUpdate,
       commentBoxClicked,
       setCommentBoxClicked,
+      newPostBtnClicked,
+      setNewPostBtnClicked,
+      addingNewComment,
+      setAddingNewComment,
+      updatingComment,
+      setUpdatingComment,
+      userCommentObject,
+      setUserCommentObject,
+      photoToPost,
+      setPhotoToPost,
+      firebaseImageURL,
+      setFirebaseImageURL,
     ]
   );
   return (

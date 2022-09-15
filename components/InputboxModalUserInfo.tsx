@@ -11,7 +11,7 @@ export const InputboxModalUserInfo = () => {
   return (
     <div className='flex items-center gap-2 ml-1 '>
       <img
-        className='rounded-full'
+        className='rounded-ful '
         src={
           session?.user?.image! ? session?.user?.image! : '/images/noWords.png'
         }
