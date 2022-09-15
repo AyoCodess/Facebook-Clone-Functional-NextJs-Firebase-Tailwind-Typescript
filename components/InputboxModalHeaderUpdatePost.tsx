@@ -25,7 +25,7 @@ export function InputboxModalHeaderUpdatePost({ setModalOpen }: Props) {
         disabled={!session}
         onClick={(e) => {
           // updating a current post
-          if (updatePostViaModal && !openCommentBox) {
+          if (updatePostViaModal) {
             const updatingPost = async () => {
               const post = doc(
                 db,

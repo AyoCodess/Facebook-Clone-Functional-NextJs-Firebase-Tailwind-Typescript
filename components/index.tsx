@@ -43,6 +43,7 @@ export * from './InputboxModalUserInfo';
 export * from './InputboxModalTextareaFormCreatePost';
 export * from './InputboxModalTextareaFormUpdatePost';
 export * from './InputboxModalTextareaFormAddComment';
+export * from './InputboxModalTextareaFormUpdateComment';
 export * from './InputboxModalButton';
 export * from './MobileMenu';
 export * from './LoadingSpinner';

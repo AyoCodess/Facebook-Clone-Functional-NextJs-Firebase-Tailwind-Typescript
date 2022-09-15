@@ -12,6 +12,7 @@ export const PostCommentBoxInputbox = () => {
     setUpdatePostViaModal,
     setNewPostBtnClicked,
     setUpdatingComment,
+    setPhotoToPost,
   } = useContext(DataContext);
   const { data: session } = useSession();
 
@@ -40,6 +41,7 @@ export const PostCommentBoxInputbox = () => {
             setNewPostBtnClicked(false);
             setUpdatingComment(false);
             setModalOpen(true);
+            setPhotoToPost(null);
           }}
           className={`rounded-full h-12 flex-grow px-5 ${
             !theme

@@ -23,14 +23,17 @@ export function InputboxModalHeaderUpdateComment({ setModalOpen }: Props) {
     postIdRefState,
     setForceUpdate,
     postMessageInModal,
-    setUpdatePostViaModal,
     openCommentBox,
     userCommentObject,
     setCommentForceUpdate,
     emailRefState,
+    firebaseImageURL,
+    setNewPostBtnClicked,
+    setAddingNewComment,
+    setUpdatingComment,
+    setPostMessageInModal,
+    setUpdatePostViaModal,
   } = useContext(DataContext);
-
-  console.log(userCommentObject);
 
   return (
     <>
@@ -38,66 +41,145 @@ export function InputboxModalHeaderUpdateComment({ setModalOpen }: Props) {
       <button
         disabled={!session}
         onClick={(e) => {
-          const updatingUserComment = async () => {
-            // logged in users post and comment
-            if (emailRefState === session.user.email) {
-              const ref = doc(
-                db,
-                'users',
-                `${session.user.email}`,
-                'posts',
-                postIdRefState
-              );
+          // triggered from PostDropdownMenuComments.tsx (checkObject function)
+          async function updateComment() {
+            try {
+              if (emailRefState === session.user.email) {
+                console.log('OWN POST');
+                const ref = doc(
+                  db,
+                  'users',
+                  `${session.user.email}`,
+                  'posts',
+                  postIdRefState
+                );
 
-              try {
-                await updateDoc(ref, {
-                  comments: arrayRemove(userCommentObject),
-                });
+                // if post has no image
+                if (!userCommentObject?.imageURL) {
+                  console.log('NO IMAGE');
 
-                await updateDoc(ref, {
-                  comments: arrayUnion({
-                    ...userCommentObject,
-                    message: postMessageInModal,
-                  }),
-                });
-              } catch (err) {
-                console.log(err);
-              } finally {
-                setCommentForceUpdate((prev) => !prev);
+                  console.log(
+                    "the object that's being updated",
+                    userCommentObject
+                  );
+
+                  try {
+                    await updateDoc(ref, {
+                      comments: arrayRemove(userCommentObject),
+                    });
+
+                    await updateDoc(ref, {
+                      comments: arrayUnion({
+                        ...userCommentObject,
+                        message: postMessageInModal,
+                      }),
+                    });
+                  } catch (error) {
+                    console.error('there was an error', error);
+                  } finally {
+                    setCommentForceUpdate((prev) => !prev);
+                  }
+                }
+
+                //if post has an image
+                if (userCommentObject?.imageURL) {
+                  console.log(' HAS A IMAGE');
+                  try {
+                    await updateDoc(ref, {
+                      comments: arrayRemove(userCommentObject),
+                    });
+                    await updateDoc(ref, {
+                      comments: arrayUnion({
+                        ...userCommentObject,
+                        message: postMessageInModal,
+                        imageURL: firebaseImageURL.imageURL,
+                      }),
+                    });
+                  } catch (error) {
+                    console.error('there was an error', error);
+                  } finally {
+                    setCommentForceUpdate((prev) => !prev);
+                  }
+                }
               }
-            }
 
-            // not current logged in users post
-            if (emailRefState !== session.user.email) {
-              console.log('in');
-              const ref = doc(
-                db,
-                'users',
-                emailRefState,
-                'posts',
-                postIdRefState
-              );
+              // other users can delete their own comments
+              // triggered from PostDropdownMenuComments.tsx (checkObject function)
+              if (emailRefState !== session.user.email) {
+                console.log('different user logged in');
 
-              try {
-                await updateDoc(ref, {
-                  comments: arrayRemove(userCommentObject),
-                });
+                console.log(userCommentObject);
 
-                await updateDoc(ref, {
-                  comments: arrayUnion({
-                    ...userCommentObject,
-                    message: postMessageInModal,
-                  }),
-                });
-              } catch (err) {
-                console.log(err);
-              } finally {
-                setCommentForceUpdate((prev) => !prev);
+                const ref = doc(
+                  db,
+                  'users',
+                  emailRefState,
+                  'posts',
+                  postIdRefState
+                );
+
+                // if post has no image
+                if (!userCommentObject?.imageURL) {
+                  console.log('NO IMAGE');
+                  try {
+                    await updateDoc(ref, {
+                      comments: arrayRemove(userCommentObject),
+                    });
+
+                    await updateDoc(ref, {
+                      comments: arrayUnion({
+                        ...userCommentObject,
+                        message: postMessageInModal,
+                      }),
+                    });
+                  } catch (error) {
+                    console.error('there was an error', error);
+                  } finally {
+                    setCommentForceUpdate((prev) => !prev);
+                  }
+                }
               }
-            }
-          };
 
-          updatingUserComment();
+              // if post has an image
+              if (userCommentObject?.imageURL) {
+                console.log(' HAS A IMAGE');
+                const ref = doc(
+                  db,
+                  'users',
+                  emailRefState,
+                  'posts',
+                  postIdRefState
+                );
+
+                try {
+                  await updateDoc(ref, {
+                    comments: arrayRemove(userCommentObject),
+                  });
+
+                  await updateDoc(ref, {
+                    comments: arrayUnion({
+                      ...userCommentObject,
+                      message: postMessageInModal,
+                      imageURL: firebaseImageURL.imageURL,
+                    }),
+                  });
+                } catch (error) {
+                  console.error('there was an error', error);
+                } finally {
+                  setCommentForceUpdate((prev) => !prev);
+                }
+              }
+
+              setTimeout(() => {
+                setCommentForceUpdate((prev) => !prev);
+              }, 1000);
+
+              setModalOpen(false);
+            } catch (err) {
+              console.error('UPDATE COMMENT ERROR', err);
+            }
+          }
+          updateComment();
           setModalOpen(false);
         }}
         className='px-2 py-1 bg-blue-500 font-medium hover:bg-blue-400 text-white text-sm rounded-md'>

@@ -24,6 +24,7 @@ export function InputboxModalHeaderAddComment({
         disabled={!session}
         onClick={(e) => {
           // adding a comment to an existing post
+          // goto inputboxModal.tsx for rest of the code
           preSendPost(e, true);
           setModalOpen(false);
           setCommentForceUpdate((prev) => !prev);

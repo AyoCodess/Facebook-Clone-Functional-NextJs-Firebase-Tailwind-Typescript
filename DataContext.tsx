@@ -52,6 +52,8 @@ interface DataContextType {
   setUserCommentObject: Dispatch<SetStateAction<any>>;
   photoToPost: any;
   setPhotoToPost: Dispatch<SetStateAction<any>>;
+  firebaseImageURL: any;
+  setFirebaseImageURL: Dispatch<SetStateAction<any>>;
 }
 export const DataContext = createContext<DataContextType>({
   show: false,
@@ -96,6 +98,8 @@ export const DataContext = createContext<DataContextType>({
   setUserCommentObject: () => {},
   photoToPost: null,
   setPhotoToPost: () => {},
+  firebaseImageURL: '',
+  setFirebaseImageURL: () => {},
 });
 
 export const DataProvider = ({ children }: Props) => {
@@ -143,6 +147,9 @@ export const DataProvider = ({ children }: Props) => {
     string | ArrayBuffer | null | undefined
   >(null);
 
+  // used for updating posts with  new images
+  const [firebaseImageURL, setFirebaseImageURL] = useState(null);
+
   const contextValues = useMemo(
     () => ({
       show,
@@ -187,6 +194,8 @@ export const DataProvider = ({ children }: Props) => {
       setUserCommentObject,
       photoToPost,
       setPhotoToPost,
+      firebaseImageURL,
+      setFirebaseImageURL,
     }),
     [
       show,
@@ -231,6 +240,8 @@ export const DataProvider = ({ children }: Props) => {
       setUserCommentObject,
       photoToPost,
       setPhotoToPost,
+      firebaseImageURL,
+      setFirebaseImageURL,
     ]
   );
   return (

@@ -30,6 +30,7 @@ import {
   InputboxModalTextareaFormAddComment,
   InputboxModalTextareaFormUpdatePost,
   InputboxModalUserInfo,
+  InputboxModalTextareaFormUpdateComment,
 } from '.';
 
 export const InputboxModal = () => {
@@ -56,6 +57,8 @@ export const InputboxModal = () => {
     setAddingNewComment,
     photoToPost,
     setPhotoToPost,
+    setFirebaseImageURL,
+    updatingComment,
   } = useContext(DataContext);
 
   const { theme } = useContext(ThemeContext);
@@ -138,7 +141,6 @@ export const InputboxModal = () => {
                   session?.user?.image || 'https://i.imgur.com/MsZzedb.jpg',
                 imageURL: downloadURL || 'https://i.imgur.com/XWiwM24.jpg',
                 timestamp: Timestamp.now(),
-                comments: [],
               }),
             }
           );
@@ -161,6 +163,7 @@ export const InputboxModal = () => {
       try {
         //   handles posts with no image attached
         if (!photoToPost) {
+          console.log('magical');
           await setDoc(
             doc(db, 'users', `${session?.user?.email}`, 'posts', postID),
             {
@@ -192,6 +195,9 @@ export const InputboxModal = () => {
           );
 
           const downloadURL = await getDownloadURL(photoRef);
+
+          // for updating comments with images
+          setFirebaseImageURL(downloadURL);
 
           // adding the image URL to the object to be posted to the collection
           const postRef = collection(usersRef, 'posts');
@@ -334,7 +340,8 @@ export const InputboxModal = () => {
                           )}
                         {!newPostBtnClicked &&
                           updatePostViaModal &&
-                          !addingNewComment && (
+                          !addingNewComment &&
+                          !updatingComment && (
                             <InputboxModalTextareaFormUpdatePost
                               onClick={() => {
                                 setCommentForceUpdate((prev) => !prev);
@@ -352,6 +359,21 @@ export const InputboxModal = () => {
                             <InputboxModalTextareaFormAddComment
                               onClick={() => {
                                 setUpdatePostViaModal(false);
+                                setCommentForceUpdate((prev) => !prev);
+                              }}
+                              setSavedMessageRef={setSavedMessageRef}
+                              removePhotoToPost={removePhotoToPost}
+                              photoToPost={photoToPost}
+                              textareaRef={textareaRef}
+                            />
+                          )}
+
+                        {!newPostBtnClicked &&
+                          updatePostViaModal &&
+                          !addingNewComment &&
+                          updatingComment && (
+                            <InputboxModalTextareaFormUpdateComment
+                              onClick={() => {
                                 setCommentForceUpdate((prev) => !prev);
                               }}
                               setSavedMessageRef={setSavedMessageRef}

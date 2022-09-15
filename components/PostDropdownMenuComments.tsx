@@ -55,6 +55,7 @@ export const PostDropdownMenuComments = ({
   commentImage,
   commentName,
   commentImageURL,
+
   setOpenDropdownMenuComments,
 }: Props) => {
   const { theme } = useContext(ThemeContext);
@@ -71,32 +72,45 @@ export const PostDropdownMenuComments = ({
     setUserCommentObject,
     userCommentObject,
     postIdRefState,
+    postMessageInModal,
+    firebaseImageURL,
+    setFirebaseImageURL,
   } = useContext(DataContext);
   const { data: session } = useSession();
 
-  const updateComment = async () => {
-    try {
-      setUserCommentObject({
-        email: `${session.user.email}`,
+  async function checkAndFormatUserCommentObject(rawObject: any) {
+    // goto 'InputboxModalHeaderUpdateComment.tsx' to see the rest of the code
+    let commentObject;
+
+    if (rawObject.imageURL === undefined) {
+      console.log('incudes undefined', rawObject);
+      commentObject = {
         id: commentID,
-        image: `${session.user.image}`,
+        name: commentName,
+        email: commentEmail,
         message: commentMessage,
-        name: `${session.user.name}`,
+        image: commentImage,
         timestamp: commentTimestamp,
-        imageURL: commentImageURL,
-      });
-
-      setNewPostBtnClicked(false);
-      setAddingNewComment(false);
-      setUpdatingComment(true);
-      setPostMessageInModal(commentMessage);
-      setUpdatePostViaModal(true);
-
-      setModalOpen(true);
-    } catch (err) {
-      console.log('UPDATE COMMENT ERROR', err);
+      };
     }
-  };
+
+    if (rawObject.imageURL !== undefined) {
+      console.log('DOES NOT include undefined', rawObject);
+      commentObject = rawObject;
+
+      // When post with image is being updated these sets the image in the modal
+      setFirebaseImageURL({ id: commentID, imageURL: commentImageURL });
+    }
+
+    console.log('newly created object', commentObject);
+    setUserCommentObject(commentObject);
+    setModalOpen(true);
+    setNewPostBtnClicked(false);
+    setAddingNewComment(false);
+    setUpdatingComment(true);
+    setPostMessageInModal(commentMessage);
+    setUpdatePostViaModal(true);
+  }
 
   const deleteComment = async (commentObject: any) => {
     // original poster can delete there comments
@@ -211,7 +225,15 @@ export const PostDropdownMenuComments = ({
                     title='Update'
                     Icon={UploadIcon}
                     onClick={() => {
-                      updateComment();
+                      checkAndFormatUserCommentObject({
+                        email: commentEmail,
+                        id: commentID,
+                        image: commentImage,
+                        message: commentMessage,
+                        name: commentName,
+                        timestamp: commentTimestamp,
+                        imageURL: commentImageURL,
+                      });
                       setAddingNewComment(false);
                       setNewPostBtnClicked(false);
                       setUpdatePostViaModal(true);
