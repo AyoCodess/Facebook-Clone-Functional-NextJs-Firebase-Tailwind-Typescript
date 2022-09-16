@@ -72,10 +72,30 @@ export const InputboxModalTextareaFormUpdatePost = ({
                 ? 'lightTheme text-blue-500 bg-gray-100'
                 : 'darkTheme  text-white bg-blue-500'
             }`}>
-            Cannot update photo yet only text
+            Remove Photo
           </p> */}
         </div>
       )}
+      {/*logic for updating photos.... */}
+      {/* {photoToPost && (
+        <div
+          onClick={removePhotoToPost}
+          className='flex flex-col filter mt-4 hover:brightness-110  hover:scale-105 transition duration-150 cursor-pointer '>
+          <img
+            src={photoToPost as string}
+            className='object-contain max-h-60'
+            alt='image post'
+          />
+          <p
+            className={`text-xl  mt-6 text-center p-2  rounded-xl w-40 mx-auto ${
+              !theme
+                ? 'lightTheme text-blue-500 bg-gray-100'
+                : 'darkTheme  text-white bg-blue-500'
+            }`}>
+            Remove Photo
+          </p>
+        </div>
+      )} */}
     </form>
   );
 };
