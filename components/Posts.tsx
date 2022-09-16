@@ -98,35 +98,45 @@ export const Posts = () => {
   async function getUserPostsFromFirebase(isQuery: 'individual' | 'everyone') {
     setLoading(true);
 
-    let userPosts: Array<any> = [];
-    let allUserPosts: Array<any> = [];
+    try {
+      let userPosts: Array<any> = [];
+      let allUserPosts: Array<any> = [];
 
-    if (isQuery === 'individual') {
-      const userQuery = query(
-        collection(db, 'users', `${session?.user?.email}`, 'posts')
+      if (isQuery === 'individual') {
+        const userQuery = query(
+          collection(db, 'users', `${session?.user?.email}`, 'posts')
+        );
+
+        const snapshot = await getDocs(userQuery);
+        userPosts = snapshot.docs.map((posts: any) => posts.data());
+      }
+
+      if (isQuery === 'everyone') {
+        const getAllUsers = query(collectionGroup(db, 'posts'));
+        const getAllUsersSnapshot = await getDocs(getAllUsers);
+
+        getAllUsersSnapshot.forEach((posts: any) => {
+          allUserPosts.push(posts.data());
+        });
+      }
+
+      const combined = [...userPosts, ...allUserPosts];
+
+      const sorted = combined.sort(
+        (a, b) => b.timestamp.seconds - a.timestamp.seconds
       );
 
-      const snapshot = await getDocs(userQuery);
-      userPosts = snapshot.docs.map((posts: any) => posts.data());
+      setRealTimePosts(sorted);
+      setLoading(false);
+    } catch (err) {
+      console.error('FAILED TO GET USER POSTS FROM FIREBASE', err);
+
+      setShow(true);
+      setTitle('There was an error');
+      setDescription(
+        'Cannot get posts due to an error. Please try again later'
+      );
     }
-
-    if (isQuery === 'everyone') {
-      const getAllUsers = query(collectionGroup(db, 'posts'));
-      const getAllUsersSnapshot = await getDocs(getAllUsers);
-
-      getAllUsersSnapshot.forEach((posts: any) => {
-        allUserPosts.push(posts.data());
-      });
-    }
-
-    const combined = [...userPosts, ...allUserPosts];
-
-    const sorted = combined.sort(
-      (a, b) => b.timestamp.seconds - a.timestamp.seconds
-    );
-
-    setRealTimePosts(sorted);
-    setLoading(false);
   }
 
   useEffect(() => {

@@ -69,14 +69,14 @@ export const InputboxModalTextareaFormUpdateComment = ({
               alt='image post'
             />
             {/* remove image from existing post logic coming soon... */}
-            <p
+            {/* <p
               className={`text-xl  mt-6 text-center p-2  rounded-xl max-w-60  mx-auto ${
                 !theme
                   ? 'lightTheme text-blue-500 bg-gray-100'
                   : 'darkTheme  text-white bg-blue-500'
               }`}>
               Cannot update photo yet only text
-            </p>
+            </p> */}
           </div>
         )}
     </form>

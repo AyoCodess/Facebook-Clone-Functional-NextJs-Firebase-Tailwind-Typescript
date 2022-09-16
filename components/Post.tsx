@@ -52,6 +52,7 @@ export const Post = ({
     setNewPostBtnClicked,
     setUpdatePostViaModal,
     setUpdatingComment,
+    emailRefState,
   } = useContext(DataContext);
 
   const postEmailRef = useRef(null);

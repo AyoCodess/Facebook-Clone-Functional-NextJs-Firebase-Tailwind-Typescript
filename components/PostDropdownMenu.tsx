@@ -3,7 +3,7 @@ import { XIcon } from '@heroicons/react/solid';
 import { doc, getDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
 import { Menu } from '@headlessui/react';
@@ -41,6 +41,8 @@ export const PostDropdownMenu = ({
     setUpdatePostViaModal,
     setUpdatingComment,
     setFirebaseImageURL,
+    emailRefState,
+    setEmailRefState,
   } = useContext(DataContext);
   const { data: session } = useSession();
 
@@ -75,71 +77,75 @@ export const PostDropdownMenu = ({
     setPhotoToPost(null);
   };
 
+  // 3 dots for dropdown menu only displays if the post is the user's post
+  useEffect(() => {
+    setEmailRefState(postEmailRef);
+  }, [postEmailRef]);
+
   return (
-    <div className=''>
-      <Menu as='div' className='relative inline-block text-left z-10 '>
-        <div>
-          <Menu.Button>
-            <DotsHorizontalIcon
-              onClick={() => setOpenDropdownMenu(true)}
-              className={`p-2 h-10 rounded-full transition duration-200 cursor-pointer ${
-                !theme
-                  ? 'lightTheme hover:bg-gray-100 text-gray-600'
-                  : 'darkTheme hover:bg-blue-500 '
-              }`}
-            />
-          </Menu.Button>
-        </div>
-        <Transition
-          as={Fragment}
-          enter='transition ease-out duration-100'
-          enterFrom='transform opacity-0 scale-95'
-          enterTo='transform opacity-100 scale-100'
-          leave='transition ease-in duration-75'
-          leaveFrom='transform opacity-100 scale-100'
-          leaveTo='transform opacity-0 scale-95'>
-          <Menu.Items
-            className={`absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
-              !theme
-                ? 'lightTheme bg-white'
-                : 'darkTheme bg-slate-700 shadow shadow-black'
-            }`}>
-            <div className='px-1 py-1 '>
-              {session.user.email === postEmailRef && (
-                <Menu.Item>
-                  <MobileMenuButton
-                    title='Update Post'
-                    Icon={UploadIcon}
-                    onClick={() => {
-                      updatePost();
-                      setUpdatingComment(false);
-                      setAddingNewComment(false);
-                      setNewPostBtnClicked(false);
-                      setUpdatePostViaModal(true);
-                    }}
-                  />
-                </Menu.Item>
-              )}
-              {session.user.email === postEmailRef && (
-                <Menu.Item>
-                  <MobileMenuButton
-                    title='Delete Post'
-                    Icon={FolderRemoveIcon}
-                    onClick={() => {
-                      deletePost();
-                    }}
-                  />
-                </Menu.Item>
-              )}
-              {session.user.email !== postEmailRef && (
-                <Menu.Item>
-                  <MobileMenuButton title='Cannot Edit' Icon={XIcon} />
-                </Menu.Item>
-              )}
+    <>
+      {session.user.email === postEmailRef && (
+        <div className=''>
+          <Menu as='div' className='relative inline-block text-left z-10 '>
+            <div>
+              <Menu.Button>
+                <DotsHorizontalIcon
+                  onClick={() => setOpenDropdownMenu(true)}
+                  className={`p-2 h-10 rounded-full transition duration-200 cursor-pointer ${
+                    !theme
+                      ? 'lightTheme hover:bg-gray-100 text-gray-600'
+                      : 'darkTheme hover:bg-blue-500 '
+                  }`}
+                />
+              </Menu.Button>
             </div>
-          </Menu.Items>
-        </Transition>
-      </Menu>
-    </div>
+            <Transition
+              as={Fragment}
+              enter='transition ease-out duration-100'
+              enterFrom='transform opacity-0 scale-95'
+              enterTo='transform opacity-100 scale-100'
+              leave='transition ease-in duration-75'
+              leaveFrom='transform opacity-100 scale-100'
+              leaveTo='transform opacity-0 scale-95'>
+              <Menu.Items
+                className={`absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
+                  !theme
+                    ? 'lightTheme bg-white'
+                    : 'darkTheme bg-slate-700 shadow shadow-black'
+                }`}>
+                <div className='px-1 py-1 '>
+                  {session.user.email === postEmailRef && (
+                    <Menu.Item>
+                      <MobileMenuButton
+                        title='Update Post'
+                        Icon={UploadIcon}
+                        onClick={() => {
+                          updatePost();
+                          setUpdatingComment(false);
+                          setAddingNewComment(false);
+                          setNewPostBtnClicked(false);
+                          setUpdatePostViaModal(true);
+                        }}
+                      />
+                    </Menu.Item>
+                  )}
+                  {session.user.email === postEmailRef && (
+                    <Menu.Item>
+                      <MobileMenuButton
+                        title='Delete Post'
+                        Icon={FolderRemoveIcon}
+                        onClick={() => {
+                          deletePost();
+                        }}
+                      />
+                    </Menu.Item>
+                  )}
+                </div>
+              </Menu.Items>
+            </Transition>
+          </Menu>
+        </div>
+      )}
+    </>
   );
 };
