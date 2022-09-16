@@ -7,6 +7,7 @@ https://leaveyourmark.vercel.app/
 ### Latest Update: 15/09/2022
 
 1. Users can now comment on their own and other users posts. They can also edit and delete these comments. The database scheme as been updated to accommodate this new feature.
+2. Optimized for core web vitals.
 
 #### Next feature implementation
 
@@ -85,3 +86,7 @@ The database was designed to make it easy to find, organize and add new user dat
 Images uploaded with a post are saved into a separate folder in firebases fire storage facility, titled with the users email.
 
 <a href="https://i.imgur.com/oFtihl8.png" ><img src="https://i.imgur.com/oFtihl8.png" width='480px' title="source: imgur.com" /></a>
+
+#### Core Web Vitals
+
+<a href="https://i.imgur.com/3hCjrmW.png" ><img src="https://i.imgur.com/3hCjrmW.png" width='480px' title="source: imgur.com" /></a>

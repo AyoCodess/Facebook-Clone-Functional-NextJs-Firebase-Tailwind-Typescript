@@ -5,7 +5,6 @@ import {
   getDocs,
   query,
   collectionGroup,
-  doc,
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { LoadingSpinner, Post } from '../components';
@@ -65,7 +64,6 @@ export const Posts = () => {
   const [realTimePosts, setRealTimePosts] = useState<any[] | null>(null);
   // - updates individual post comment every time a new post comment is added to the database
   const [updatedComments, setUpdatedComments] = useState<any[] | null>(null);
-  const [userCommentsList, setUserCommentsList] = useState<any[] | null>(null);
 
   async function getUserSession() {
     const theSession = await getSession();
