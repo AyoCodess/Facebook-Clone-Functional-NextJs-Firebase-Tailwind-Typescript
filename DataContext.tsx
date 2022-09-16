@@ -112,7 +112,7 @@ export const DataProvider = ({ children }: Props) => {
   const [updatePostViaModal, setUpdatePostViaModal] = useState(false);
 
   // toast
-  const [show, setShow] = useState(false); // used to alter user that the database is not writable yet
+  const [show, setShow] = useState(false);
   const [title, setTitle] = useState('Cannot send post to database');
   const [description, setDescription] = useState(
     'To stop spam I have locked the database'
