@@ -5,20 +5,19 @@ import { DataContext } from '../DataContext';
 
 interface Props {
   id: string;
-  userComments: any[];
+  //   userComments: any[];
   updatedComments: any[];
   emailRef: string;
   postIdRef: string;
 }
 export const PostCommentBox = ({
   id,
-  userComments,
+  //   userComments,
   updatedComments,
   emailRef,
   postIdRef,
 }: Props) => {
-  const { loadCommentBox, emailRefState, postIdRefState, commentForceUpdate } =
-    React.useContext(DataContext);
+  const { loadCommentBox, postIdRefState } = React.useContext(DataContext);
 
   return (
     <section className='pt-2 '>
@@ -32,7 +31,7 @@ export const PostCommentBox = ({
         <PostCommentBoxPost
           emailRef={emailRef}
           postIdRef={postIdRef}
-          userComments={userComments}
+          //   userComments={userComments}
           updatedComments={updatedComments}
         />
       )}

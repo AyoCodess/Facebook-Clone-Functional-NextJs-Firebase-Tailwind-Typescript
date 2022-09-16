@@ -23,7 +23,6 @@ interface Props {
   postIdRef: any;
   openDropdownMenuComments: boolean;
   setOpenDropdownMenuComments: React.Dispatch<React.SetStateAction<boolean>>;
-  userComments: any[];
   updatedComments: any[];
   commentID: string;
   commentMessage: string;

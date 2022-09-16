@@ -1,5 +1,4 @@
 import { Fragment } from 'react';
-import { XIcon } from '@heroicons/react/solid';
 import { doc, getDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
@@ -41,7 +40,6 @@ export const PostDropdownMenu = ({
     setUpdatePostViaModal,
     setUpdatingComment,
     setFirebaseImageURL,
-    emailRefState,
     setEmailRefState,
   } = useContext(DataContext);
   const { data: session } = useSession();
@@ -58,8 +56,6 @@ export const PostDropdownMenu = ({
       id: postIdRef,
       imageURL: postDoc.data().imageURL,
     });
-
-    console.log('postsdata', postDoc.data());
   };
 
   const deletePost = async () => {

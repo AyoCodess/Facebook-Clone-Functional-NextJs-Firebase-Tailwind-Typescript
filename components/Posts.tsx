@@ -141,20 +141,20 @@ export const Posts = () => {
 
   useEffect(() => {
     async function updatePostComments() {
-      if (updatedComments || realTimePosts) {
+      if (
+        updatedComments ||
+        (realTimePosts && emailRefState && postIdRefState)
+      ) {
         try {
           const userQuery = query(
             collection(db, 'users', emailRefState, 'posts')
           );
 
-          doc(db, 'users', emailRefState, 'posts', postIdRefState);
-
           const snapshot = await getDocs(userQuery);
 
           setUpdatedComments(snapshot.docs.map((posts: any) => posts.data()));
         } catch (err) {
-          console.error('UPDATE POSTS ERROR', err);
-        } finally {
+          console.error('GET OR UPDATE POSTS ERROR', err);
         }
       }
     }
@@ -181,7 +181,6 @@ export const Posts = () => {
                 key={i}
                 onClick={() => {
                   setPostIdRefState(post.id);
-                  //   setCommentForceUpdate((prev) => !prev);
                 }}
                 name={post.name}
                 id={post.id}
@@ -190,9 +189,6 @@ export const Posts = () => {
                 timestamp={post.timestamp}
                 image={post.image}
                 postImage={post.imageURL}
-                userComments={
-                  updatedPost ? updatedPost.comments : post.comments
-                }
                 updatedComments={updatedPost ? updatedPost.comments : null}
                 setUpdatedComments={setUpdatedComments}
               />

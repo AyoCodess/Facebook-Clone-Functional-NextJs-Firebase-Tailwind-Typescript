@@ -1,11 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useContext, useState, useRef, useEffect } from 'react';
-import {
-  ChatAltIcon,
-  DotsHorizontalIcon,
-  ShareIcon,
-  ThumbUpIcon,
-} from '@heroicons/react/solid';
+import React, { useContext, useState, useRef } from 'react';
+import { ChatAltIcon, ShareIcon, ThumbUpIcon } from '@heroicons/react/solid';
 import { Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
 import { ThemeContext } from '../ThemeContext';
@@ -22,7 +17,6 @@ interface Props {
   image?: string;
   timestamp: Timestamp;
   id: string;
-  userComments: any[];
   updatedComments: any[];
   setUpdatedComments: React.Dispatch<React.SetStateAction<any[]>>;
   onClick?: () => void;
@@ -36,7 +30,6 @@ export const Post = ({
   timestamp,
   email,
   id,
-  userComments,
   updatedComments,
   onClick,
 }: Props) => {
@@ -52,7 +45,6 @@ export const Post = ({
     setNewPostBtnClicked,
     setUpdatePostViaModal,
     setUpdatingComment,
-    emailRefState,
   } = useContext(DataContext);
 
   const postEmailRef = useRef(null);
@@ -190,7 +182,6 @@ export const Post = ({
           id={id}
           emailRef={postEmailRef.current.innerText}
           postIdRef={postIdRef.current.innerText}
-          userComments={userComments}
           updatedComments={updatedComments}
         />
       )}
