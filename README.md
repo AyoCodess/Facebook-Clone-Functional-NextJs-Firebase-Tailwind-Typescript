@@ -11,7 +11,7 @@ https://leaveyourmark.vercel.app/
 
 #### Next feature implementation
 
-1. Post and comment 'like' functionally.
+1. Post and comment 'like' functionality.
 
 ### Teach stack
 
