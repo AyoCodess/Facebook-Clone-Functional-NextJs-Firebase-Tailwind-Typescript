@@ -53,7 +53,9 @@ export const Header = () => {
         {/*Center */}
         <div
           className={`flex ${
-            session ? 'flex-grow justify-center mx-auto' : 'ml-auto'
+            session
+              ? 'flex-grow justify-center mx-auto  xxxxl:mr-28'
+              : 'ml-auto'
           }`}>
           {session && (
             <div
