@@ -16,7 +16,11 @@ export const PostButton = ({ Icon, title, onClick, disable }: Props) => {
       onClick={onClick}
       className={`
       inputIcon p-3 rounded-none group  
-      ${disable === true ? 'text-gray-400 hover:bg-gray-200' : ''}
+      ${
+        disable === true
+          ? 'text-gray-400 hover:bg-transparent cursor-default'
+          : ''
+      }
       ${!theme ? 'lightTheme' : 'darkTheme hover:bg-blue-500 text-white'}
        
       `}>
