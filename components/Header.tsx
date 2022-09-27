@@ -96,13 +96,15 @@ export const Header = () => {
         {session && (
           <>
             <img
-              className='h-10 rounded-full mx-2'
+              className='h-10 rounded-full mx-2 '
               src={session.user?.image || 'https://i.imgur.com/MsZzedb.jpg'}
               alt=''
             />
             <ViewListIcon
-              className={`xl:hidden h-8 block ${
-                !theme ? 'themeLight text-gray-300' : 'themeDark  text-gray-200'
+              className={`xl:hidden h-8 block  ${
+                !theme
+                  ? 'themeLight text-gray-300 '
+                  : 'themeDark  text-gray-200'
               }`}
               onClick={() => setOpenMenu((prev) => !prev)}
             />

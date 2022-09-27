@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useContext, useRef, Fragment } from 'react';
 import { ThemeContext } from '../ThemeContext';
 import { DataContext } from '../DataContext';
@@ -60,7 +61,7 @@ export const MobileMenu = ({ openMenu, setOpenMenu }: Props) => {
               leaveFrom='opacity-100 translate-y-0 sm:scale-100'
               leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'>
               <div
-                className={` absolute top-16 right-0 xl:hidden animate-popUp mr-5  bg-white rounded-lg  transform transition-all h-96 w-60 ${
+                className={` absolute top-16 right-0 xl:hidden animate-popUp mr-5  bg-white rounded-lg  transform transition-all h-max w-60 ${
                   !theme
                     ? 'lightTheme bg-white  shadow-xl '
                     : 'darkTheme bg-slate-700  shadow-slate-400'
@@ -88,14 +89,35 @@ export const MobileMenu = ({ openMenu, setOpenMenu }: Props) => {
                       <MobileMenuButton Icon={ViewGridIcon} title='More' />
                       <MobileMenuButton Icon={ChatIcon} title='Messenger' />
                       <MobileMenuButton Icon={BellIcon} title='Notifications' />
+                      <a
+                        onClick={() => setOpenMenu(false)}
+                        href='mailto:ayo.daniel.adesanya@gmail.com?subject=Facebook Clone - Bug Report'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className={`flex gap-2 h-14 items-center cursor-pointer rounded-xl w-full p-2 ${
+                          !theme
+                            ? 'lightTheme hover:bg-gray-100'
+                            : 'darkTheme hover:bg-blue-500 text-white'
+                        }`}>
+                        <img
+                          className='h-10 w-10 rounded-full object-cover'
+                          src='/images/bug.jpeg'
+                          alt='shortcut icon'
+                        />
+                        <p className='font-medium'> {'Report a bug'}</p>
+                      </a>
                     </div>
                   )}
                   {session && (
-                    <SignInOutButton
-                      setOpenMenu={setOpenMenu}
-                      openMenu={openMenu}
-                      login='signout'
-                    />
+                    <div
+                      className='
+                    mb-4'>
+                      <SignInOutButton
+                        setOpenMenu={setOpenMenu}
+                        openMenu={openMenu}
+                        login='signout'
+                      />
+                    </div>
                   )}
                 </div>
               </div>
