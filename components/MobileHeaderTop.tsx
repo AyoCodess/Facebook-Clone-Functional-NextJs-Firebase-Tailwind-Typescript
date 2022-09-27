@@ -103,7 +103,7 @@ export const MobileHeaderTop = () => {
               alt=''
             />
             <ViewListIcon
-              className={`xl:hidden h-8 block ${
+              className={`xl:hidden h-8 block cursor-pointer ${
                 !theme ? 'themeLight text-gray-300' : 'themeDark  text-gray-200'
               }`}
               onClick={() => setOpenMenu((prev) => !prev)}
