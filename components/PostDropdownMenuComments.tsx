@@ -173,118 +173,117 @@ export const PostDropdownMenuComments = ({
   };
 
   return (
-    <div className='relative'>
-      <Menu as='div' className='relative inline-block text-left  '>
-        <div>
-          <Menu.Button>
-            <DotsHorizontalIcon
-              onClick={() => setOpenDropdownMenuComments(true)}
-              className={`p-2 h-10 rounded-full transition duration-200 cursor-pointer ${
-                !theme
-                  ? 'lightTheme hover:bg-gray-100 text-gray-600'
-                  : 'darkTheme hover:bg-blue-500 '
-              }`}
-            />
-          </Menu.Button>
-        </div>
-        <Transition
-          as={Fragment}
-          enter='transition ease-out duration-100'
-          enterFrom='transform opacity-0 scale-95'
-          enterTo='transform opacity-100 scale-100'
-          leave='transition ease-in duration-75'
-          leaveFrom='transform opacity-100 scale-100'
-          leaveTo='transform opacity-0 scale-95'>
-          <Menu.Items
-            className={`z-50 absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
-              !theme
-                ? 'lightTheme bg-white'
-                : 'darkTheme bg-slate-700 shadow shadow-black'
-            }`}>
-            <div className='px-1 py-1  '>
-              {session.user.email === commentEmail && (
-                <Menu.Item>
-                  <MobileMenuButton
-                    title='Update'
-                    Icon={UploadIcon}
-                    onClick={() => {
-                      checkAndFormatUserCommentObject({
-                        email: commentEmail,
-                        id: commentID,
-                        image: commentImage,
-                        message: commentMessage,
-                        name: commentName,
-                        timestamp: commentTimestamp,
-                        imageURL: commentImageURL,
-                      });
-                      setAddingNewComment(false);
-                      setNewPostBtnClicked(false);
-                      setUpdatePostViaModal(true);
-                    }}
-                  />
-                </Menu.Item>
-              )}
-              {session.user.email === commentEmail && (
-                <Menu.Item>
-                  <MobileMenuButton
-                    title='Delete '
-                    Icon={FolderRemoveIcon}
-                    onClick={() => {
-                      async function getObject() {
-                        let commentObject;
-                        try {
-                          const ref = doc(
-                            db,
-                            'users',
-                            postEmailRef,
-                            'posts',
-                            postIdRefState
-                          );
-
-                          const docSnap = await getDoc(ref);
-
-                          if (docSnap.exists()) {
-                            console.log(
-                              'Document data:',
-                              docSnap
-                                .data()
-                                .comments.find(
-                                  (comment: any) => commentID === comment.id
-                                )
-                            );
-
-                            commentObject = docSnap
-                              .data()
-                              .comments.find(
-                                (comment: any) => commentID === comment.id
+    <>
+      {session.user.email === commentEmail && (
+        <div className='relative'>
+          <Menu as='div' className='relative inline-block text-left  '>
+            <div>
+              <Menu.Button>
+                <DotsHorizontalIcon
+                  onClick={() => setOpenDropdownMenuComments(true)}
+                  className={`p-2 h-10 rounded-full transition duration-200 cursor-pointer ${
+                    !theme
+                      ? 'lightTheme hover:bg-gray-100 text-gray-600'
+                      : 'darkTheme hover:bg-blue-500 '
+                  }`}
+                />
+              </Menu.Button>
+            </div>
+            <Transition
+              as={Fragment}
+              enter='transition ease-out duration-100'
+              enterFrom='transform opacity-0 scale-95'
+              enterTo='transform opacity-100 scale-100'
+              leave='transition ease-in duration-75'
+              leaveFrom='transform opacity-100 scale-100'
+              leaveTo='transform opacity-0 scale-95'>
+              <Menu.Items
+                className={`z-50 absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
+                  !theme
+                    ? 'lightTheme bg-white'
+                    : 'darkTheme bg-slate-700 shadow shadow-black'
+                }`}>
+                <div className='px-1 py-1  '>
+                  {session.user.email === commentEmail && (
+                    <Menu.Item>
+                      <MobileMenuButton
+                        title='Update'
+                        Icon={UploadIcon}
+                        onClick={() => {
+                          checkAndFormatUserCommentObject({
+                            email: commentEmail,
+                            id: commentID,
+                            image: commentImage,
+                            message: commentMessage,
+                            name: commentName,
+                            timestamp: commentTimestamp,
+                            imageURL: commentImageURL,
+                          });
+                          setAddingNewComment(false);
+                          setNewPostBtnClicked(false);
+                          setUpdatePostViaModal(true);
+                        }}
+                      />
+                    </Menu.Item>
+                  )}
+                  {session.user.email === commentEmail && (
+                    <Menu.Item>
+                      <MobileMenuButton
+                        title='Delete '
+                        Icon={FolderRemoveIcon}
+                        onClick={() => {
+                          async function getObject() {
+                            let commentObject;
+                            try {
+                              const ref = doc(
+                                db,
+                                'users',
+                                postEmailRef,
+                                'posts',
+                                postIdRefState
                               );
 
-                            setUserCommentObject(commentObject);
-                          } else {
-                            // doc.data() will be undefined in this case
-                            // console.log('No such document!');
+                              const docSnap = await getDoc(ref);
+
+                              if (docSnap.exists()) {
+                                console.log(
+                                  'Document data:',
+                                  docSnap
+                                    .data()
+                                    .comments.find(
+                                      (comment: any) => commentID === comment.id
+                                    )
+                                );
+
+                                commentObject = docSnap
+                                  .data()
+                                  .comments.find(
+                                    (comment: any) => commentID === comment.id
+                                  );
+
+                                setUserCommentObject(commentObject);
+                              } else {
+                                // doc.data() will be undefined in this case
+                                // console.log('No such document!');
+                              }
+                            } catch (err) {
+                              console.error('getting object', err);
+                            } finally {
+                              setCommentForceUpdate((prev) => !prev);
+                              deleteComment(commentObject);
+                            }
                           }
-                        } catch (err) {
-                          console.error('getting object', err);
-                        } finally {
-                          setCommentForceUpdate((prev) => !prev);
-                          deleteComment(commentObject);
-                        }
-                      }
-                      getObject();
-                    }}
-                  />
-                </Menu.Item>
-              )}
-              {session.user.email !== commentEmail && (
-                <Menu.Item>
-                  <MobileMenuButton title='Cannot Edit' Icon={XIcon} />
-                </Menu.Item>
-              )}
-            </div>
-          </Menu.Items>
-        </Transition>
-      </Menu>
-    </div>
+                          getObject();
+                        }}
+                      />
+                    </Menu.Item>
+                  )}
+                </div>
+              </Menu.Items>
+            </Transition>
+          </Menu>
+        </div>
+      )}
+    </>
   );
 };

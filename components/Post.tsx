@@ -96,7 +96,7 @@ export const Post = ({
               src={!viewEveryonesPosts ? session?.user?.image! : image}
               width={40}
               height={40}
-              alt='user image'
+              alt='user'
             />
             <div>
               <p className='font-medium'>{name}</p>
