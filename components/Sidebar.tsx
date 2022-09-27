@@ -86,6 +86,7 @@ export const Sidebar = () => {
             image={'/images/FacebookIcons/memories.png'}
             title='Memories'
           />
+
           <SidebarRow
             Icon={ChevronDownIcon}
             title='See More'

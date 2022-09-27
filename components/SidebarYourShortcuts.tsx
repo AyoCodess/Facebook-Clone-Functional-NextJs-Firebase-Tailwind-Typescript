@@ -7,6 +7,12 @@ import { ThemeContext } from '../ThemeContext';
 
 const shortcuts = [
   {
+    id: 8,
+    name: 'Found a bug? Report it',
+    image: '/images/bug.jpeg',
+    link: 'mailto:ayo.daniel.adesanya@gmail.com?subject=Facebook Clone - Bug Report',
+  },
+  {
     id: 1,
     name: 'Project Git Hub Repo',
     image: '/images/github.png',
