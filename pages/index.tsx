@@ -27,6 +27,8 @@ const Home: NextPage<Props> = () => {
 
   const { data: session } = useSession();
 
+  console.log({ session });
+
   // - removes search field error toast
   useEffect(() => {
     if (show) {
@@ -81,7 +83,7 @@ const Home: NextPage<Props> = () => {
         </Head>
         <Toast />
         <InputboxModal />
-        <Header />
+        <Header data-testid='header' />
         <MobileHeaderTop />
         <main
           className={` relative sm:flex   ${
