@@ -104,7 +104,7 @@ export const MobileMenu = ({ openMenu, setOpenMenu }: Props) => {
                           src='/images/bug.jpeg'
                           alt='shortcut icon'
                         />
-                        <p className='font-medium'> {'Report a bug'}</p>
+                        <p className='font-medium'> {'Report an Issue'}</p>
                       </a>
                     </div>
                   )}
