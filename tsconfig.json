@@ -21,7 +21,8 @@
     "**/*.ts",
     "**/*.tsx",
     "components/SidebarTwoContacts.tsx",
-    "components/SidebarTwoBirthdays.tsx"
+    "components/SidebarTwoBirthdays.tsx",
+    "__tests__/__snapshots__/snapshot.tsx.snap"
   ],
   "exclude": ["node_modules"]
 }
