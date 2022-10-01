@@ -91,6 +91,7 @@ const Home: NextPage<Props> = () => {
           }`}>
           {/*Ipad and larger screens App */}
           <Sidebar />
+
           <Feed />
           <SidebarTwo />
           {/*Mobile App */}

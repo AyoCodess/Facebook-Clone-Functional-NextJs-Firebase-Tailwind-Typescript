@@ -19,7 +19,7 @@ export const ThemeToggle = ({ className, openMenu, setOpenMenu }: Props) => {
   return (
     <Switch.Group
       as='div'
-      className={`  w-[9rem] flex items-center   ${className}  `}>
+      className={`  w-[9rem] flex items-center  ${className}  `}>
       <Switch
         checked={theme}
         onChange={() => {
@@ -47,7 +47,7 @@ export const ThemeToggle = ({ className, openMenu, setOpenMenu }: Props) => {
           className={`text-sm font-medium ${
             theme ? 'text-white' : 'text-gray-900'
           }`}>
-          {theme ? 'Dark Mode' : 'Light Mode'}
+          {theme ? 'Dark' : 'Light'}
         </span>
         {/* <span className='text-sm text-gray-500'>(Save 10%)</span> */}
       </Switch.Label>

@@ -36,7 +36,7 @@ export const MobileInputboxx = () => {
           }`}>
           <p className='mt-3 text-sm'>
             {!session
-              ? `Please sign in to make a post, click here.`
+              ? `Please sign in to make a post.`
               : `Whats on your mind, ${session?.user?.name
                   ?.split(' ')
                   ?.slice(0, 1)}?`}
