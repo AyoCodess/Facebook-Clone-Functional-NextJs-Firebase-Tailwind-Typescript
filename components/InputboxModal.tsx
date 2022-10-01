@@ -154,7 +154,7 @@ export const InputboxModal = () => {
       let postID = cryptoRandomString({ length: 24 });
 
       const usersRef = doc(db, 'users', `${session?.user?.email}`);
-      
+
       try {
         //   handles posts with no image attached
         if (!photoToPost) {

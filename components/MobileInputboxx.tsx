@@ -11,7 +11,7 @@ export const MobileInputboxx = () => {
 
   return (
     <div
-      className={`  sm:hidden py-2 shadow-md text-gray-500 font-medium  ${
+      className={`sm:hidden py-2 shadow-md text-gray-500 font-medium  ${
         !theme
           ? 'themeLight'
           : 'themeDark  bg-slate-800 shadow-slate-600 shadow-sm '
@@ -28,7 +28,11 @@ export const MobileInputboxx = () => {
           />
         )}
         <div
-          onClick={() => setModalOpen(true)}
+          onClick={() => {
+            if (session) {
+              setModalOpen(true);
+            }
+          }}
           className={`rounded-full h-12 flex-grow px-5 ${
             !theme
               ? 'lightTheme bg-gray-100 '

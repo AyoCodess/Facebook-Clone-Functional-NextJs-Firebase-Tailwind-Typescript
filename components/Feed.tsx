@@ -12,8 +12,8 @@ export const Feed = () => {
       }`}>
       <div className='mx-auto max-w-4xl'>
         {session && <Stories />}
-        <InputBox />
         <MobileInputboxx />
+        <InputBox />
         {!session && (
           <div className='w-[20rem] h-[30rem] grid place-items-center text-center mx-auto'>
             <div>
