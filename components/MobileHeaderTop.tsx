@@ -50,9 +50,6 @@ export const MobileHeaderTop = () => {
               layout='fixed'
             />
           </div>
-
-          {!session && <SignInOutButton login='signin' />}
-
           <Search />
         </div>
         {/*Center */}

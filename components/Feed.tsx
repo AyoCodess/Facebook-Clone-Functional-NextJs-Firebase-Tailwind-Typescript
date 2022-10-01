@@ -6,7 +6,10 @@ export const Feed = () => {
   const { data: session } = useSession();
 
   return (
-    <div className='  flex-grow h-[90rem] pb-5 sm:pt-6 sm:ml-2  sm:mr-4 overflow-y-auto scrollbar-hide sm:px-2'>
+    <div
+      className={`flex-grow  pb-5 sm:pt-6 sm:ml-2  sm:mr-4 overflow-y-auto scrollbar-hide sm:px-2 ${
+        session ? 'h-[90rem]' : 'h-[90vh]'
+      }`}>
       <div className='mx-auto max-w-4xl'>
         {session && <Stories />}
         <InputBox />
