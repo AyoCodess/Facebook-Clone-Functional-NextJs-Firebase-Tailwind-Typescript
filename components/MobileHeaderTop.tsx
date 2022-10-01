@@ -74,7 +74,7 @@ export const MobileHeaderTop = () => {
         {/*Right */}
 
         {!session && (
-          <div className={` block mx-auto mr-8 w-24`}>
+          <div className={` block mx-auto mr-2 w-28`}>
             <ThemeToggle />
           </div>
         )}

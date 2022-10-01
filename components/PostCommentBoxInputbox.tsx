@@ -50,7 +50,7 @@ export const PostCommentBoxInputbox = () => {
           }`}>
           <p className='mt-3 text-sm'>
             {!session
-              ? `Please sign in to make a post, click here.`
+              ? `Please sign in to make a post.`
               : `Leaving a comment ${session?.user?.name
                   ?.split(' ')
                   ?.slice(0, 1)}?`}
