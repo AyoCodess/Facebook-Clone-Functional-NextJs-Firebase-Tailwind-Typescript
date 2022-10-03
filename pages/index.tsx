@@ -86,12 +86,11 @@ const Home: NextPage<Props> = () => {
         <Header data-testid='header' />
         <MobileHeaderTop />
         <main
-          className={` relative sm:flex   ${
+          className={` relative sm:flex  ${
             !theme ? 'lightTheme bg-gray-100' : ' darkTheme bg-slate-900'
           }`}>
           {/*Ipad and larger screens App */}
           <Sidebar />
-
           <Feed />
           <SidebarTwo />
           {/*Mobile App */}

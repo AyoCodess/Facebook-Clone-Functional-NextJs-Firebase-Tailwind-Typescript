@@ -17,7 +17,13 @@ export const Feed = () => {
         {!session && (
           <div className='w-[20rem] h-[30rem] grid place-items-center text-center mx-auto'>
             <div>
-              <p className='my-4'>Please sign in to view the rest of the app</p>
+              <p className='my-4 text-blue-500 font-medium'>
+                Please sign in to view the rest of the app
+              </p>
+              <p className='my-4 text-sm'>
+                You can create, save and edit your own posts, view others posts
+                and much more...
+              </p>
               <div className='mr-[2rem]'>
                 <SignInOutButton login='signin' />
               </div>
