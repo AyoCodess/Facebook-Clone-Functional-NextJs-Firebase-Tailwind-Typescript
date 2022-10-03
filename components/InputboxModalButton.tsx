@@ -25,12 +25,12 @@ export const InputboxModalButton = ({
   return (
     <div
       onClick={onClick}
-      className={`inputIcon ${!theme ? '' : 'hover:bg-blue-500 '} ${
-        session ? ' ' : ' hover:bg-transparent cursor-default'
-      }`}>
+      className={`inputIcon whitespace-nowrap ${
+        !theme ? '' : 'hover:bg-blue-500 '
+      } ${session ? ' ' : ' hover:bg-transparent cursor-default'}`}>
       <Icon className={`h-7 ${iconColor}  `} />
       <p
-        className={`text-xs sm:text-sm xl:text-base ${
+        className={`text-xs sm:text-sm xl:text-base  ${
           !theme ? 'themeLight bg-transparent' : 'themeDark bg-transparent'
         }`}>
         {title}

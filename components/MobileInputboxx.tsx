@@ -40,18 +40,18 @@ export const MobileInputboxx = () => {
           }`}>
           <p className='mt-3 text-sm'>
             {!session
-              ? `Please sign in to make a post.`
+              ? `Please sign in to view and make posts.`
               : `Whats on your mind, ${session?.user?.name
                   ?.split(' ')
                   ?.slice(0, 1)}?`}
           </p>
         </div>
       </div>
-      <hr
+      {/* <hr
         className={`w-[100vw] ${
           !theme ? 'lightTheme  border-gray-300' : 'darkTheme border-blue-500'
         } `}
-      />
+      /> */}
     </div>
   );
 };

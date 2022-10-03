@@ -19,7 +19,7 @@ export const ThemeToggle = ({ className, openMenu, setOpenMenu }: Props) => {
   return (
     <Switch.Group
       as='div'
-      className={`  w-[9rem] flex items-center  ${className}  `}>
+      className={`  w-[9rem] pl-10  flex items-center  ${className}  `}>
       <Switch
         checked={theme}
         onChange={() => {
