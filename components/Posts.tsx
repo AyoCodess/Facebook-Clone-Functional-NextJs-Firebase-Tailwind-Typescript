@@ -101,8 +101,8 @@ export const Posts = () => {
       let allUserPosts: Array<any> = [];
 
       if (isQuery === 'individual') {
-        const userQuery = query(
-          collection(db, 'users', `${session?.user?.email}`, 'posts')
+     const userQuery = query(
+          collection(db, 'users', `${session?.user?.email}`, 'posts')   
         );
 
         const snapshot = await getDocs(userQuery);
